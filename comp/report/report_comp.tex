@@ -18,11 +18,12 @@
         \section{Introduction}\label{sec:introduction}
         This report will describe six ideas used in the implementation of a \LaTeX{} file compression scheme.
         This scheme works under the assumption that only one \LaTeX{} file is being encoded and decoded at a time, however, there is nothing to stop multiple files being independently encoded and decoded.
-        Additionally, it is assumed that input \LaTeX{} files are encoded using ASCII (7 bits per character plus one padding bit), no assumptions are made regarding the line endings.
+
+        Additionally, it is assumed that input \LaTeX{} files are encoded using ASCII (7 bits per character plus one padding bit), no assumptions are made regarding the line ending format.
 
 
         \section{Compression Stack}\label{sec:compression-stack}
-        This compression scheme uses a stack-model.
+        This compression scheme uses a \textit{stack} model.
         In the same way the OSI model is used in networking to wrap data the more low-level it becomes, this scheme may use many techniques to compress data at each level.
 
         When encoding, this goes from the application-level to the text-level through encoding of the input plaintext \LaTeX{} file, followed by the text-level to the binary level and finally any binary level compression.

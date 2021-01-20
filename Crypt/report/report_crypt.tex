@@ -41,7 +41,7 @@
         This means the keyspace can be reduced by a factor of 256 by ignoring the last bit of each byte.
         Thus, a full brute-force attack would take up-to $2^{56}$ attempts.
 
-        As shown in~\eqref{eq:plaintext_definition}, the plaintext must contain two full stop characters (\texttt{0x2e}).
+        As demonstrated in~\eqref{eq:plaintext_definition}, the plaintext must contain two full stop characters (\texttt{0x2e}).
         Without access to an oracle, this, potentially combined with a dictionary, could be used to help check for a valid plaintext when the correct key is used.
         Given access to the encryption oracle however, this can theoretically be reduced by many factors of 2 ($~2^{40}-2^{50}$) using techniques such as linear cryptanalysis~\cite{matsui1993linear}, and differential cryptanalysis~\cite{biham1992differential}.
         On a single machine, even with GPU acceleration, this may take several days to months.
@@ -65,7 +65,7 @@
             p_{\max} = 16
         \end{gather*}
         These reasonably tight bounds mean that only up to two bytes of padding may be used.
-        In this case it would be sensible to try appending 0x00 and 0x0000 to any applicable ciphertexts of length 14 and 13 respectively.
+        In this case it would be sensible to try appending 0x00 and 0x0000 to any applicable ciphertexts of length 15 and 14 respectively.
         If this does not work, brute force could be attempted on the last one or two bytes (where non-zero padding is used).
 
         For simplicity however, the assumption will be made that no padding is used, hence $p = p_{\max} = 16$.
@@ -73,18 +73,18 @@
         \[\{6, 4, 4\}, \{4, 6, 4\}, \{4, 4, 6\}, \{5, 5, 4\}, \{4, 5, 5\}, \{5, 4, 5\}\]
 
         According to the \textit{what3words} Wikipedia page~\cite{what3words_wikipedia}, a 40,000-long English word-list is used to cover all sea and land squares.
-        Supposing all words from this could be used in the ciphertext, this, if known, would require up to $40,000^3 = 64\times 10^{12} \approx 2^{46}$ tests for a guaranteed ciphertext, which is roughly in-line with a linear cryptanalysis attack.
+        Supposing all words from this could be used in the ciphertext, this, if known, would require up to $40,000^3 = 64\times10^{12} \approx 2^{46}$ tests for a guaranteed ciphertext, which is roughly in-line with a linear cryptanalysis attack.
         Given the presented constraints however, this can be significantly reduced while maintaining an incredibly high chance of attaining success.
         Hence, any dictionary can safely discard words of length less than 4 and greater than 6, as well as words considered to be rude or offensive.
         Additionally, the three words are likely to be relatively popular given their short length, and the need for them to be memorable.
 
         The word lists at~\cite{attack_dictionary} contain around 10,000 of the most popular words.
-        Full searches of these would require up to $10,000^3 = 1\times 10^{12} \approx 2^{40}$ tests with the oracle.
-        For this example, \texttt{google-10000-english-no-swears.txt} will be used.
-        By default, it contains 9894 words, after removal of words of length less than 4 and greater than 6 this is reduced to 3958, yielding a maximum of $3958^3 \approx 62\times 10^{9} \approx 2^{36}$ oracle tests.
+        Full searches of these would require up to $10,000^3 = 1\times10^{12} \approx 2^{40}$ tests with the oracle.
+        For this example, \texttt{google-10000-english-no-swears.txt} will be used, which, by default, contains 9894 words.
+        After removal of words of length less than 4 and greater than 6 this is reduced to 3958, yielding a maximum of $3958^3 \approx 62\times10^{9} \approx 2^{36}$ oracle tests.
 
         As this attack would require testing two blocks at a time, and given the windows command line input size limit is 32,767 characters, around 1024 block-pairs (depending on the length of the executable filename) can be sent to the oracle at a time.
-        This means the attack can theoretically be carried out with high probability of success in around $61 \times 10^6 \approx 2^{26}$ direct calls to the oracle before accounting for the fact that only some combinations are valid.
+        This means the attack can theoretically be carried out with high probability of success in around $61\times10^6 \approx 2^{26}$ direct calls to the oracle before accounting for the fact that only some combinations are valid.
 
 
         \section{Attack Results}\label{sec:attack-results}
