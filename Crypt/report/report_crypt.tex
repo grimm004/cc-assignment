@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{multicol}
+
+\title{DES Encryption Attack Report}
+\author{wcrr51}
+\date{January 2021}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols*}{2}
+        \section{Introduction}\label{sec:introduction}
+        This report looks to explore an attack plan to decrypt the following 16-byte ciphertext:
+        \begin{center}
+            \texttt{0x903408ec4d951acfaeb47ca88390c475}
+        \end{center}
+        The following information is provided:
+        \begin{itemize}
+            \item The corresponding plaintext is a \textit{What Three Words} location
+            \item The ciphertext was encrypted using DES in ECB mode with a 64-bit key
+        \end{itemize}
+
+        Firstly, as the \textit{What Three Words} format is $a.b.c$ where $a, b, c$ are words such that $n_a + n_b + n_c + 2 \leq 16$ where $n_x$ is the length (in characters) of word $x$.
+        As the plaintext must contain two full stop characters (\texttt{0x2e}), these can be used to help check for a plaintext with brute-force decryption.
+
+        While the key is advertised to be 64-bit, DES only uses 56 - the remaining 8 are either discarded or used as parity bits.
+        This means the keyspace can be reduced by a factor of 256 by ignoring the last bit of each byte.
+
+
+        \section{Chosen-plaintext Attack}\label{sec:chosen-plaintext-attack}
+
+
+        \section{Attack Results}\label{sec:attack-results}
+        After around 3 hours of carrying out the attack on an i7-6700k, the key \texttt{0x98a1bef23455dc03} is found, decrypting the provided ciphertext yields the 16-byte plaintext \texttt{tile.bills.print}.
+        In \textit{What Three Words}, this refers to the coordinates \texttt{40.026102, -75.030026} in Philadelphia, Pennsylvania, USA\@.
+    \end{multicols*}
+
+\end{document}
