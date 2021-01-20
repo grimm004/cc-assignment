@@ -302,7 +302,7 @@ Note that there is no need for general tie-breaking rules. Indeed, different mer
 
 \paragraph{Non-binary Huffman codes}
 
-Huffman codes can be extended to non-binary alphabets: If we have an alphabet of $D$ characters, we group the $D$ least likely symbols at each stage of reducing the source. When expanding the code we append each of the $D$ characters to one of the least likely symbols’ codewords.
+Huffman codes can be extended to non-binary alphabets: If we have an alphabet of $D$ characters, we group the $D$ least likely symbols at each stage of reducing the source. When expanding the code we append each of the $D$ characters to one of the least likely symbols' codewords.
 
 We must end up with exactly $D$ symbols in the final source, so we may need to pad the original source up to $D+k(D-1)$ by adding symbols of probability $0$.
 
@@ -510,7 +510,7 @@ In Lectures \ref{sec:01} and \ref{sec:02} we looked at compact codes for data be
 
 This week we look at encoding a fixed file of data efficiently. Rather than having estimates for the probabilities of each symbol, we can look at the whole message and determine the frequency of each symbol. Compact codes for memoryless sources are guaranteed to be optimal on average, but we may not have an average message. If the encoding is not determined in advance (as can be done for known sources), but is message dependent, then we must transmit the code as well as the encoded message.
 
-Recall, memoryless sources emit each symbol independently of any previous symbols. There is no ‘pattern’ to the data beyond the frequency of each symbol. For instance, consider the message 
+Recall, memoryless sources emit each symbol independently of any previous symbols. There is no 'pattern' to the data beyond the frequency of each symbol. For instance, consider the message 
 \[
     abbaeadcaadccbaabaaa
 \]
@@ -652,7 +652,7 @@ Typical values are $W = 2^{16} - 1 = 65535$, and $L = 2^8 - 1 = 255$, so we need
 
 Deflate is everywhere: in \texttt{gzip}, in the \Important{ZIP} file format, in \Important{PNG}, etc. (Technically, ZIP allows for many different compression techniques, but Deflate is the one that's used most of the time.)
 
-\paragraph{LZMA} The Lempel–Ziv–Markov chain algorithm (\Define{LZMA}) was developed for 7z. Its description is out of the scope of these lectures.
+\paragraph{LZMA} The Lempel-Ziv-Markov chain algorithm (\Define{LZMA}) was developed for 7z. Its description is out of the scope of these lectures.
 
 \subsection{See further}
 
@@ -2011,7 +2011,7 @@ We now denote a row of extended pixels in a tile by $P(k), P(k+1), \dots , P(m)$
     C(2i + 1) &= P(2i + 1) - \left\lfloor \frac{P(2i) + P(2i + 2)}{2} \right\rfloor &\quad& k - 1 \le 2i + 1 < m+ 1 &\quad& \text{step 1}\\
     C(2i) &= P(2i) + \left\lfloor \frac{ C(2i - 1) + C(2i + 1) + 2 }{4} \right\rfloor &\quad&  k \le 2i < m+ 1 &\quad& \text{step 2}.
 \end{alignat*}
-The Cohen–Daubechies–Feauveau 9/7 (\Define{CDF 9/7}) wavelet transform is computed by executing the following six steps successively:
+The Cohen-Daubechies-Feauveau 9/7 (\Define{CDF 9/7}) wavelet transform is computed by executing the following six steps successively:
 \begin{alignat*}{4}
 C(2i + 1) &= P(2i + 1) +  \alpha [P(2i) + P(2i + 2)], &\quad & k-3 \le 2i+1 < m+3 & \quad& \text{step 1}\\
 C(2i) &= P(2i) + \beta[C(2i - 1) + C(2i + 1)], &\quad& k-2 \le 2i < m+2 &\quad& \text{step 2}\\
@@ -2423,7 +2423,7 @@ If the length of the key is guess right, then the attacker can still use frequen
 
 
 
-\paragraph{Autokey Vigenère cipher}
+\paragraph{Autokey Vig\`enere cipher}
 The basic idea is to break the frequency analysis by having a non-repeating key. Again, the key is a sequence of letters e.g. $K = \texttt{BOTTLEOFRUM}$. The key is repeated only once, instead it is augmented to $K^*$ with the start of the message.
 \begin{align*}
     M &= \texttt{THETREASUREISUNDERTHEROCKBYTHETHIRDPALMTREE}\\
@@ -2855,8 +2855,8 @@ Those actually are the only weak keys of DES.
 
 
 \paragraph{Attacking DES}
-Even in 1977 the key size (56 bits) was considered ‘low’.
-The NSA ‘encouraged’ the dropping of key size from 128 to 56 bits at the time - could they mount a brute force attack even then?
+Even in 1977 the key size (56 bits) was considered 'low'.
+The NSA 'encouraged' the dropping of key size from 128 to 56 bits at the time - could they mount a brute force attack even then?
 Proposed machines to break DES by brute force are:
 \begin{itemize}
     \item 1977. Diffie and Hellman outline a \$20million machine to crack DES in 1 day.
@@ -3013,14 +3013,14 @@ A \Define{trapdoor function} is a one-way function that can be easily inverted w
 
     \item Bob has a secret method of opening the trapdoor and inverting $f$.
 
-    \item Even if Eve intercepts $f(M)$, she cannot invert without knowing Bob’s secret trapdoor.
+    \item Even if Eve intercepts $f(M)$, she cannot invert without knowing Bob's secret trapdoor.
 \end{enumerate}
 Trapdoor functions were first proposed by James Ellis at GCHQ in 1969. The first public key cryptosystem was developed by Clifford Cocks, also at GCHQ, in 1973. Both developments remained secret until 1997.
 
 
 
 \paragraph{RSA cryptosystem}
-Rivest, Shamir and Adleman rediscovered, and published, Cocks’ scheme in 1977. 
+Rivest, Shamir and Adleman rediscovered, and published, Cocks' scheme in 1977. 
 It relies on the difficulty of factoring for security.
 
 \begin{description}
@@ -3071,11 +3071,11 @@ Primality testing is very fast using randomised algorithms, and possible using a
 
 Computing $n = pq$ and $\phi(n) = (p-1)(q-1)$ is simple multiplication.
 
-Finding $e$ by random sampling and testing (Euclid’s Algorithm), we expect to take polynomially many tests. We can also pick $e$ to be a prime number, then we just need to check it does not divide $\phi(n)$. In practice, we often use the prime number
+Finding $e$ by random sampling and testing (Euclid's Algorithm), we expect to take polynomially many tests. We can also pick $e$ to be a prime number, then we just need to check it does not divide $\phi(n)$. In practice, we often use the prime number
 \[
     e = 65537 = 2^{16}+1.
 \]
-Finding $d$ is again \Important{Euclid’s Algorithm}. Encryption and decryption can be achieved by \Important{repeated squaring}.
+Finding $d$ is again \Important{Euclid's Algorithm}. Encryption and decryption can be achieved by \Important{repeated squaring}.
 
 
 
@@ -3089,7 +3089,7 @@ Amongst the many applications of RSA, let us mention Transport Layer Security (\
 \begin{enumerate}
 	\item Client contacts server and they agree to use the highest level cryptography suite they both know.
 	
-	\item The client generates a random number and communicates it to the server using public key cryptography (RSA) and the server’s public key.
+	\item The client generates a random number and communicates it to the server using public key cryptography (RSA) and the server's public key.
 	
 	\item The server and client both compute a secret master key from the random number.
 	
@@ -3129,13 +3129,13 @@ The one main drawback of the Rabin cryptosystem is that encryption is not inject
 \begin{exercise} \label{exercise:rsa}
 Alice and Bob decide to communicate using RSA. Bob picks primes $p = 5$ and $q = 13$, and public exponent $e = 19$.
 \begin{enumerate}
-    \item What information does Bob publish as his public key? Give the speciﬁc values from this example.
+    \item What information does Bob publish as his public key? Give the specific values from this example.
 
-    \item What information comprises Bob’s private key? Compute it in this example.
+    \item What information comprises Bob's private key? Compute it in this example.
     
     \item What is the process for Alice to send a message to Bob? Alice first coverts each character into a number  (as given in the character - number conversion table attached). She then encrypts each number using Bob's public information, and converts it back to a character to send to Bob. Illustrate how she would encrypt the message "Hell".
     
-    \item Explain the process for Bob to decrypt messages he receives and decrypt the message ‘:Uo’.
+    \item Explain the process for Bob to decrypt messages he receives and decrypt the message ':Uo'.
     
     \item What would the encryption of the numbers 0, 1 and 64 be? Why aren't they used in the character conversion table?
 \end{enumerate}
@@ -3166,7 +3166,7 @@ Due to its popularity, RSA has been the subject of much research trying to break
 
 Several schemes are known for attacking the system, which perform well if special conditions are met, for instance:
 \begin{itemize}
-    \item Primes $p$ and $q$ are ‘too close’ (searching from $\sqrt{n}$ up to $(p+q)/2$ reveals a factor).
+    \item Primes $p$ and $q$ are 'too close' (searching from $\sqrt{n}$ up to $(p+q)/2$ reveals a factor).
     
     \item If $d$ is too small $(< n^{0.25})$, then $d$ can be recovered from $(n,e)$.
     
@@ -3177,7 +3177,7 @@ No scheme for cracking RSA in general, except by factoring $n$, is known.
 
 
 \paragraph{Other issues}
-Problem of non-random messages: If you only send a limited range of messages, Eve can try encrypting each to see which gives the intercepted cryptogram. For instance, if you always send ‘Transfer X pounds into my account’ or ‘My 3-digit card security code is X’.
+Problem of non-random messages: If you only send a limited range of messages, Eve can try encrypting each to see which gives the intercepted cryptogram. For instance, if you always send 'Transfer X pounds into my account' or 'My 3-digit card security code is X'.
 
 This is why Alice should always pad messages with random bits.
 
@@ -3865,14 +3865,14 @@ RSA signature: Recall Alice has a public key $(n,e)$ and private key $d$, such t
     C^d = M^{ed} = M \mod n.
 \]
 \begin{enumerate}
-    \item Alice creates the signature by ‘decrypting’ her message  
+    \item Alice creates the signature by 'decrypting' her message  
     \[
     	S = M^d \mod n.
     \]
     
     \item Alice send the pair $(M,S)$ to Bob.
     
-    \item Bob ‘encrypts’ $S$, and verifies that
+    \item Bob 'encrypts' $S$, and verifies that
     \[
         S^e = M^{de} = M \mod n.
     \]
@@ -3884,7 +3884,7 @@ Being able to sign general messages requires knowledge of the secret key $d$, so
 
 \paragraph{Example}
 
-Alice’s public key is $(n = 65,e = 19)$. Her private key is $d = 43$. Alice sends the message ``Hi'' using conversion from Exercise \ref{exercise:rsa}:
+Alice's public key is $(n = 65,e = 19)$. Her private key is $d = 43$. Alice sends the message ``Hi'' using conversion from Exercise \ref{exercise:rsa}:
 \begin{align*}
     Hi -> M &= (11, 38)\\
     S &= (1143 \mod 65, 3843 \mod 65) = (41 , 12).
@@ -3892,7 +3892,7 @@ Alice’s public key is $(n = 65,e = 19)$. Her private key is $d = 43$. Alice se
 Bob receives the message/signature pair $((11,38),(41,12))$.
 He converts $(11,38)$ into ``Hi''.
 He checks $S$ by checking $(4119 \mod 65,1219 \mod 65) = (11,38)$
-It does - he knows only someone with knowledge of Alice’s private key could have created the message! I.e. it is from Alice.
+It does - he knows only someone with knowledge of Alice's private key could have created the message! I.e. it is from Alice.
 
 
 
@@ -3928,7 +3928,7 @@ Secondly, Eve may be able to \Important{dupe Alice} into signing unseen messages
 
 \subsection{Hashing and signing}
 
-\paragraph{‘Hash then sign’ schemes}
+\paragraph{'Hash then sign' schemes}
 
 \begin{description}
 \item [Setup] Alice and Bob need to setup the following:
@@ -3967,7 +3967,7 @@ So far all signed messages have been sent in the clear: $(M, S(h(M) )$. To send 
     
     \item Compute the signature $S$ for $H$ using her private key.
     
-    \item Encrypt the full message $(M,S)$ using Bob’s public key, obtaining $C$.
+    \item Encrypt the full message $(M,S)$ using Bob's public key, obtaining $C$.
     
     \item Send $C$ to Bob.
 \end{enumerate}
@@ -3978,7 +3978,7 @@ To verify, Bob then:
     
     \item Computes the hash $H$ of $M$.
     
-    \item Encrypts the signature $S$ using Alice’s public key, obtaining $H'$.
+    \item Encrypts the signature $S$ using Alice's public key, obtaining $H'$.
     
     \item Checks that $H' = H$.
 \end{enumerate}
@@ -3988,11 +3988,11 @@ To verify, Bob then:
 \paragraph{Trusted Authorities}
 
 All this can still be foiled if Eve intercepts every message from the beginning, and forges replies.
-We need a method of knowing we really have Bob’s public key, and not one Eve has advertised falsely as Bob’s.
+We need a method of knowing we really have Bob's public key, and not one Eve has advertised falsely as Bob's.
 
-This is overcome by have a trusted authority, or \Important{certificate authority} (CA), who verifies people’s identities and public keys, and signs a certificate to confirm that they are who they say they are.
+This is overcome by have a trusted authority, or \Important{certificate authority} (CA), who verifies people's identities and public keys, and signs a certificate to confirm that they are who they say they are.
 
-For example, imagine Bob wishes to set up an internet shop. He generates private and public keys, and approaches a CA (e.g. Verisign). The CA checks him out and signs a certificate saying he is Bob and his public key is correct. If Alice finds Bob’s shop and wishes to send a secure message, she can check that the public key advertised does belong to Bob, because it is signed by the CA, and Alice already knows the CAs public key.
+For example, imagine Bob wishes to set up an internet shop. He generates private and public keys, and approaches a CA (e.g. Verisign). The CA checks him out and signs a certificate saying he is Bob and his public key is correct. If Alice finds Bob's shop and wishes to send a secure message, she can check that the public key advertised does belong to Bob, because it is signed by the CA, and Alice already knows the CAs public key.
 
 Browsers come pre-configured with the public keys of major certificate authorities. You have to trust the CA to do its homework and check the identity. In 2001 someone convinced Verisign that they were a representative of Microsoft, and got a certificate signed by Verisign in the name of Microsoft Corporation. It later transpired that they were unconnected, and Microsoft and Verisign acted quickly to try and stop them.
 

@@ -16,18 +16,23 @@
     \begin{multicols*}{2}
 
         \section{Introduction}\label{sec:introduction}
-        This report will describe the ideas used in the implementation of a \LaTeX{} file compression scheme.
-        This scheme works under the assumption that only one \LaTeX{} file is being encoded and decoded at a time, however, there is nothing to stop multiple files being independently encoded / decoded.
-        Additionally, it is assumed that input \LaTeX{} files are encoded using ASCII (7 bits per character plus one padding bit).
+        This report will describe six ideas used in the implementation of a \LaTeX{} file compression scheme.
+        This scheme works under the assumption that only one \LaTeX{} file is being encoded and decoded at a time, however, there is nothing to stop multiple files being independently encoded and decoded.
+        Additionally, it is assumed that input \LaTeX{} files are encoded using ASCII (7 bits per character plus one padding bit), no assumptions are made regarding the line endings.
 
+
+        \section{Compression Stack}\label{sec:compression-stack}
         This compression scheme uses a stack-model.
         In the same way the OSI model is used in networking to wrap data the more low-level it becomes, this scheme may use many techniques to compress data at each level.
 
-        When encoding this goes from the application-level to the text-level through encoding of the input plaintext \LaTeX{} file, followed by the text-level to the binary level and finally any binary level compression.
+        When encoding, this goes from the application-level to the text-level through encoding of the input plaintext \LaTeX{} file, followed by the text-level to the binary level and finally any binary level compression.
         Decoding simply does these operations in reverse (by sending the input back up the stack).
 
         Standard compression algorithms can be inserted at any point as long as the output type from the previous layer matches the input type to the next (and vice versa).
         It is worth noting that the same scheme would work for applying encryption.
+        This may involve the use of standardised approaches, context-modified approaches and/or novel context-specific approaches.
+
+        An advantage of this is that each layer can add its own metadata.
 
 
         \section{Application-level Encoding}\label{sec:application-level-encoding}
@@ -39,6 +44,7 @@
 
         \section{Text-level Encoding}\label{sec:text-level-encoding}
         As input documents are assumed to be encoded with ASCII, each character can safely have one bit removed, automatically reducing the file size to seven eighths of the original.
+
 
         \section{Binary-level Encoding}\label{sec:binary-level-encoding}
 

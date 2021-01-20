@@ -7,36 +7,36 @@ import string
 from concurrent import futures
 from des import DesKey
 
-def encrypt_hex_string(hex_string: str) -> str:
-    return subprocess \
-        .run(f"{os.path.dirname(os.path.realpath(__file__))}\\encrypt.exe \"{hex_string}\"",
-             stdout=subprocess.PIPE) \
-        .stdout.strip().decode("utf-8")
-
-
-def encrypt_string(string: str) -> str:
-    return encrypt_hex_string("".join("{:02x}".format(ord(c)) for c in string))
-
-
-def split_string(string: str, n: int, gap: str = " ", transform=lambda s: s) -> str:
-    return gap.join([transform(string[i:i+n]) for i in range(0, len(string), n)])
-
-
-def format_encrypted_string(string: str) -> str:
-    return split_string(string, 16, transform=lambda s: split_string(s, 2, "-"))
-
-
-def evaluate(comb, target):
-    encoded = "".join(comb).encode("utf-8")
-    key = des.DesKey(encoded)
-
-    encrypted = key.encrypt(b"aaaaaaaa")
-    
-    if encrypted == target:
-        print(f"Found plaintext key: {comb}, {encoded}")
-        exit(0)
-    
-    return encrypted
+# def encrypt_hex_string(hex_string: str) -> str:
+#     return subprocess \
+#         .run(f"{os.path.dirname(os.path.realpath(__file__))}\\encrypt.exe \"{hex_string}\"",
+#              stdout=subprocess.PIPE) \
+#         .stdout.strip().decode("utf-8")
+#
+#
+# def encrypt_string(string: str) -> str:
+#     return encrypt_hex_string("".join("{:02x}".format(ord(c)) for c in string))
+#
+#
+# def split_string(string: str, n: int, gap: str = " ", transform=lambda s: s) -> str:
+#     return gap.join([transform(string[i:i+n]) for i in range(0, len(string), n)])
+#
+#
+# def format_encrypted_string(string: str) -> str:
+#     return split_string(string, 16, transform=lambda s: split_string(s, 2, "-"))
+#
+#
+# def evaluate(comb, target):
+#     encoded = "".join(comb).encode("utf-8")
+#     key = des.DesKey(encoded)
+#
+#     encrypted = key.encrypt(b"aaaaaaaa")
+#
+#     if encrypted == target:
+#         print(f"Found plaintext key: {comb}, {encoded}")
+#         exit(0)
+#
+#     return encrypted
 
 
 if __name__ == "__main__":

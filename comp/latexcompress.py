@@ -35,7 +35,7 @@ class BinaryCompression(Compression):
     def decode(self, compressed: bytes) -> Union[bytes, str]: pass
 
 
-class LaTeXCompression(Compression):
+class LaTeXCompression(TextCompression):
     def __init__(self):
         super().__init__()
 
@@ -62,7 +62,7 @@ class LaTeXCompression(Compression):
     def decode(self, compressed: bytes) -> Union[bytes, str]:
         input_str: str = compressed.decode("ascii")
 
-        for key, codeword in reversed(self.dictionary.items()):
+        for key, codeword in reversed(list(self.dictionary.items())):
             input_str = input_str.replace(codeword, key)
 
         return input_str
@@ -144,6 +144,21 @@ class LZWCompression(BinaryCompression):
     def decode(self, compressed: bytes) -> bytes:
         # https://gist.github.com/mjs3339/9b2cfe7f872c58c41435d6adfe1a9913
         return bytes()
+
+
+# import io
+#
+# class BitReader:
+#     def __init__(self):
+#         io.BytesIO
+#
+#     def read_bit(self):
+#
+#
+# class BitWriter:
+#     def __init__(self):
+#         pass
+
 
 
 if __name__ == "__main__":
