@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Union, List
+from typing import Dict, Union
 from array import array
 
 
@@ -158,7 +158,6 @@ class LZWCompression(BinaryCompression):
 # class BitWriter:
 #     def __init__(self):
 #         pass
-
 
 
 if __name__ == "__main__":

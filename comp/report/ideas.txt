@@ -1,0 +1,7 @@
+6 Ideas:
+- Stack-based compression structure
+- Context-based compression
+- LZ78 compression
+- Huffman Encoding
+- Parameter Optimisation
+- Applying LZ78 and Huffman to context
