@@ -1,0 +1,787 @@
+%%%%%%%%%%LateX document prepared by Jared Ruiz%%%%%%%
+%obviously, percent signs are used to write comments.
+
+%%%%The document class says whether you are writing a paper, beamer, presentation, etc. For most purposes, article is used.
+\documentclass[12pt]{article}
+
+%%%Similar to classes in C or Java. Include these to use different typesetting styles, symbols, etc. I usually just include these no matter what I'm writing.
+\usepackage{setspace}
+\usepackage{amsmath, amssymb,amsthm}
+\usepackage{graphicx,graphics}
+\usepackage{amsfonts, dsfont}
+\usepackage{epsfig}
+\usepackage{latexsym}
+\usepackage{alltt}
+%\usepackage{fancyhdr}
+\usepackage{lastpage,ifthen}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{multicol}
+
+
+%%Define styles for theorems, facts, etc. In the actually document below, I'll write something like "\begin{thm}" etc.
+\newtheorem{thm}{Theorem}
+\newtheorem{fact}{Fact}
+\newtheorem{cor}{Corollary}
+\newtheorem{lem}{Lemma}
+\newtheoremstyle{defn}{10 pt}{10 pt}{}{}{\bfseries}{.}{3 pt}{}
+\theoremstyle{defn}
+\newtheorem{defn}{Definition}
+\newtheoremstyle{pf}{10 pt}{10 pt}{}{}{\bfseries}{}{3 pt}{}
+\theoremstyle{pf}
+\newtheorem*{pf}{Proof:}
+\newtheoremstyle{defns}{10 pt}{10 pt}{}{}{\bfseries}{}{3 pt}{}
+%\newtheoremstyle{proof}{10 pt}{10 pt}{}{}{\bfseries}{}{3 pt}{}
+\newtheorem{post}{Postulate}
+\newtheorem*{prop}{Proposition}
+
+
+%%Defines margins, etc. Experiment, or just comment these out
+\renewcommand{\baselinestretch}{2}
+\usepackage[left=1in,top=1.1in,right=1in,bottom=.7in]{geometry}
+\onehalfspacing \setlength{\hoffset}{-18pt}
+\setlength{\voffset}{-18pt} \setlength{\headheight}{18pt}
+\setlength{\headsep}{12pt} \setlength{\textwidth}{504pt}
+\setlength{\oddsidemargin}{0pt} \setlength{\evensidemargin}{0pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\marginparsep}{0pt} \setlength{\marginparpush}{0pt}
+\setlength{\columnsep}{12pt} \setlength{\parsep}{0pt}
+\setlength{\abovedisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{0pt plus 2pt}
+\setlength{\belowdisplayshortskip}{0pt plus 2pt}
+\setlength{\abovedisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{0pt plus 2pt}
+\setlength{\belowdisplayshortskip}{0pt plus 2pt}
+
+
+%%%VERY HELPFUL!!! This lets you define your own commands, which can be used later in the document (similar to "alias" in shell scripts, etc.).  For instance, below if I type $\arcsec$, the compiler will interpret it as: $\mathop {\textrm {arcsec}}$, etc. (By the way, "math typing" is achieved by writing dollar signs)
+\newcommand{\arcsec}{\mathop {\textrm {arcsec}}}
+\newcommand{\arccot}{\mathop {\textrm {arccot}}}
+\newcommand{\arccsc}{\mathop {\textrm {arccsc}}}
+\newcommand{\lcm}{\mathop {\textrm {lcm}}}
+\newcommand{\m}{\mbox{mod }}
+\newcommand{\f}{\mbox{for }}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\M}{\mathbb{M}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\nn}{\mathcal{N}}
+%\newcommand{\tt}{\mathcal{T}}
+\newcommand{\Gal}{\mathrm{Gal}}
+\newcommand{\s}{$S^*$}
+\newcommand{\scr}[1]{\mathscr{#1} }
+\newcommand{\qd}{\vspace{-.2in} \flushright $\Box$}
+\newcommand{\q}{\flushright $\blacksquare$}
+\newcommand{\lset}{\left\{ }
+\newcommand{\rset}{\right\} }
+\newcommand{\nor}{\trianglelefteq}
+\newcommand{\of}{\subseteq}
+\newcommand{\bset}{\supseteq}
+\newcommand{\nb}[1]{\noindent \textbf{#1} }
+\newcommand{\setof}[2]{\left\{#1 :#2 \right\} }
+\newcommand{\abs}[1]{\left|#1\right| }
+\renewcommand{\bar}[1]{\overline{#1} }
+\newcommand{\set}[1]{\lset #1 \rset }
+\newcommand{\0}{\emptyset}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\con}[2]{\equiv #1  \left(\mbox{mod } #2\right) }
+\newcommand{\iso}{\cong } 
+\newcommand{\syl}[2]{\mbox{Syl}_{#1}\left(#2\right)}
+\newcommand{\alf}{\alpha}
+\newcommand{\aut}{\mbox{Aut}}
+\newcommand{\gal}{\mbox{Gal}}
+\newcommand{\z}{\zeta}
+\newcommand{\si}{\sigma}
+\newcommand{\e}{\epsilon}
+\renewcommand{\d}{\delta}
+%\newcommand{\<}{\left\langle}
+%\renewcommand{\>}{\right\Qngle}
+\renewcommand{\-}{\setminus}
+\newcommand{\bof}{\supseteq}
+\newcommand{\reo}{\bar{\R}}
+\newcommand{\ip}[1]{\left\langle #1\right\rangle}
+\newcommand{\spn}[1]{\mbox{span}\left(#1\right)}
+\newcommand{\ran}{\mbox{Range}}
+\newcommand{\op}{\operatorname}
+
+%%Commands followed by square brackets and then a number means you are calling the command with so many arguments (like a function). In the definition of the command, place pound signs and then numbers to show where each argument is placed. For instance, calling $\ch{33}{44}$ will be interpreted as $33 \choose 44$. 
+\newcommand{\ch}[2]{ {#1 \choose #2} }
+\renewcommand{\v}[1]{ \vec{#1} }
+\newcommand{\p}{\partial}
+
+
+%%\begin{????} \end{???} is just like defining a method in C/Java with curly brackets {  }, or defining something in HTML with < >. Basically, whatever you "begin" you must also "end." The beginning of each document must always have \begin{document} and \end{document}
+\begin{document}
+\title{The Mathematics of Special Relativity}
+\author{Jared Ruiz\\Advised by Dr. Steven Kent}
+
+%%You can use \today instead of writing out the date to get the current date. I chose not to, since I wrote this back in 2009. 
+\date{May 7, 2009}
+
+
+%%Written to make the title. 
+\maketitle
+
+%%Written to make a new page.
+\newpage
+
+
+%%Use \section and \subsection to split paper up.
+\section{Origins of Relativity}
+
+%%Anytime you write math, it must be inside dollar signs (like $E=mc^2$ below). Doing this will include the math in-line. If you want the math set apart, use double dollar signs $$ .. $$. There are lots of examples of this throughout.
+When hearing the words ``theory of relativity,'' most immediately
+think of the equation $E=mc^2$, or Albert Einstein. While this is
+not a bad thing, ample appreciation is oftentimes not given where it is
+due. The road to the development, understanding, and actual
+application of the theory of relativity is a long and twisted one,
+and credit cannot be given to one man alone. Much like how Newton
+stood ``...on the shoulders of giants...'' when he developed the
+calculus, so too did Albert Einstein when finally realizing the
+theory of relativity. 
+
+Today the the necessary tools and knowledge are available that the special theory of relativity can be understood with little work. But before delving into the mathematics which lay before us, we should look at those who helped develop this theory; to understand their thoughts, their inspirations, and their struggles.
+
+\subsection{The Absolute}
+
+In 1632, Galileo Galilei published \textit{Dialogue concerning the two chief
+world systems}. In it, two characters, Salviati and Simplicio, debate over whether the sun or the earth is the center of the universe (we know now
+that the sun is the center of or our solar system). While this brought
+about great controversy regarding the Roman Catholic Church, it marked a monumental shift in perspective. Up until this
+point, the state of physics had been at a standstill for over a
+millenium. Science at the time consisted of reading the works of Aristotle, not hypothesizing and making new theories. Galileo was a visionary; he studied the heavens, made calculations, and although he could not prove his ideas, he supported them with solid observational evidence. So in a sense, Galileo's work did
+more than persuade others to believe the Copernican view of the
+solar system. It was the birth of modern physics \cite{blackwell}. 
+%%the "\cite{}" command is used with a bibliography file. At the very end of this document is a call to a file titled "biblio.bib." A separate .bib file is useful instead of including a bibliography in each new document, especially if you're writing los of documents. You can continue adding and adding new entries to your .bib file, but only the ones you want to reference (which is done with the \cite{}) will be included in your document. If you look in the biblio.bib file, there is an entry that is titled "blackwell." 
+
+
+Isaac Newton was born on Christmas day 1642, the same year that Galileo
+passed away. In Newton's lifetime, Galileo's would become generally accepted, and Newton himself based his work upon Galileo's. Again, by his own observations and study, Newton successfully developed the calculus in \textit{Philosophiae Naturalis Principia Mathematica}. More importantly, in this work he defined a set of laws which all objects must follow in motion, and gave the law of universal gravitation. His work was incomplete, yet the \textit{Principia}, as it is widely called, gave Newton great fame. His and Galileo's work, oftentimes referred to as Galilean relativity or classical mechanics, would remain the foundation of physics for nearly 200 years \cite{blackwell}. 
+
+Today, Newton's Laws of Motion and the heliocentric theory are taught to children in grade school. So why the need for relativity? Was not classical mechanics enough? Was it possible that these great masters of old were incorrect in their assumptions? Yes, yet none realized how incorrect they were. Why then is Newton (along with Archimedes and Gauss), considered one of the greatest mathematicians of all time? It is important to understand the subtlety of their mistakes. The mathematics which Newton and Galileo used was correct. What was incorrect was the physics. Newton and Galileo simply thought the speed of light was not constant \cite{bell}. 
+
+\subsection{Electrodynamics}
+In 1865, the main turning point in the history of relativity came about. James Clerk Maxwell, a Scottish physicist, unified the theories of electricity and magnetism. Up until this point, the laws and equations which governed electrical and magnetic fields were seperate. All known interactions between electrical and magnetic fields with moving charges were described by Maxwell's system of partial differential equations \cite{hawking}. These are known as Maxwell's equations, which are given for completeness.
+ 
+ 
+ 
+ %%\begin{eqnarray*} .. \end{eqnarray*} (read "equation array") allows you to line up math equations nicely. The asterisk is used so that numbers are not written to label the equations. Taking these away will write little numbers off to the side. See the pdf document for how this looks, and then just play around to see how things look. 
+\begin{eqnarray*}
+\nabla\cdot D=4\pi\rho\\
+\nabla\cdot B=0\\
+\nabla\times H=\dfrac{4\pi}{c}J+\dfrac{1}{c}\dfrac{\partial D}{\partial t}\\
+\nabla\times E+\dfrac{1}{c}\dfrac{\partial B}{\partial t}=0
+\end{eqnarray*}
+
+The release of Maxwell's equations began a crisis in physics. If what Maxwell said was correct, then light traveled in waves just like sound. Then there obviously had to be some sort of medium for which light waves had to travel. Sound traveled through air, but what did light travel through? This medium was called the ether. 
+Unfortunately, the idea of an ether conflicted with the laws of Galilean relativity. If the ether existed, then the laws of electromagnetism did not correctly transform under Galilean relativity. This was a \textit{huge} problem. Either Maxwell was wrong (and experimental evidence said otherwise), or the work done by Galileo and Newton, work that had been unchanged for the last two hundred years, had to be corrected \cite{jackson}. 
+
+\subsection{The Ether}
+The ether was thought to exist everywhere at once, since it had to follow Maxwell's equations. The belief was that the ether had little density, and its interaction with matter so small it could barely be noticed. The ether's sole purpose was to propagate electromagnetic waves. This ether was thought of as fixed, and in it the velocity of light was $c=299,792,458 m/s$. But for other observers moving relative to the ether, the speed of light ought to be different \cite{jackson}.
+
+To make the idea of the ether fit with Galilean relativity, partial solutions were given. One was that the ether is the only absolute standard of rest, and that all motion was relative to it. Another was to assume the velocity of light was $c$ when measured in a way that the source of the light is at rest. These were disproved; the first by the aberration of starlight, the second by the Fizzeau experiment (see \cite{jackson} for more detail). One last avenue was that motion through the ether could be detected by bodies with extremely high mass (or that these bodies could ``carry'' the ether) \cite{jackson}.
+
+This last argument was disproven in 1887 by two Americans, Albert Michelson (who would later go on to win the Nobel prize in physics), and Edward Morley. The thought was that as the earth moved through the ether, the velocity of light should be higher when the earth approached the source of light, and less when measured at right angles. To test this, the now famous Micehlson-Morley experiment was devised. Here, a beam of light was split in two, each new beam travelling different paths of equal length. The distance traveled and time taken for the beams to run their course were carefully measured. This entire apparatus floated on mercury, so that it could be rotated (much like the rotation of the earth). To their surprise there was no considerable difference in results from when the device was spun or not. The result was inconclusive: motion through the ether could not be detected. Even more so, it appeared that the velocity of light was independent of the motion of the source (in other words, it was a constant) \cite{taylor_wheeler}.
+
+Partial solutions were given to explain the null-result of the Michelson-Morley experiment. Lorentz and FitzGerald argued that the lengths of moving bodies would contract in the direction they were travelling. They were somewhat correct: this contraction appears in special relativity, but in a much more general sense. However, most agreed by this point that the idea of the ether was dead. More work was done, but with little success. With one of the greatest problems ever in physics, the stage was set for Albert Einstein to make his grand appearance \cite{jackson}.
+
+\subsection{The Relative}
+
+Einstein realized what none other had: that the idea of an ether did not just conflict with Galilean relativity, but classical mechanics gave no room for an ether to even exist! Einstein concluded it was pointless in defining a physical quantity unless there was some means of measuring it. Furthermore, motion could only be measured physically with respect to a material body, so we have to ignore all other motion. Einstein was viewing motion as a relative idea, so motion with respect to absolute space was incorrect. This became his first postulate of relativity, the same one which Galileo and Newton had presented years earlier \cite{vanname_flory}. 
+
+
+
+%%A few more helpful ideas here. First notice \begin{post} .. \end{post} is defined above, and will write "Postulate" to the .pdf file. Second, I label this post postulate are "post1" (probably a bad name, but oh well). Anything defined as a \newtheorem (which "post" is) is automatically numbered. When you move things around in your document, the numbers may change. This allows you to reference a certain theorem/definition/etc. without knowing it's number in the paper. Notice in the next paragraph, I write \ref{post1}, which will bring up the number associated with this postulate. See the .pdf file for how this will look.
+\begin{post}\label{post1}There is no absolute standard of rest; only relative motion is observable \cite{woodhouse}.
+\end{post}
+
+Postulate \ref{post1} is consistent with the results of the Michelson-Morley experiment, as it makes the question of detecting motion through the ether meaningless. Next, to compensate for the lack of an ether, Einstein realized what Maxwell himself did not: that the velocity of light did not depend on the motion of observers. Light required no medium to travel through, as its velocity was constant. This was his second postulate.
+
+\begin{post}\label{post2}The velocity of light $c$ is independent of the motion of the source \cite{jackson}.
+\end{post}
+
+With these two assumptions, Einstein was able to recreate the mathematics which governed the physical universe. In 1905 he released his crowning achievement, the \textit{Theory of Special Relativity}. At first, most felt that what this new ``theory'' said was impossible to grasp. Yet as time progresses, we see that relativity has slowly creeped into the general consciousness of humanity. What Einstein predicted in his work has been shown to be true by literally millions of experiments \cite{kaku}.
+
+At first, we will only assume Einstein's first postulate. This gives us the Galilean transformation. Then we will show how the innocence of the second postulate changes everything. From there, we will shift the mathematics to adhere to these guidelines, and then see what they predict. We start by looking at the world as Galileo did; through the eyes of observers moving with respect to one another in different reference frames.
+
+\section{Essentials of Relativity}  
+\subsection{Galilean Reference Frames}
+
+When talking about space and time, one imagines a set of axes on which to plot points. However as Galileo made clear, it is necessary to use different axes at different times. In classical mechanics, motion is described in a \textit{frame of reference}. These frames all contain an origin, a set of Cartesian axes (usually everything is restricted to the first quadrant or octant), and a fourth axis which measures time. This four-dimensional set of axes is known as \textit{spacetime} \cite{woodhouse}.
+\newpage
+
+%%\small just makes the text smaller. \includegraphics is used to attach a picture. The picture I am calling here is in the SAME FOLDER as the latex document, and is a .jpeg file. 
+{\small
+\begin{center}Spacetime\end{center}}
+\begin{center}\includegraphics[scale=.4]{spacetime}\end{center}
+
+An example can illustrate what is meant by a reference frame. Imagine a traveller who is sitting in a train which is moving in a straight line with a constant velocity relative to the earth (recall Postulate 1). Inside the train, the traveller is at rest. Yet the traveller is not really at rest. Taking a step back and looking at the frame of reference of the earth, the traveller is in a completely different place at one moment in time than another, because the train is moving along its tracks. Further still, the earth is revolving about the sun, which is slowly revolving about the center of the galaxy, etc. In special relativity, we assume that all motion is uniform (there is no acceleration or deceleration).
+
+\begin{defn}A reference frame is \textit{inertial} if every test particle initially at rest remains at rest and every particle in motion remains in motion without changing speed or direction \cite{taylor_wheeler}.
+\end{defn}
+
+In the train, the traveller can throw balls into the air and catch them as if the train were not moving. He can jump forward or backward, and would not unexpectedly crash into the walls of the train. Even though the train is moving along its track, the motion inside the train remains the same. ``The laws of motion are the same in a `fixed' frame and in a frame moving..." \cite{woodhouse} with the train, so long as the motion is uniform. Thus to look at motion happening in the train, we can simply look at a reference frame which is moving with the train, as opposed to looking at one that is fixed with respect to the earth. We say the person in the train moves \textit{relative} to the reference frame of the train.
+
+\begin{defn}An \textit{event} is a point $(t,x,y,z)$ in spacetime \cite{callahan}.
+\end{defn}
+
+\begin{defn}Any line which joins different events associated with a given object will be called a \textit{world-line}  \cite{shadowitz}.
+\end{defn}
+
+In the train, the person jumping or throwing balls would all be different events. We can also think of the world-line as the history of the object.
+
+
+\begin{defn}An \textit{observer} is a series of clocks in an inertial reference frame which measures the time at which different events take place \cite{taylor_wheeler}.
+\end{defn}
+
+An observer must reside inside a particular reference frame, yet an event does not have to. If we were to take an event in the train, say a person jumping, the event is taking place somewhere in spacetime. This event can be observed from inside the reference frame of the train. Additionally it can be viewed from the reference frame of the earth. Because different observers are viewing the same event in different ways, there needs to be some way to link the coordinates of the event in one reference frame to the coordinates of the same event in another. To do this, classical mechanics uses what is now known as the Galilean transformation.
+
+\begin{thm}\label{gal_trans}Given two observers, $O$ and $O'$, events in the inertial frames of reference set up by the observers are related by:
+
+%%%\begin{cases} .. \end{cases} is used if you want to write something that looks like a piecewise function.
+$$\begin{cases}
+t'=t\\
+x'=x+vt\\
+y'=y\\
+z'=z\\
+\end{cases}
+$$
+
+where $v$ is the relative velocity which $O'$ is moving with respect to $O$ \cite{shadowitz}.
+\end{thm}
+
+\begin{proof}
+ Let $O$ and $O'$ be two reference frames and let there be an event which occurred at some point $(t,x,y,z)$ in $O$. Assume $O'$ is moving with uniform velocity $v$ in the $x'$ direction relative to $O$, but not moving in the $y'$ or $z'$ direction. Also, we will assume that the two frames coincided at $t=t'=0$. Thus an event which happened at a given time $t$ and position $x$ in $O$s coordinate system would happen at some position $x'=x+vt$ in $O'$s. Neither the $y$ nor $z$ coordinates changed.
+\end{proof}
+
+Unfortunately, this theorem is incorrect. The mathematics is fine; assuming what we did (that the speed of light is \textit{not} constant) this would be the logical outcome. It can be generalized to motion in three directions (although the mathematics would be more difficult) in a similar manner. The problem is that it assumes that space and time are absolute quantities.
+
+\subsection{Time Dilation}
+But how can time \textit{not} be absolute? Is not a minute for one observer a minute for every other observer, regardless of where they are or how fast their motion? 
+
+\begin{defn}The \textit{proper time} $\tau$ along the worldline of a particle in constant motion is the time measured in an inertial coordinate system in which the particle is at rest \cite{woodhouse}.
+\end{defn}
+
+Imagine a set of mirrors which reflect light rays. If the mirrors are set at a fixed distance from one another, we can measure time by how often the light rays bounce off each mirror, thus effectively creating a ``light-clock.'' Now assuming Einstein's second postulate (that the velocity of light is constant), if the mirrors were to move with a constant velocity to the right or left, the distance traveled by the light is farther (by the Pythagorean theorem) than when the mirrors were stationary. Furthermore, the time between ticks has slowed down. In general, observers moving with constant velocity measure time slower than observers at rest. This is true of all clocks, not just our special light-clock. This particular phenomenon is known as time dilation \cite{vanname_flory}.
+
+\begin{defn} ``Time Dilation is the name given to the phenomenon that happens when a nonproper-time interval is larger than a proper time interval'' \cite{shadowitz}. \end{defn}
+
+Consider two observers, $O$ and $O'$, where $O'$ is moving with constant velocity $v$ with respect to $O$. Suppose a photon (a bundle of electromagnetic energy) is emitted by $O$ toward $O'$ at time $t$ (according to $O$), and is received by $O'$ at time $t'$ according to his clock. Since the velocity of light is $c$ with respect to both observers (regardless if they are moving or not), and one is traveling with a constant velocity, we can assume that according to $O, t=kt'$, where $k$ is a constant. But there is nothing special about $O$, or the reference frame in which $O$ is stationary. We can change reference frames so that $O'$ is at rest, and $O$ is now moving with velocity $v$ (this follows from Postulate \ref{post1}). So according to $O', t'=kt$. This constant $k$ is known as \textit{Bondi's} $k$\textit{-factor} \cite{woodhouse}.
+
+\begin{center}\includegraphics[scale=.4]{bondi}\end{center}
+
+In Galilean relativity, $k=1$. But $c$ is constant, so solving for $k$, we can see how the time in one inertial coordinate system is related to the time in another. Consider the above diagram. Because $c$ is a constant, the convention is to set $c=1$ geometrically, but to write $c$ (as in $ct$) algebraically. It has been set to $1$ above for clarity, but it is necessary to consider it in our calculations. The time coordinate $t_B$ and space coordinate $d_B$ can be expressed as: 
+$$d_B=\dfrac{1}{2}c(k^2-1)t \quad \mbox{and} \quad 
+t_B=\dfrac{1}{2}(k^2+1)t.$$
+
+Now if $O'$ is moving with constant velocity $v$ according to $O$, $$v=\dfrac{d_B}{t_B}=\dfrac{\frac{1}{2}c(k^2-1)t}{\frac{1}{2}(k^2+1)t}=\dfrac{c(k^2-1)}{(k^2+1)}.$$ Now solving for $k$ (notice how important keeping $c$ in our calculations is) gives
+
+\begin{eqnarray*}
+ vk^2+v&=&ck^2-c\\
+c+v&=&ck^2-vk^2\\
+c+v&=&k^2(c-v)\\
+k&=&\sqrt{\dfrac{c+v}{c-v}}>1.\\
+\end{eqnarray*}
+
+It follows that $$\dfrac{\mbox{time $E$ to $B$ measured by $O$}}{\mbox{time $E$ to $B$ measured by $O'$}}=\dfrac{t_B}{kt}=\dfrac{(k^2+1)t}{2kt}=\gamma(v)$$ where substituting for $k$ we find that the \textit{gamma factor} $\gamma(v)$ is
+\begin{eqnarray*}
+\gamma(v)=\dfrac{(k^2+1)t}{2kt}&=&\dfrac{\frac{c+v}{c-v}+1}{2\sqrt{\frac{c+v}{c-v}}}\\
+&=&\dfrac{(c+v)+(c-v)}{2\frac{\sqrt{c+v}}{\sqrt{c-v}}(c-v)}\\
+&=&\dfrac{2c}{2\sqrt{(c+v)(c-v)}}\\
+&=&\dfrac{c}{\sqrt{c^2-v^2}}=\dfrac{c}{c\sqrt{1-v^2/c^2}}=\dfrac{1}{\sqrt{1-v^2/c^2.}}\\
+\end{eqnarray*}
+
+With the gamma factor, we can easily see the effects of time dilation. One such example is known as the ``Paradox of the twins,'' which was originally introduced by Einstein. Suppose a set of twins are born on earth, and that one remains on earth, while the other is blasted off to space, travelling in a straight line at a constant velocity. After some time, the ship stops, turns around, and comes back to earth, following the same path and travelling at the same constant velocity. Then according to the gamma factor, if the twin on earth aged $T$ years, the twin in the rocket ship aged $T/\gamma(v)=T\sqrt{1-v^2/c^2}$ years!
+
+Yet, if we were to look at a frame in which the twin in the rocket was stationary and the twin on earth moved away, the opposite would happen. The twin on earth would now be younger! Something is wrong. The problem is that the twin in the rocket ship is not in an inertial frame of reference. The rocket must have accelerated at some point to reach a constant velocity, decelerated, stopped, and then accelerated once again. Not remaining at a constant velocity destroyed the link between the twins, thus we cannot view the scenario where the earth is moving away from the rocket. Since special relativity ignored acceleration, general relativity is required to correctly solve problems of this type \cite{shadowitz}.
+
+\subsection{The Lorentz Transformation}
+With the gamma factor, we can correctly see how the coordinates of an event in one inertial coordinate system are related to another observer. This is known as the Lorentz transformation.
+\begin{thm}\label{lor_trans}The inertial coordinate systems set up by two observers are related by:
+$$\begin{cases}
+t=\dfrac{t'+(vx'/c^2)}{\sqrt{1-(v/c)^2}}\\
+x=\dfrac{x'+vt'}{\sqrt{1-(v/c)^2}}\\
+\end{cases}
+$$
+
+%%A few things happening here. \begin{equation} .. \end{equation} will appear as double dollar signs, but will put a number next to the equation (just like equation array). the \label{} is used to refer back to this equation later on (just like \cite{}). Use \ref{} to refer back to this equation. So \ref{} is used both to refer back to specific equations, and to refer back to theorems. 
+%% Another thing happening here is how to make matrices. This is done with the \begin{array} .. \end{array} commands, and the {cc} following defines the number of columns in the matrix. The & is used to define rows in the matrix, and \\ ends a row. The \left( .. \right) use used to put large parenthesis around the matrix. This can be changed to \left[ .. \right] to make square brackets instead. In fact, putting \left( and \right) is useful anytime you have a large section of math that regular parenthesis don't cover.  
+We can write this more concisely as
+\begin{equation}\label{lt}
+\left(\begin{array}{c}
+      ct\\
+x\\
+      \end{array}\right)=\gamma(v)\left(\begin{array}{cc}
+      1 & v/c\\
+v/c & 1\\
+      \end{array}\right)\left(\begin{array}{c}
+      ct'\\
+x'\\
+      \end{array}\right)
+\end{equation}
+where $v$ is the relative velocity.
+\end{thm}
+
+\begin{center}\includegraphics[scale=.4]{lor}\end{center}
+
+\begin{proof}Look at the diagram. According to $O$, the event $B$ has coordinates $$t=\dfrac{1}{2}(t_2+t_1)=\dfrac{1}{2}(kt_2'+t_1) \quad x=\dfrac{1}{2}c(t_2-t_1)=\dfrac{1}{2}c(kt_2'-t_1)$$ where $k$ is Bondi's k-factor. Now since $t=kt'$, the coordinates of the event $B$ according to $O'$ is: $$t'=kt=k\left(\dfrac{1}{2}(t_2+t_1)\right)=\dfrac{1}{2}(t_2'+kt_1)$$ and since $t'$ happened between $t_1'$ and $t_2'$, we have $$x'=\dfrac{1}{2}c(t_2'-t_1')=\dfrac{1}{2}c(t_2'-kt_1)$$ This can be condensed as: $$
+\left(\begin{array}{c}
+ ct\\
+x\\
+\end{array}\right)=
+\dfrac{c}{2}\left(\begin{array}{cc}
+             1 & k\\
+-1 & k\\
+            \end{array}\right)
+\left(\begin{array}{c}
+ t_1\\
+t_2'
+\end{array}\right)
+$$
+$$
+\left(\begin{array}{c}
+ ct'\\
+x'\\
+\end{array}\right)=
+\dfrac{c}{2}\left(\begin{array}{cc}
+             k & 1\\
+-k & 1\\
+            \end{array}\right)
+\left(\begin{array}{c}
+ t_1\\
+t_2'
+\end{array}\right)
+$$
+
+Thus we see that $$\left(\begin{array}{c}
+         t_1\\
+t_2'\\
+        \end{array}\right)=\dfrac{2}{c}\left(\begin{array}{cc}
+1 & k\\
+-1 & k\\
+\end{array}\right)^{-1}\left(\begin{array}{c}
+ct\\
+x\\
+\end{array}\right)=\dfrac{2}{c}\left(\begin{array}{cc}
+k & 1\\
+-k & 1\\
+\end{array}\right)^{-1}\left(\begin{array}{c}
+ct'\\
+x'\\
+\end{array}\right).$$ So \begin{eqnarray*}\left(\begin{array}{c}
+         ct\\
+x\\
+        \end{array}\right)=\left(\begin{array}{cc}
+1 & k\\
+-1 & k\\
+\end{array}\right)\left(\begin{array}{cc}
+k & 1\\
+-k & 1\\
+\end{array}\right)^{-1}\left(\begin{array}{c}
+ct'\\
+x'\\
+\end{array}\right)&=&\dfrac{1}{2k}\left(\begin{array}{cc}
+1 & k\\
+-1 & k\\
+\end{array}\right)\left(\begin{array}{cc}
+1 & -1\\
+k & k\\
+\end{array}\right)\left(\begin{array}{c}
+ct'\\
+x'\\
+\end{array}\right)\\
+&=&\dfrac{1}{2}\left(\begin{array}{cc}
+k+k^{-1} & k-k^{-1}\\
+k-k^{-1} & k+k^{-1}\\
+\end{array}\right)\left(\begin{array}{c}
+ct'\\
+x'\\
+\end{array}\right)\\
+\end{eqnarray*}
+
+Now $$k+k^{-1}=\dfrac{2c}{\sqrt{c^2-v^2}} \quad \mbox{and} \quad k-k^{-1}=\dfrac{2v}{\sqrt{c^2-v^2}}$$ so $$\dfrac{1}{2}\cdot\dfrac{2c}{\sqrt{c^2-v^2}}=\gamma(v) \quad \mbox{and} \quad \dfrac{1}{2}\cdot\dfrac{2v}{\sqrt{c^2-v^2}}=\dfrac{v}{c}\gamma(v).$$ Therefore, $$
+\left(\begin{array}{c}
+      ct\\
+x\\
+      \end{array}\right)=\gamma(v)\left(\begin{array}{cc}
+      1 & v/c\\
+v/c & 1\\
+      \end{array}\right)\left(\begin{array}{c}
+      ct'\\
+x'\\
+      \end{array}\right)
+$$
+\end{proof}
+
+Geometrically, the coordinates of the event are being transformed.
+\newpage
+{\small
+\begin{center}Transformation of Coordinates\end{center}}
+\begin{center}\includegraphics[scale=.4]{lt}\end{center}
+
+Since the $2\times2$ matrix in (\ref{lt}) is based upon $v$, we can think of it as adding the velocity $v$ to the particle. From the previous theorem, we have in four dimensions \begin{equation}\label{boost}\left(\begin{array}{c}ct\\                                                                                                                            x\\
+y\\
+z\\
+\end{array}\right)=\left(\begin{array}{cccc}\gamma & \gamma v/c & 0 & 0\\
+\gamma v/c & \gamma & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right)\left(\begin{array}{c}ct'\\
+x'\\
+y'\\
+z'\\
+\end{array}\right)\end{equation} where $v$ is the relative velocity and $\gamma=\gamma(v)$. Thus we arrive at a definition for this matrix.
+
+\begin{defn}
+The $4\times4$ matrix in (\ref{boost}) is known as the \textit{boost}, denoted $L_v$ \cite{woodhouse}. \end{defn}
+
+With the properties of the boost, we can look at how a moving observer would judge a moving particle's velocity.
+
+\begin{lem}\label{c}A particle cannot travel faster than $c$, the velocity of light.\end{lem}
+\begin{proof}Suppose an observer is moving in the $x$ direction with velocity $-v$, and that a particle is travelling relative to the observer with constant velocity $u$. Then by Theorem \ref{lor_trans} $x'=-vt+b$ for some constant $b$. In classical mechanics, the new velocity $w$ would be an addition of the old velocities, $w=u+v$. But in relativity, using the boost (in two dimensions) $$\left(\begin{array}{c}ct'\\
+                                                                                                                                                                                                         x'\\
+\end{array}\right)=\gamma(u)\left(\begin{array}{cc}1 & -u/c\\
+                                   -u/c & 1\\
+                                  \end{array}\right)\left(\begin{array}{c}ct\\
+                                                                                                                                                                                                          -vt+b\\
+\end{array}\right).$$ So according to $O'$, $$t'=\gamma(u)\left(\left(1+\dfrac{uv}{c^2}\right)t-\dfrac{bu}{c^2}\right) \quad \mbox{and} \quad x'=\gamma(u)\left(-\left(u+v\right)t+b\right).$$ Then the new velocity is $$w=-\dfrac{dx'}{dt'}=\dfrac{v+u}{1+uv/c^2}.$$ Now, if $v=c$, we have
+$$\dfrac{c+u}{1+(cu)/c^2}= \dfrac{c^2+uc}{c+u}=c.$$ Finally, if $|u|<c$ and $|v|<c$, $|w|<c$ since
+\begin{eqnarray*}(c-u)(c-v)=c^2-(u+v)c+uv>0\iff -(u+v)c&>&-c^2-uv\\
+ u+v&<&c\left(1+\dfrac{uv}{c^2}\right)\\
+w&<&c\\
+\end{eqnarray*} and
+\begin{eqnarray*}(c+u)(c+v)=c^2+(u+v)c+uv>0\iff (u+v)c&>&-c^2-uv\\
+ u+v&>&-c\left(1+\dfrac{uv}{c^2}\right)\\
+w&>&-c \quad \mbox{\cite{woodhouse}}.\\
+\end{eqnarray*}
+\end{proof}
+
+So, we cannot combine any number of boosts together to break or even reach the speed of light. As Michio Kaku says, ``The speed of light is the ultimate speed limit in the universe" \cite{kaku}. Although this fact will be more important later, we use the boost to help define a general Lorentz transformation. 
+
+In four-dimensions, we can say that \begin{equation}\label{gen_lt}\left(\begin{array}{c}ct\\                                                                                                                            x\\
+y\\
+z\\
+\end{array}\right)=L\left(\begin{array}{c}ct'\\
+x'\\
+y'\\
+z'\\
+\end{array}\right)\end{equation} where $L=\left(\begin{array}{cc}1 & 0\\
+0 & H\\
+\end{array}\right)L_v\left(\begin{array}{cc}1 & 0\\
+0 & K^T\\
+\end{array}\right)$ and $H,K$ are $3\times3$ orthogonal matrices. It is not important to know every term of the matrix $L$, only that it correctly represents the change in coordinate systems (unlike the Galilean transformation). 
+
+\begin{defn}\label{ltdef}We say that $L$ in (\ref{gen_lt}) is a \textit{Lorentz transformation} if $L^{-1}=gL^Tg$, where $g=\left(\begin{array}{cccc}1 & 0 & 0 & 0\\
+                                                                                       0 & -1 & 0 & 0\\
+0 & 0 & -1 & 0\\
+0 & 0 & 0 & -1\\
+\end{array}\right)$. Furthermore, $L$ is \textit{orthochronous} if $l_{1,1}>0$, where $l_{1,1}$ is the first entry of the first row of $L$\cite{woodhouse}. \end{defn}
+
+We will see shortly where the entries in $g$ come from. With the Lorentz transformation and the concept of time dilation, we have the necessary tools to look deeper at the mathematics behind  special relativity. The gamma factor will continue to be used heavily. As for the Lorentz transformation, it will be used for both definitions and calculations. Again, the inspiration for the mathematics to be used comes from observations and experiments which confirm the speed of light is constant. Thus some of the mathematics must be forced to fit where necessary.
+
+\section{Space of Relativity}
+
+Since the universe we live in has one time coordinate and three space coordinates, we can think of all motion being described in $\R^4=\R\times\R^3$. 
+
+\begin{defn}In special relativity, the space we live in is called \textit{Minkowski Space}, denoted by $\M=\R\times\R^3$ where $\R=\R\times 0$ is the time axes, and $\R^3=0\times \R^3$ the space axes \cite{zeeman}.\end{defn}
+
+Minkowski space is not entirely correct when representing our universe (again, because we are in special relativity). In general relativity, acceleration and forces of gravity are viewed as curving spacetime. Minkowski space assumes that the universe is flat, not curved. However, Minkowski space is correct locally, much like measuring distances on a flat map, rather than a globe. 
+
+\subsection{The Interval}
+
+The distance $D$ from any point to the origin is $$D=\sqrt{x^2+y^2+z^2}.$$ If a light-pulse is emitted at $t=x=y=z=0$, it will arrive at $(ct,x,y,z)$ if $ct=\sqrt{x^2+y^2+z^2}=D$. Thus $c^2t^2=D^2$, and $c^2t^2-x^2-y^2-z^2=0$ \cite{shadowitz}.
+
+\begin{defn}In Minkowski space, the \textit{interval} between any two events $x=(t_1,x_1,y_1,z_1)$ and $y=(t_2,x_2,y_2,z_2)$ is defined to be $$c^2(t_2-t_1)^2-(x_2-x_1)^2-(y_2-y_1)^2-(z_2-z_1)^2 \quad \mbox{\cite{shadowitz}}.$$ 
+\end{defn}
+
+In an inertial coordinate system, assume that a light-pulse is transmitted when $ct_1=\sqrt{x_1^2+y_1^2+z_1^2}$, and arrives at $(ct_2,x_2,y_2,z_2)$ when $ct_2=\sqrt{x_2^2+y_2^2+z_2^2}$. Then $$c^2(t_2-t_1)^2-(x_2-x_1)^2-(y_2-y_1)^2-(z_2-z_1)^2=0.$$ If we consider an observer $O'$, moving with constant velocity relative to this first frame, then by the Lorentz transformation $$c^2(t_2'-t_1')^2-(x_2'-x_1')^2-(y_2'-y_1')^2-(z_2'-z_1')^2=0$$ in $O'$s reference frame. This property is known as the \textit{invariance} of the interval, and simply expresses that the velocity of light is the constant $c$ for both observers \cite{shadowitz}.
+
+\begin{defn}In $\M$, two objects $X=(X_0,X_1,X_2,X_3)$ and $X'=(X_0',X_1',X_2',X_3')$ are called \textit{four-vectors} if $$X=LX'$$ where $L$ is the general Lorentz transformation \cite{woodhouse}.
+\end{defn}
+
+Addition and scalar multiplication of four-vectors in Minkowski space works similar to $\R^4$. In fact, $\M$ forms a vector space over $\R$. Every event in Minkowski space is a four-vector. If we have two events $x=(ct_1,x_1,y_1,z_1), y=(ct_2,x_2,y_2,z_2)\in\M$, then the displacement four-vector between them is $X=y-x=c(t_2-t_1)+(x_2-x_1)+(y_2-y_1)+(z_2-z_1).$ Thinking in terms of vectors rather than individual points, we can redefine how we are to look at the interval between two events.
+
+\begin{defn}The \textit{inner product} between two four-vectors $X,Y\in \M$ is:
+ $$g(X,Y)=X_0Y_0-X_1Y_1-X_2Y_2-X_3Y_3 \quad \mbox{\cite{woodhouse}}.$$
+\end{defn}
+
+This definition is slightly misleading, since $g$ is not exactly an inner product. We can see that for any three four-vectors $X,Y,Z\in \M$:
+\begin{eqnarray*} g(X+Y,Z)&=&g\left((X_0+Y_0,X_1+Y_1,X_2+Y_2,X_3+Y_3),Z\right)\\
+&=&(X_0+Y_0)Z_0-(X_1+Y_1)Z_1-(X_2+Y_2)Z_2-(X_3+Y_3)Z_3\\
+&=&X_0Z_0+Y_0Z_0-X_1Z_1-Y_1Z_1-X_2Z_2-Y_2Z_2-X_3Z_3-Y_3Z_3\\
+&=&g(X,Z)+g(Y,Z)\end{eqnarray*} Also, for a scalar $\alpha\in \R$, $$g(\alpha X,Y)=\alpha X_0Y_0-\alpha X_1Y_1-\alpha X_2Y_2-\alpha X_3Y_3=\alpha(X_0Y_0-X_1Y_1-X_2Y_2-X_3Y_3)=\alpha g(X,Y).$$ But $g$ can be positive, negative, or zero. Thus $g$ is technically an \textit{indefinite} inner product (however we will continue to refer to it as an inner product for short). Because of this property, $g(X,X)$ (or the interval) can be used to split Minkowski space into cones.
+
+{\small
+\begin{center}Cone\end{center}}
+\begin{center}\includegraphics[scale=.4]{cones}\end{center}
+
+Events on the cone are called \textit{lightlike}; they can only be reached from the event $x$ by travelling at the speed of light. Events inside the cone are called \textit{timelike}; they can be reached from $x$ by travelling at speeds less than $c$. All events outside the cone are \textit{spacelike}; they can only be reached from $x$ by travelling faster than the speed of light, and are unreachable by Lemma 1. We can think of the points on, in, and outside this cone as sets.
+
+\begin{defn}
+For an event $x\in \M$, the interval through $x$ is broken up into three cones:
+\begin{itemize}
+ \item \textit{Light-Cone} $C^L(x)=\left\{y:g(X,X)=0\right\}$
+\item \textit{Time-Cone} $C^T(x)=\left\{y:g(X,X)>0\right\}$
+\item \textit{Space-Cone} $C^S(x)=\left\{y:g(X,X)<0\right\}$
+\end{itemize}
+where $y$ is any event in $\M$, and $X$ is the displacement vector from $x$ to $y$ \cite{zeeman}.
+\end{defn}
+
+As the picture shows, only the light cone is an actual cone, but we will call the spacelike and timelike events cones as well, simply because it makes set notation more uniform. These cones can further be split up, based upon whether the temporal part $(t_2-t_1)$ is positive or negative. If positive (the event $y$ takes place \textit{after} $x$) we have the \textit{future light-cone} and \textit{future time-cone}, and if negative (the event $y$ takes place \textit{before} $x$) we have the \textit{past light-cone} and \textit{past time-cone}. The space-cone is not split up, so we ignore the case where $t_2=t_1$ \cite{callahan}. 
+
+\begin{defn}
+For events $x,y\in\M$ we define a partial ordering $<$ on $\M$ by $x<y$ if the displacement vector $X$ from $x$ to $y$ lies in the future light-cone \cite{zeeman}.\end{defn}
+
+With the inner product, we can give a more rigorous definition to the idea of Lorentz transformations.
+
+\begin{defn}Define the \textit{Lorentz group} $\mathcal{L}=\left\{\lambda:\M\rightarrow\M \mbox{  } : \mbox{  } \forall X,Y\in\M, g(\lambda X,\lambda Y)=g(X,Y)\right\}$ \cite{woodhouse}. \end{defn}
+
+The Lorentz group is acting on the vector space $\M$. Here, each $\lambda\mathcal{L}$ can be represented by $L$, a general Lorentz transformation. Thus $$g(X',Y')=g(\lambda X,\lambda Y)=g(LX,LY)=g(X,Y)$$ so the Lorentz group is simply those mappings which leave the interval invariant. In Definition \ref{ltdef} we gave a pseudo-orthogonality condition for $L$. Now we can see where the matrix $g$ in Definition \ref{ltdef} comes from; it is the matrix representation of our inner product (or the interval). It is crucial in defining both the Lorentz transformation and Lorentz group. The set of orthochronous Lorentz transformations also defined in Definition \ref{ltdef} define another group (notice the similarities between this new group and the orthochronous Lorentz transformation).
+
+\begin{defn}The \textit{orthochronous Lorentz group} $\mathcal{L}_+$ is the subgroup of $\mathcal{L}$ whose elements preserve the partial ordering $<$ on $\M$.\end{defn}
+
+\subsection{Topology on Minkowski Space}
+
+%%Below, I use \left\{ ..\right\} to define a set. In my user-defined commands above, I now have a command for doing this, which is defined by \set{}{}. 
+When looking deeper at the vector space $M$, one may be inclined to think of the topology on $\M$ as the usual Euclidean topology on $\R^4$ ($\M$ essentially is $\R^4$ after all). This topology is: $$\mathcal{T}^E=\left\{U\in P(\R):N_\epsilon^E(x)\subset U \mbox{ for all } x\in \R\right\}.$$ Here $$N_\epsilon^E(x)=\left\{y:d(x,y)<\epsilon\right\}$$ where $d$ is the usual Euclidean metric between two points, $x,y\in \R^4$, and $\epsilon>0$. Physically, using this topology is incorrect for two reasons:
+
+%In other words, the usual topology $T$ on $\R^4$ is defined as: $$T=\left\{U\in P(\R^4): \mbox{for all} (a,b,c,d)\in U, \mbox{there exists} \delta>0 \mbox{such that} \left\{(w,x,y,z)\in\R^4:(w-a)^2+(x-b)^2+(y-c)^2+(z-d)^2<\delta^2\right\}\subset U\right\}.$$ Physically, this is incorrect for two reasons:
+\begin{itemize}
+ \item[1.] The 4-dimensional Euclidean topology is locally homogeneous, yet $\M$ is not (the light cone separates timelike and spacelike events).
+\item[2.] The group of all homeomorphisms of $\R^4$ include mappings of no physical significance.
+\end{itemize}
+
+The correct topology to use is known as the \textit{fine topology}, $\mathcal{T}^F$. Unlike $T$, it will have the two properties:
+\begin{itemize}
+ \item[1*.] $\mathcal{T}^F$ is not locally homogenous, and the light cone through any point can be deduced from $\mathcal{T}^F$.
+\item[2*.] The group of all homeomorphisms of the fine topology is generated by the inhomogeneous Lorentz group and dilatations \cite{zeeman}.
+\end{itemize}
+
+\begin{defn}Define the group $G$ to be the group consisting of:
+ \begin{enumerate}
+ \item $\mathcal{L}$ ($X'=LX$).
+\item Translations ($X'=X+K$ where $K\in\M$ is a constant column vector).
+\item Multiplication by a scalar, or dilatations ($X'=\alpha X$ where $\alpha\in\R$).
+ \end{enumerate}
+\end{defn}
+
+Every element in $G$ either preserves or reverses the partial ordering $<$ on $\M$. Specifically, those elements which reverse the partial ordering are all part of $\mathcal{L}$, since neither a translation nor dilatation has any effect on the time. From this we can define a new group.
+
+\begin{defn}Define the group $G_0$ to be the group consisting of:
+ \begin{enumerate}
+ \item $\mathcal{L}_+$.
+\item Translations.
+\item Dilatations.
+ \end{enumerate}
+\end{defn}
+
+\begin{defn}The \textit{fine topology} $\mathcal{T}^F$ of $M$ is defined to be the finest topology on $\M$ which induces the 1-dimensional Euclidean topology on every time-axes $g\R$ and the 3-dimensional topology on every space axes $g\R^3$, where $g\in G$. A set $U\in M$ is open in $\mathcal{T}^F$ if and only if $U\cap g\R$ is open in $g\R$, and $U\cap g\R^3$ is open in $g\R^3$ \cite{zeeman}.\end{defn}
+
+Here, we use $g\R$ and $g\R^3$ to signify that these axes can be acted upon by any element of $G$, yet the sets are no different. The neighborhoods in $\mathcal{T}^F$ are defined as: $$N_\epsilon^F(x)=N_\epsilon^E(x)\cap\left(C^T(x)\cup C^S(x)\right)$$ where $x\in\M$. Essentially, the epsilon-neighborhoods in $\mathcal{T}^F$ are the usual Euclidean neighborhoods with the light cone removed and the point $x$ replaced. It is necessary to show these actually fit into the definition of open sets of the fine topology.
+
+\begin{thm}$N_\epsilon^F(x)$ is open in $\mathcal{T}^F$.
+\end{thm}
+\begin{proof}
+Let $A$ be either the time axes or space axes. Then $$N_\epsilon^F(x)\cap A=\begin{cases}N_\epsilon^E(x)\cap A \quad \mbox{if} \quad x\in A\\
+\left(N_\epsilon^E(x)\setminus C^L(x)\right)\cap A \quad \mbox{if} \quad x\notin A\\
+\end{cases}
+$$
+If $x$ is on the $A$ axes, consider the usual Euclidean neighborhoods of $x$ intersect the $A$ axes. We are therefore left with an open interval.
+
+{\small
+\begin{center}\end{center}}
+\begin{center}\includegraphics[scale=.4]{nolight}\end{center}
+
+If the point $x$ is not on the $A$ axes, remove the light cone from the Euclidean neighborhood, replace the point $x$, and again intersect with the $A$ axes. Here we are left with disjoint open sets, the union of which are open. 
+
+{\small
+\begin{center}\end{center}}
+\begin{center}\includegraphics[scale=.4]{yeslight}\end{center}
+
+\end{proof}
+
+Knowing how this topology works, we are more equipped to prove statements $1^*$ (Theorem \ref{1}) and $2^*$ (Corollary \ref{2}) above. We first state two lemmas.
+
+\begin{lem}
+ Let $h:\mathcal{T}^F\rightarrow \mathcal{T}^F$ be a homeomorphism. Then $h$ either preserves the partial ordering or reverses it.
+\end{lem}
+\begin{proof}
+ See \cite{zeeman}.
+\end{proof}
+
+\begin{lem}
+ The group of automorphisms of the set $\M$ preserving the partial ordering is $G_0$.
+\end{lem}
+\begin{proof}
+ See \cite{zeeman2}.
+\end{proof}
+
+
+\begin{thm}\label{1}The group of all homeomorphisms of $\mathcal{T}^F$ is $G$ \cite{zeeman}.
+\end{thm}
+\begin{proof}
+$\mathcal{T}^F$ is defined invariantly under $G$, so every $g\in G$ is a homeomorphism. Now we have to show every homeomorphism $h:\mathcal{T}^F\rightarrow \mathcal{T}^F$ is in $G$.
+
+Now let $g\in G$ be the element corresponding to time reflection. By the previous lemma, either $h$ or $gh$ preserves the partial ordering, and is an element of $G_0$. The group of all homeomorphisms is thus generated by $g$ and $G_0$, which is $G$.
+\end{proof}
+
+\begin{cor}\label{2}
+ The light, time, and space cones through a point can be deduced from $\mathcal{T}^F$ \cite{zeeman}.
+\end{cor}
+\begin{proof}
+ For $x\in M$, let $G_x$ be the group of homeomorphisms which fix $x$. By the previous theorem, $G_x$ is generated by the Lorentz group and dilatations. Therefore there are exactly four orbits under $G_x$, the point $x$, $C^T(x)\setminus x$, $C^L(x)\setminus x$, and $C^S(x)\setminus x$.
+\end{proof}
+
+These results are quite exciting. The topological space $\left(\M,\mathcal{T}^F\right)$ correctly gives the light cone, time cone, and space cone. Even more interesting, the topology which correctly represents our universe, and therefore the one we want to use, only uses Lorentz transformations, translations, and dilatations. Translations and dilatations are far from exciting, so when working in $\M$, the only maps we need to consider are Lorentz transformations, which are all invariant under $g$!
+
+\section{Predictions of Relativity}
+We can now see what predictions are made by the mathematics which have so far been developed. Recall that we have only assumed Postulates 1 and 2. From these, Bondi's $k$-factor led us to develop the gamma factor, which in turn gave us the Lorentz transformation. The topology $\mathcal{T}^F$ on $\M$ ensures us that the only mappings which need be considered are in the Lorentz group. All of these predictions (no matter how strange) have been verified by experiments.
+
+If a particle is at rest in $(ct',x',y',z')$, then $x',y',z'$ are all constant. If $(ct,x,y,z)$ is another inertial coordinate system related to the first by a Lorentz transformation and moving with constant velocity $v$,
+ then
+$$t=\gamma(v)\tau+k$$
+where $k$ is a constant. Thus $$\dfrac{dt}{d\tau}=\gamma(v).$$
+
+\begin{defn}The \textit{four-velocity} of a particle, $(V_0,V_1,V_2,V_3)$, is given by:
+$$V_0=c\dfrac{dt}{d\tau}, \quad V_1=\dfrac{dx}{d\tau}, \quad V_2=\dfrac{dy}{d\tau}, \quad V_3=\dfrac{dz}{d\tau}.$$
+\end{defn}
+
+It can be shown that a particle's four-velocity satisfies the properties of a four-vector.
+
+If $X=(X_0,X_1,X_2,X_3)$ then $$\dfrac{dX}{d\tau}=V.$$ Hence by integration we have that $$X=\tau V+K$$ where $K$ is a constant column vector.
+
+\subsection{Effects of $c$}
+
+\begin{thm}\label{orthog}Let an observer $O$ be moving with constant velocity $V$. Then $O$ sees two events $A$ and $B$ as being simultaneous if and only if the displacement vector $X$ from $A$ to $B$ is orthogonal to $V$ \cite{woodhouse}.
+\end{thm}
+\begin{proof}
+ Choose a frame in which $O$ is at rest. Then the displacement vector $X=(X_0,a_1,a_2,a_3)$, where $a_1,a_2,a_3\in\R$ are constants. Then $$V=\dfrac{dX}{d\tau}=\left(\dfrac{dX_0}{d\tau},0,0,0\right)=c\gamma(v).$$ So $g(V,X)=c\gamma(v)X_0$, and $O$ thinks the events $A$ and $B$ are simultaneous $\iff X_0 = 0 \iff g(X,V)=0.$
+\end{proof}
+
+\begin{cor}Two events which are simultaneous for one observer may not be simultaneous for another observer moving at constant velocity with the respect to the first observer.
+\end{cor}
+\begin{proof}
+ Let $O$ be an observer moving with velocity $V$, and let $A$ and $B$ be two simultaneous events in $O$s inertial coordinate system. Now let $O'$ be an observer moving with velocity $U$ relative to $O$. In $O$s coordinate system, $X=(X_0,a_1,a_2,a_3)$, where $a_1,a_2,a_3$ are constants. But since $O'$ is moving with a constant velocity (according to $O$), then $X'=(X_0,X_1,X_2,X_3)$, $U=\frac{dU}{d\tau}=(\frac{dX_0}{d\tau},\frac{dX_1}{d\tau},\frac{dX_2}{d\tau},\frac{dX_3}{d\tau})$ and if we assume $g(X',X')>0$, then $$g(X',U)\geq0.$$
+\end{proof}
+
+\begin{lem}
+ A particle with four-velocity $V$ has $g(V,V)=c^2$ \cite{woodhouse}.
+\end{lem}
+\begin{proof}
+ In an inertial coordinate system where the particle is at rest, $V=(c,0,0,0)$, hence $g(V,V)=c^2$. But $g$ is invariant, thus this result holds in any inertial coordinate system.
+\end{proof}
+
+\begin{thm}If a rod has length $R_0$ in a rest frame, then in an inertial coordinate system oriented in the direction of the unit vector $\textbf{e}$ and moving with respect to the rod with velocity $\textbf{v}$, the length of the rod is:
+ $$R=\dfrac{R_0\sqrt{c^2-v^2}}{\sqrt{c^2-v^2\sin^2(\theta)}}$$
+where $\theta$ is the angle between $\textbf{e}$ and $\textbf{v}$.
+\end{thm}
+\begin{proof}
+ Let $V$ be the four-velocity of the rod. If $X$ is the displacement vector whose length is $R_0$, then the displacement vector $X'$ is $$X'=X+\tau V.$$ So $$R^2=-g(X,X) \quad \mbox{and} \quad R_0^2=-g(X',X').$$
+
+Now, $g(V,Y)=0$, since the two ends of the rod are simultaneous in this frame. In the moving frame, $X=(0,R\textbf{e})$ (where $\textbf{e}$ is the unit vector) and $V=\gamma(v)(c,\textbf{v})$. So $$g(X,V)=-R\gamma(v)\textbf{e}\cdot\textbf{v}=-R\gamma(v)v\cos(\theta).$$ Also, $$g(X,V)=g(X'-\tau V,V)=-\tau c^2.$$ Solving for $\tau$ gives $$\tau=R\gamma(v)v\cos(\theta).$$ Then the length of the rod $R$ in the new frame is:
+\begin{eqnarray*}R^2=-g(X,X)=-g(X'-\tau V,X'-\tau V)&=-\left(g(X',X')+g(\tau V,\tau V)\right)&=R_0^2-\tau^2c^2\\
+&=R_0^2-\dfrac{R^2v^2\gamma(v)^2\cos^2(\theta)}{c^2}\\
+\end{eqnarray*}
+Then combining like terms gives
+\begin{eqnarray*}
+ R^2\left(1+\dfrac{v^2\gamma(v)^2\cos^2(\theta)}{c^2}\right)&=&R_0^2\\
+R^2\left(1+\dfrac{v^2\frac{1}{1-(v/c)^2}\cos^2(\theta)}{c^2}\right)&=&R_0^2\\
+R^2\left(1+\dfrac{v^2\cos^2(\theta)}{c^2-v^2}\right)&=&R_0^2\\
+R^2\left(\dfrac{c^2-v^2+v^2(1-\sin^2(\theta))}{c^2-v^2}\right)&=&R_0^2\\
+R&=&\dfrac{R_0\sqrt{c^2-v^2}}{\sqrt{c^2-v^2\sin^2(\theta)}}
+\end{eqnarray*}
+\end{proof}
+
+If $\theta=0$, then $\sin^2(0)=0$, and $$R=\dfrac{R_0\sqrt{c^2-v^2}}{\sqrt{c^2-0}}=\dfrac{R_0c\sqrt{1-v^2/c^2}}{c}=R_0\sqrt{1-v^2/c^2}.$$
+
+It is interesting to note that time dilation, the Lorentz transformation, simultaneity, and the Lorentz contraction do not have to be introduced in this order. We could have very well introduced the concept of simultaneity first, and then shown time dilation (many sources actually do this). In a sense, these four things are nearly equivalent statements; they are all implications of the fact that $c$ is constant!
+
+
+\subsection{Mass, Momentum, and Energy}
+
+In the \textit{Principia}, Newton introduced his three laws of motion. These laws are flawed for two main reasons: first, they assume the velocity of light changes depending upon the motion of the observer and second, they only hold in inertial coordinate systems (we could have thus defined inertial coordinate systems as reference frames which adhere to Newton's Laws of Motion). The second problem is fine for our purposes, since we are only considering inertial reference frames. Yet we need to examine each law and do some fine-tuning if necessary, to comply with our results up to this point.
+
+\begin{defn}{Newton's Laws of Motion}
+\begin{itemize}
+\item[1.]In the absence of forces, every body remains in its state of rest or moves in a straight line at constant speed \cite{callahan}.
+\item[2.]The \textit{change of motion} is proportional to the \textit{motive force} impressed, and is made in the direction of the straight line in which that force is impressed \cite{callahan}.
+\item[3.]For every \textit{action} there is an equal and opposite reaction \cite{woodhouse}.
+\end{itemize}
+\end{defn}
+
+To understand the second law, we need to know what is meant by ``change of motion.`` To tackle the change of motion, we must be familiar with mass, momentum, and force. Newton defines \textit{momentum} $\textit{p}$ as $\textbf{p}=m\textbf{v}$ where $\textbf{v}$ is the vector velocity of a moving particle, $m$ is its mass, and \textit{change of motion} is simply $d\textbf{p}/dt$. From this, we see that the \textit{force} $\textbf{f}$ is equal to the change of motion or
+$$\textbf{f}=\dfrac{d\textbf{p}}{dt}=\dfrac{d(m\textbf{v})}{dt}.$$ If $m$ is constant, we have $$\textbf{f}=m\dfrac{d\textbf{v}}{dt}=m\textbf{a}.$$ 
+
+Here we come across our first problem. He assumes this mass $m$, which he calls the \textit{inertial mass} of the body, is constant.
+
+\begin{thm}A body's inertial mass $m$ is not constant. Furthermore, $m$ is a function of $v$ the velocity of the body in an inertial coordinate system, and can be rewritten as $m=m(v)$ \cite{callahan}.
+\end{thm}
+\begin{proof}
+Suppose otherwise. Then there exists $M$ such that $m\leq M$. By Newton's Second Law $$v(t)=\dfrac{k}{m}t+b$$ where $k$ is a constant force and $b$ is a constant. If $k=\frac{d(mv)}{dt}$, then $$kt+b=mv\leq Mv \rightarrow \dfrac{kt+b}{M}=\dfrac{k}{M}t+\dfrac{b}{M}\leq v(t).$$ Then we can find $T$ such that $$\dfrac{k}{M}T+\dfrac{b}{M}=c\leq v(t)$$ which contradicts Lemma \ref{c}.
+\end{proof}
+
+\begin{defn}
+ The \textit{rest mass} $m_0=m(0)$ of a body is the mass of a body measured in an inertial coordinate system in which the body is at rest. 
+\end{defn}
+
+\begin{defn}The \textit{four-momentum} of a particle  is $P=mV$, where $m$ is the inertial mass of the particle and $V$ is the four-velocity of the particle \cite{woodhouse}.
+\end{defn}
+
+\begin{thm}The inertial mass of a body moving with velocity $v$ is $m=m(v)=\gamma(v)m_0$.
+\end{thm}
+\begin{proof}
+Let $O$ be an observer to which the particle is moving, and $O'$ one to whom the body is at rest. Then according to $O'$, the mass of the body is $m_0$, and its four-momentum is $P=m_0V$, where $V=(c,0)$. Then $$P'=L_vP=L_vm_0V=\gamma(v)\left(\begin{array}{cc}c & v/c\\
+                                                                                                                                                            v/c & c\\                                                                                                                                                        \end{array}\right)\left(\begin{array}{c}
+                                                                                                                                                                                                                                                                                                                                                    m_0c\\
+0\\
+                                                                                                                                                                                                                                                                                                                                                    \end{array}\right)=m_0\gamma(v)\left(\begin{array}{c}
+                                                                                                                                                                                                                                                                                                                                                    c^2\\
+v\\
+                                                                                                                                                                                                                                                                                                                                                    \end{array}\right)=m\left(\begin{array}{c}
+                                                                                                                                                                                                                                                                                                                                                    c^2\\
+v\\
+                                                                                                                                                                                                                                                                                                                                                    \end{array}\right).$$ (using the $L_v$ rather than $L$ changes nothing, since it is still a Lorentz transformation). So $m=m_0\gamma(v).$ 
+\end{proof}
+
+
+This is another reason why it is impossible to travel at a velocity greater than $c$, because a body's inertial mass (or just mass for short) becomes infinitely large as $v\rightarrow c$. And again, as we have seen with time and length, mass is not an absolute quantity, but a relative one. Because of this, $m$ can be referred to as the \textit{relativistic mass} of a body. 
+Now that we have corrected Newton's second law, we can move onto the third. Newton's third law is referring to collisions between two bodies (this is what is meant by ``action''). An action can be as simple as pushing on a boat (which according to Newton will push back on you) to the collision of moving vehicles, to the splitting of an atom. Collisions come in two types: \textit{inelastic}, where two bodies come together after colliding (they coalesce); or \textit{elastic}, where two bodies bounce off one another after colliding. 
+
+The four-momentum is invariant under a Lorentz transformation. We assume by Newton's third law that total momentum is conserved in a collision, or that the total momentum $P$ before the collision is equal to the total momentum $\bar{P}$ after the collision.
+
+\begin{thm}\label{mass}Take two bodies $G_1$ and $G_2$ in $O$s frame. Let the bodies collide with one another, and let $O$ say the total four-momentum is conserved. Then a second obsverer $O'$ says the total four-momentum is also conserved in his frame.
+\end{thm}
+\begin{proof}Let $P_1,P_2$ be the four-momentum vector of $G_1$ and $G_2$, respectively. Then in $O'$s system, $P_1'=LP_1$ and $P_2'=LP_2$. So $$P_1'+P_2'=LP_1+LP_2=L(P_1+P_2)=L(\bar{P_1}+\bar{P_2})=L\bar{P_1}+L\bar{P_2}=\bar{Q_1}+\bar{Q_2} \quad \mbox{\cite{callahan}}.$$
+\end{proof}
+
+This theorem is looking at an elastic collisions. Yet in an inelastic collision we arrive at a similar property. Consider two bodies travelling towards each other with equal velocities, and whose rest masses $m_1$ and $m_2$ are equal (for simplicity we will assume they are moving in only one dimension, so their velocities are $v_1$ and $v_2=-v_1$). Now, according to Taylor's Theorem, $$\gamma(v_1)=\gamma(v_2)=1+\dfrac{1}{2}\dfrac{v^2}{c^2}+O\left(\dfrac{v^4}{c^4}\right)  \quad \mbox{\cite{woodhouse}}.$$ Now the momentum of each body before the collision can be given by $$P_1=\left(cm_1\gamma(v_1),m_1v_1\gamma(v_1)\right)$$ and $$P_2=\left(cm_2\gamma(v_2),-m_1v_1\gamma(v_2)\right) \quad \mbox{\cite{callahan}}.$$ Yet after the collision we have \begin{equation}\label{mom}P=P_1+P_2=\left(c(m_1+m_2)\gamma(v),0\right).\end{equation} Since the particle is now at rest, it means that the first term is the rest mass of the new object. But this mass $$(m_1+m_2)\gamma(v)>m_1+m_2$$ which was the total rest mass of the two bodies \textit{before} the collision. Extra rest mass was created from the collision! 
+
+This extra mass came from the kinetic energy of the objects; it was converted to mass once the bodies came to rest. If we let $m_0=m_1+m_2$,  $$m_0\gamma(v)=m_0\left(1+\dfrac{1}{2}\dfrac{v^2}{c^2}+O\left(\dfrac{v^4}{c^4}\right)\right)=m_0+m_0\dfrac{1}{2}\dfrac{v^2}{c^2}=\dfrac{1}{c^2}\left(m_0c^2+\dfrac{1}{2}m_0v^2\right).$$
+ 
+On the right-hand side, the term $m_0c^2$ is oftentimes called the \textit{rest energy}, while every term after that is known as the \textit{kinetic energy}. The entire expression is known as the \textit{total energy}. From (\ref{mom}) only $P_0$ is conserved in a collision, so this is our total energy. Energy must always be given in terms of $mass\times velocity^2$, so the $c^2$ in the denominator can be pulled over and we have $$cP_0=E=\gamma(v)m_0c^2 \quad \mbox{\cite{woodhouse}}.$$ But from Theorem \ref{mass} we know $m=\gamma(v)m_0$, and we end up with perhaps the most famous equation of all time: $$E=mc^2.$$
+
+The fact that the total energy in a given inertial coordinate is equal to $mc^2$ is another direct consequence of the speed of light being constant! Perhaps the idea of the ether being the one absolute standard to which all things be measured was not so crazy after all. The predictions which the mathematics of special reltivity gives are all based upon one simple postulate about the velocity of light.
+
+\section{Future of Relativity}
+As was said, special relativity is \textit{special} because it is limited to inertial coordinate systems. In 1916, Einstein released the \textit{General Theory of Relativity}, in which he considers all observers in relative motion, be they travelling with constant velocity or not. The mathematics of general relativity is concerned with differential geometry and manifolds, representing how acceleration causes spacetime to curve. General relativity is considered by many to be the greatest achievement of the last century.
+
+However, the world of physics is at another monumental crisis. General relativity appears to explain the motion of bodies of a certain size, yet fails when looking at the quantum level. Thus we have a problem; the theory of relativity does not comply with the laws of quantum mechanics. This is strikingly similar to the problem of Maxwell. The current state of physics rests on two pillars, and one (if not both) must fall \cite{hawking}. 
+
+So why study relativity? What if the future of relativity is doomed to become like classical mechanics; reshaped and twisted to the point of becoming an entirely new subject? Just because there are problems with relativity, does not mean it is unimportant. Global positioning systems use relativity to pinpoint our exact location on earth \cite{kaku}. The dawn of the atomic age was brought about by dropping two nuclear bombs on Hiroshima and Nagasaki, bombs which rested entirely upon the theory of relativity. As was mentioned, the predictions made by relativity have all been confirmed (except on the quantum level) by experiment. In fact, only those theories which are consistent with relativity 
+need be considered in physics \cite{jackson}. Relativity has changed, and continues to change our world. 
+
+But more importantly, the theory of relativity is one of the greatest examples of the wonderful connections between mathematics and physics. Without the physics, the fascinating mathematics used by relativity (the Lorentz group $\mathcal{L}$, the inner product $g$, the fine topology $\mathcal{T}^F$) would never have been created. Yet without the mathematics, finding solutions to explain phenomena like time dilation or the equivalence of mass and energy is hopeless. Much like how Einstein showed the ideas of the ether needed to be better examined, the mathematics of special relativity is beautiful enough that it rightfully deserves a closer look.
+
+%%This attaches the bibliography page. Remember, ONLY the entries you called in this document will appear, and they will appear in alphabetical order by the last name of the author.
+\newpage
+\bibliographystyle{plain}
+    \bibliography{biblio}
+
+\end{document}
+
+%%%%%%Good luck and have fun!%%%%%%%%%%%%%%%%% 

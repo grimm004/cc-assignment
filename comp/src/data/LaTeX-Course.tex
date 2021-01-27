@@ -1,0 +1,853 @@
+% -*- TeX:US -*-
+\NeedsTeXFormat{LaTeX2e}
+\documentclass[presentation,hideothersubsections,final,10pt,american]{beamer}
+% LaTeX course created for the Biochemistry faculty at RUSM. The course is based on the
+% /info/german/tex-kurs by Rainer Rupprecht (1988) and on /info/lshort/ by Schmidt et al., 2003. 
+% This material may be used under Gnu Copyleft
+
+% everyone:
+\usepackage{babel,siunitx,hyperref,graphicx,marvosym,wasysym,isotope,chemarrow,booktabs}
+\usepackage[largesmallcaps,frenchstyle,partialup,narrowiints]{kpfonts}
+\usepackage{textgreek}
+\usepackage{inputenc}
+\usepackage[T1]{fontenc}
+
+\mode<article>{\usepackage{fullpage}}
+\mode<presentation>{\usetheme{Goettingen}\usecolortheme{ross}}
+\mode<handout>{\setbeamercolor{background canvas}{bg=black!5}}
+\beamertemplatenavigationsymbolsempty
+
+\newcommand{\ph}{\textit{p}H}
+
+\newcommand{\single}{\raisebox{0.25ex}{\ensuremath{-}}}
+\newcommand{\double}{\raisebox{0.25ex}{\ensuremath{=}}}
+\newcommand{\triple}{\raisebox{0.25ex}{\ensuremath{\equiv}}}
+\makeatletter
+\DeclareRobustCommand{\chemical}[1]{%
+    {\(\m@th
+     \edef\resetfontdimens{\noexpand\)%
+         \fontdimen16\textfont2=\the\fontdimen16\textfont2
+         \fontdimen17\textfont2=\the\fontdimen17\textfont2\relax}%
+     \fontdimen16\textfont2=2.7pt \fontdimen17\textfont2=2.7pt
+     \mathsf{#1}%
+     \resetfontdimens}}
+\makeatother
+
+\frenchspacing 
+
+\title{The \alert{\LaTeX} document preparation system}
+\institute{Department of Biochemistry, RUSM}
+\author{Dr Engelbert Buxbaum}
+\date{July 2008\\ \vspace{5mm}
+    \includegraphics[height=15mm]{Graphics/Ross-Siegel}}
+
+\begin{document}
+\setbeamertemplate{footline}
+  {%
+    \insertframenumber
+  }
+
+\frame{\titlepage}
+
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{Name of the game}
+  \begin{description}
+    \item[\TeX]{typesetting system developed by
+        \textsc{Donald E. Knuth} (Stanford University) to
+        create beautiful documents, especially those
+        containing maths. \TeX\ is free software with
+        copyright vested in the American Mathematical
+        Society.}
+    \item[\LaTeX]{\TeX -macroprocessor written by \textsc{Leslie
+        Lamport}, which implements a markup-language (similar: HTML, XML). Users can
+        concentrate on the structure of their document rather than on
+        formatting.}
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Typographic design}
+  \begin{itemize}
+    \item{craft that needs to be learned}
+    \item{not about esthetics but about function: Books are
+        read, not displayed in a museum}
+  \end{itemize}
+\end{frame}
+
+\subsection{Advantages and disadvantages}
+
+\begin{frame}
+  \frametitle{Advantages}
+  \begin{itemize}
+     \item{Several professional styles are available that
+         make documents look ``like printed''. Changing
+         style requires changing one single line in the
+         document, consistency is ensured.}
+     \item{High quality math typesetting}
+     \item{Only a few commands to define the structure of
+         text, no knowledge of typography or book design
+         required.}
+     \item{Complex scientific documents can be created
+         automatically:
+         \begin{itemize}
+           \item{bibliography}
+           \item{index}
+           \item{crossreferences}
+           \item{table of contents, lists of figures,
+               tables etc.}
+           \item{...}
+         \end{itemize} }
+     \item{Operating-system independent}
+     \item{Long-term storage of documents: ASCII rather
+         than binary}
+     \item{Free software with source code available: Errors
+         are corrected rapidly}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Disadvantages}
+  \begin{itemize}
+    \item{Learning curve}
+    \item{Major changes in layout may require rewriting the
+        style file (blessing in disguise)}
+    \item{One gets an eye for all the bad documents out
+        there}
+  \end{itemize}
+\end{frame}
+
+\subsection{Resources}
+
+\begin{frame}
+  \frametitle{Resources}
+  \begin{description}
+    \item[Software]{\href{www.ctan.org}{\texttt{\alert{www.ctan.org}}}, automatically selects nearest server }
+    \item[Help]{Usenet: comp.text.tex (also German: de.comp.text.tex)}
+    \item[Introduction]{l2short available in various languages}
+    \item[Literature]{The \LaTeX -companion (\textsc{Mittelbach}
+        \textit{et al}, 2004)}
+    \item[Symbols]{Comprehensive symbol list from CTAN}
+  \end{description}
+\end{frame}
+
+\section{Structure of a \LaTeX\ document}
+
+\begin{frame}
+  \frametitle{Boxes and glue}
+  \begin{itemize}
+    \item{Box (letter) + Glue (space) + Box + ... = larger
+        Box (word)}
+    \item{Words are treated as boxes to form lines, lines
+        paragraphs and paragraphs pages}
+    \item{Glue can shrink and expand within limits}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structure of a \LaTeX -document}
+  {\color{darkgreen} \begin{verbatim}
+    % -*- TeX:US -*-                % for text-editor
+    \NeedsTeXFormat{LaTeX2e}        % for TeX-system
+    \documentclass[options]{style}
+
+    \usepackage[latin1]{inputenc}
+    \usepackage[T1]{fontenc}
+
+    \author{}
+    \title{}
+    \date{}
+
+    \begin{document}
+    \maketitle
+
+    \chapter{}
+    ...
+    \end{document}
+  \end{verbatim} }
+\end{frame}
+
+\subsection{classes}
+
+\begin{frame}
+  \frametitle{Document classes}
+  \begin{tabular}{llp{0.5\textwidth}}
+     \toprule
+     \LaTeX & Koma-Script & purpose \\
+     \midrule
+     article & scrartcl & journal papers, short reports \\
+     report  & scrreprt & longer text with several chapters, e.g. thesis \\
+     book    & scrbook  & books \\
+     letter  & scrlttr2 & letters \\
+     beamer  &          & slide presentations \\
+     sciposter &        & conference posters \\
+     \bottomrule
+  \end{tabular}
+
+  Apart from Koma-Script another alternative style package is
+  \alert{memoir}. Also publisher-specific styles (e.g.
+  Springer, Elsevier, Teubner etc.)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Class options}
+  \begin{description}
+    \item[Font size]{10pt | 11pt | 12pt...}
+    \item[Paper size]{a4paper | legalpaper...}
+    \item[equations]{fleqn, leqno }
+    \item[title]{titlepage |  notitlepage}
+    \item[columns]{onecolumn | twocolumn}
+    \item[printing]{oneside | twoside}
+  \end{description}
+\end{frame}
+
+\section{Basic commands}
+
+\subsection{Special characters}
+
+\begin{frame}[fragile]
+  \frametitle{Input characters}
+  Some characters have special meaning in \TeX , if you need
+  them they have to be entered as \TeX -commands:
+
+  \vspace{5mm}
+  \begin{tabular}{lll}
+    $\backslash$~~   & start command        & {\color{darkgreen}\verb+$\backslash$+}    \\
+                     &                      & note: {\color{darkgreen}\verb+\\+} = newline \\
+    \$               & toggle math modus    & {\color{darkgreen}\verb+\$+}              \\
+    \&               & tabulator            & {\color{darkgreen}\verb+\&+}              \\
+    \%               & rest of line comment & {\color{darkgreen}\verb+\%+}              \\
+    \#               &                      & {\color{darkgreen}\verb+\#+}              \\
+    \textasciitilde  &                      & {\color{darkgreen}\verb+\textasciitilde+} \\
+    \textbar         & vert. lines in table & {\color{darkgreen}\verb+\textbar+}        \\
+    \_               & start subscript      & {\color{darkgreen}\verb+\_+}              \\
+    \textasciicircum & start superscript    & {\color{darkgreen}\verb+\textasciicircum+}\\
+    \{ \}            & command delimiter    & {\color{darkgreen}\verb+\{ \}+}           \\
+    $[\ ]$           & optional arguments   & {\color{darkgreen}\verb+$[ ]$+}           \\
+    `` ''            & quotation marks      & {\color{darkgreen}\verb+`` ''+}           \\
+    $> <$            & tabbing              & {\color{darkgreen}\verb+$> <$+}           \\
+  \end{tabular}
+\end{frame}
+
+\subsection{Hypens \& Cie}
+
+\begin{frame}[fragile]
+  \frametitle{Hypen, minus ...}
+  A horizontal line can mean a lot of things, depending on
+  length and thickness:
+
+  \vspace{5mm}
+  \begin{tabular}{lll}
+    O-legs           & {\color{darkgreen}\verb+O-legs+}           \\
+    10--18 o'clock   & {\color{darkgreen}\verb+10--18 o'clock+}   \\
+    ja -- oder nein? & {\color{darkgreen}\verb+ja -- oder nein?+} \\
+    yes---or no?     & {\color{darkgreen}\verb+yes---or no?+}     \\
+    0, 1 and --1     & {\color{darkgreen}\verb+0, 1 and --1+}     \\
+  \end{tabular}
+\end{frame}
+
+\section{Structuring text}
+
+\subsection{Sectioning}
+
+\begin{frame}[fragile]
+  \frametitle{Sectioning commands}
+  \begin{itemize}
+    \item{\alert{$\backslash$part\{\}}}
+    \item{\alert{$\backslash$chapter\{\}}}
+    \item{{\color{darkgreen}$\backslash$section\{\}}}
+    \item{{\color{darkgreen}$\backslash$subsection\{\}}}
+    \item{{\color{darkgreen}$\backslash$subsubsection\{\}}}
+    \item{{\color{darkgreen}$\backslash$paragraph\{\}}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Breaking down large documents}
+  Use separate files for, say, each chapter. One main file with
+  limbo and commands to include the others:
+  \begin{description}
+    \item[{\color{darkgreen}$\backslash$input\{\}}]{reads file ``as is''}
+    \item[{\color{darkgreen}$\backslash$include\{\}}]{equiv. to
+        {\color{darkgreen}$\backslash$clearpage $\backslash$input\{\}
+        $\backslash$clearpage}}
+    \item[{\color{darkgreen}$\backslash$includeonly\{\}}]{used in limbo to
+        limit files {\color{darkgreen}$\backslash$included} }
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What is where?}
+    \begin{itemize}
+        \item{{\color{darkgreen}$\backslash$tableofcontents}}
+        \item{{\color{darkgreen}$\backslash$listoffigures}}
+        \item{{\color{darkgreen}$\backslash$listoftables}}
+        \item{}
+        \item{{\color{darkgreen}$\backslash$bibliographystyle\{plainnat\}}}
+        \item{{\color{darkgreen}$\backslash$bibliography\{references\}}}
+        \item{}
+        \item{{\color{darkgreen}$\backslash$printindex}}
+    \end{itemize}
+\end{frame}
+
+\subsection{Fonts}
+
+\begin{frame}
+  \frametitle{Emphasizing}
+    \begin{description}
+       \item[{\color{darkgreen}$\backslash$textit\{\}}]{italics, used for
+           foreign words, species names etc: \textit{Staph.
+           aureus}}
+       \item[{\color{darkgreen}$\backslash$textsl\{\}}]{\textsl{slanted}}
+       \item[{\color{darkgreen}$\backslash$emph\{\}}]{used for emphasizing:
+           this is \emph{not} the case}
+       \item[{\color{darkgreen}$\backslash$textsc\{\}}]{small caps, used for
+           persons: \textsc{Neil Armstrong} was the first man on the moon.}
+       \item[{\color{darkgreen}$\backslash$textbf\{\}}]{bold face: used to
+           make something really \textbf{stick out}.}
+       \item[{\color{darkgreen}$\backslash$textsf\{\}}]{sans serif, often used
+           as base font on slides. Also used for chemical
+           equations.}
+       \item[{\color{darkgreen}$\backslash$texttt\{\}}]{typewriter, used for
+           computer code or URLs: \texttt{http://www.rossmed.edu.dm/}}
+    \end{description}
+    \alert{Note:} Slides use sanserif font: slanted instead of italics!
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Font sizes}
+    {\begin{tabbing} \texttt{xfootnotesizexx}\= und dann der Text
+        \kill
+        {\color{darkgreen}\verb|\tiny|}         \> \tiny         microscopic font           \\
+        {\color{darkgreen}\verb|\scriptsize|}   \> \scriptsize   very tiny font (subscripts)\\
+        {\color{darkgreen}\verb|\footnotesize|} \> \footnotesize tiny font (footnotes)      \\
+        {\color{darkgreen}\verb|\small|}        \> \small        small font                 \\
+        {\color{darkgreen}\verb|\normalsize|}   \> \normalsize   normal font                \\
+        {\color{darkgreen}\verb|\large|}        \> \large        large font                 \\
+        {\color{darkgreen}\verb|\Large|}        \> \Large        larger font                \\
+        {\color{darkgreen}\verb|\LARGE|}        \> \LARGE        very large font            \\[3pt]
+        {\color{darkgreen}\verb|\huge|}         \> \huge         huge font                  \\[3pt]
+        {\color{darkgreen}\verb|\Huge|}         \> \Huge         very huge font
+    \end{tabbing}}
+    Note: \alert{not} a command: {\color{darkgreen}\verb+{\small foo bar}+}
+\end{frame}
+
+\subsection{Lists}
+
+\begin{frame}[fragile]
+  \frametitle{Simple lists}
+    Please believe me:
+    \begin{itemize}
+        \item{Few swallows can turn winter into summer.}
+        \item{Inside it's colder than in the night.
+            \begin{itemize}
+                \item{In the morning it pulls.}
+                \item{At noon he pushes.}
+                \item{In the evening she goes.}
+                \end{itemize} }
+        \item{Every nonsense must find an end.}
+    \end{itemize}
+    {\color{darkgreen}\small \begin{verbatim}
+Please believe me:
+\begin{itemize}
+    \item{Few swallows can turn winter into summer.}
+    \item{Inside it's colder than in the night.
+        \begin{itemize}
+            \item{In the morning it pulls.}
+            \item{At noon he pushes.}
+            \item{In the evening she goes.}
+        \end{itemize} }
+    \item{Every nonsense must find an end.}
+\end{itemize}
+    \end{verbatim} }
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Descriptive lists}
+    Three animals you should know about are:
+    \begin{description}
+        \item[gnat:]{A small animal, found in the North
+            Woods, that causes no end of trouble.}
+        \item[gnu:]{A large animal, found in crossword
+            puzzles, that causes no end of trouble.}
+        \item[armadillo:]{A medium-sized animal, named
+            after a medium-sized Texas city which causes no
+            end of trouble.}
+    \end{description}
+    {\color{darkgreen}\small \begin{verbatim}
+\begin{description}
+    \item[gnat:]{A small animal, found in the North
+        Woods, that causes no end of trouble.}
+    \item[gnu:]{A large animal, found in crossword
+        puzzles, that causes no end of trouble.}
+    \item[armadillo:]{A medium-sized animal, named
+        after a medium-sized Texas city which causes
+        no end of trouble.}
+\end{description}
+\end{verbatim} }
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Enumerated lists}
+    These are the main points:
+    \begin{enumerate}
+        \item{first item}
+        \item{second item}
+        \item{third item
+           \begin{enumerate}
+             \item{first sub-item}
+             \item{second sub-item}
+           \end{enumerate} }
+    \end{enumerate}
+    {\color{darkgreen}\small \begin{verbatim}
+These are the main points:
+\begin{enumerate}
+    \item{first item}
+    \item{second item}
+    \item{third item
+       \begin{enumerate}
+         \item{first sub-item}
+         \item{second sub-item}
+       \end{enumerate} }
+\end{enumerate}
+\end{verbatim} }
+\end{frame}
+
+\subsection{Tables and stuff}
+
+\begin{frame}[fragile]
+  \frametitle{Tabbing}
+    \begin{tabbing}
+        If \= it's raining           \\
+            \> then \= put on boots, \\
+            \>      \> take hat;     \\
+            \> else \> smile.        \\
+        Leave house.
+    \end{tabbing}
+    {\color{darkgreen}\small \begin{verbatim}
+\begin{tabbing}
+    If \= it's raining           \\
+        \> then \= put on boots, \\
+        \>      \> take hat;     \\
+        \> else \> smile.        \\
+    Leave house.
+\end{tabbing}
+    \end{verbatim} }
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Tabular}
+    \begin{tabular}{|r||c|p{2.5in}|}
+        \hline
+        \multicolumn{3}{|c|}{\sc GG\&A Hoofed Stock} \\
+        \hline
+        \hline
+        \multicolumn{1}{|c||}{\bf Year} & \bf Price   & \multicolumn{1}{c|}{\bf Comments} \\
+        \hline
+        1971 & 97--245   & Bad year for farmers in the west.     \\ \hline
+          72 & 245--245  & Light trading due to a heavy winter.  \\ \hline
+          73 & 245--2001 & No gnus was very good gnus this year. \\ \hline
+    \end{tabular}
+    {\color{darkgreen}\scriptsize \begin{verbatim}
+\begin{tabular}{|r||c|p{2.5in}|}
+    \hline
+    \multicolumn{3}{|c|}{\sc GG\&A Hoofed Stock} \\
+    \hline
+    \hline
+    \multicolumn{1}{|c||}{\bf Year} & \bf Price   & \multicolumn{1}{c|}{\bf Comments} \\
+    \hline
+    1971 & 97--245   & Bad year for farmers in the west.     \\
+    \hline
+      72 & 245--245  & Light trading due to a heavy winter.  \\
+    \hline
+      73 & 245--2001 & No gnus was very good gnus this year. \\
+    \hline
+\end{tabular}
+    \end{verbatim} }
+    Note: this is a very bad example of a table!
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Table (a float: not used on slides)}
+    {\color{darkgreen}\small \begin{verbatim}
+\begin{table}
+    \caption{The fastest man in the world:
+        Some of his possibilities}
+    \label{tab:fast}
+    \centering
+    \begin{tabular}{|l|c|r|}
+        \toprule
+        Disciplin & distance (m) & time (min) \\
+        \midrule
+        Running   & 100          &  5         \\
+        Swimming  & 50           & 30         \\
+        Cycling   & 1000         & 20         \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+    \end{verbatim} }
+    In the text the table can be referenced with: see table
+    {\color{darkgreen}\verb+\ref{tab:fast}+} on page {\color{darkgreen}\verb+\pageref{tab:fast}+}.
+\end{frame}
+
+\subsection{Graphics}
+
+\begin{frame}[fragile]
+  \frametitle{Graphics}
+  \includegraphics[height=0.3\textheight]{Graphics/Campus3}
+
+  {\color{darkgreen}\footnotesize \begin{verbatim}
+\includegraphics[height=0.3\textheight]{Graphics/Campus3}
+  \end{verbatim} }
+  \begin{itemize}
+     \item{Requires \verb+\usepackage{graphicx}+}
+     \item{Several file formats possible depending on
+         dvi-driver. For pdfLaTeX pdf, png, jpg. }
+     \item{Convert other formats \textit{e.g.}, with IrfanView or
+         Gimp.}
+     \item{other optional arguments like width, angle,
+         size}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Figures }
+    {\color{darkgreen}\scriptsize \begin{verbatim}
+\begin{figure}
+    \caption{A view of our campus. }
+    \label{fig:Campus}
+    \centering
+        \includegraphics[height=0.3\textheight]{Graphics/Campus3}
+\end{figure}
+    \end{verbatim} }
+ Like table, figure is a floating environment that has no
+ meaning in slides. Cross-referencing works as with tables.
+\end{frame}
+
+\section{Maths}
+
+\subsection{Math environments}
+
+\begin{frame}[fragile]
+  \frametitle{Text maths}
+    if $a$ and $b$ are legs of a
+    right-angled triangle and $c$ the hypotenuse, then
+    $c^2=a^2+b^2$ (Theorem of Pythagoras).
+
+    {\color{darkgreen}\small \begin{verbatim}
+if $a$ and $b$ are legs of a right-angled triangle
+and $c$ the hypotenuse, then $c^2=a^2+b^2$ (Theorem
+of Pythagoras).
+    \end{verbatim} }
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Display maths}
+    if $a$ and $b$ are legs of a
+    right-angled triangle and $c$ the hypotenuse, then
+    \begin{equation}
+       c^2=a^2+b^2
+    \end{equation}
+    (Theorem of Pythagoras).
+
+    {\color{darkgreen}\small \begin{verbatim}
+if $a$ and $b$ are legs of a right-angled triangle
+and $c$ the hypotenuse, then
+\begin{equation}
+    c^2=a^2+b^2
+\end{equation}
+(Theorem of Pythagoras).
+    \end{verbatim} }
+\end{frame}
+
+\subsection{Basic math commands}
+
+\begin{frame}[fragile]
+  \frametitle{Formulas}
+    \begin{displaymath}
+        x^5 \qquad \qquad x_1 \qquad \qquad \sqrt{x^2+\sqrt[3]{y}}
+    \end{displaymath}
+    {\color{darkgreen}\begin{verbatim}
+x^5     x_1       \sqrt{x^2+\sqrt[3]{y}}
+    \end{verbatim}}
+
+    \begin{displaymath}
+        \frac{1}{\frac{x^2+y^2+z^2}{x+y}} \qquad \qquad {n\choose {n-k}}
+    \end{displaymath}
+    {\color{darkgreen}\begin{verbatim}
+\frac{1}{\frac{x^2+y^2+z^2}{x+y}}  {n\choose {n-k}}
+    \end{verbatim}}
+
+    \begin{displaymath}
+        \int \limits_{-\infty}^{\infty}x^3 \qquad \qquad \sum_{i=1}^{n}a_i
+    \end{displaymath}
+    {\color{darkgreen}\begin{verbatim}
+\int \limits_{-\infty}^{\infty}x^3  \sum_{i=1}^{n}a_i
+    \end{verbatim}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Aligning equations}
+    \begin{align}
+        f(x)                & =  \cos x \\
+        f'(x)               & =  -\sin x \\
+        \int_{0}^{x} f(y)dy & =  \sin x
+    \end{align}
+    {\color{darkgreen}\small \begin{verbatim}
+\begin{align}
+    f(x)                & =  \cos x \\
+    f'(x)               & =  -\sin x \\
+    \int_{0}^{x} f(y)dy & =  \sin x
+\end{align}
+    \end{verbatim} }
+\end{frame}
+
+\section{Changing the layout}
+
+\subsection{Counters and parameters}
+
+\begin{frame}[fragile]
+  \frametitle{Internal Counter + parameters}
+    Change parameters:
+    {\color{darkgreen}\begin{verbatim}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\addtolength{\textwidth}{60pt}
+    \end{verbatim}}
+
+    Set counters:
+    {\color{darkgreen}\begin{verbatim}
+\setcounter{page}{0}
+\addtocounter{page}{10}
+    \end{verbatim}}
+
+    Output counter content: This is page \thepage.\\
+    {\color{darkgreen}\verb+This is page \thepage.+}
+\end{frame}
+
+\subsection{Distances}
+
+\begin{frame}[fragile]
+  \frametitle{Horizontal distance}
+    Here we have \hspace{2cm} \SI{2}{cm} distance.
+
+    {\color{darkgreen}\begin{verbatim}
+Here we have \hspace{2cm} \SI{2}{cm} distance.
+    \end{verbatim}}
+
+    left\hfill right
+    {\color{darkgreen}\begin{verbatim}
+left\hfill right
+    \end{verbatim}}
+    \begin{tabbing}
+        \texttt{xenspace}\qquad \= \kill
+        {\color{darkgreen}\verb|\,|}       \> very small distance \\
+        {\color{darkgreen}\verb|\enspace|} \> as wide as a number \\
+        {\color{darkgreen}\verb|\quad|} \> as wide as a letter is heigh \\
+        {\color{darkgreen}\verb|\qquad|} \> twice as wide as \verb|\quad| \\
+        {\color{darkgreen}\verb|\hfill|} \> a distance that can expand from 0\\
+                     \> to $\infty$ \\
+    \end{tabbing}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Vertical distance}
+    Here
+
+    \vspace{2cm}
+
+    is \SI{2}{cm} distance.
+    {\color{darkgreen}\begin{verbatim}
+Here
+
+\vspace{2cm}
+
+is \SI{2}{cm} distance.
+    \end{verbatim}}
+
+    \begin{tabbing}
+        \texttt{xsmallskip}\qquad \= \kill
+        {\color{darkgreen}\verb|\smallskip|} \> about $1/4$ line \\
+        {\color{darkgreen}\verb|\medskip|} \> about $1/2$ line \\
+        {\color{darkgreen}\verb|\bigskip|} \> about 1 line \\
+        {\color{darkgreen}\verb|\vfill|} \> distance that can expand from 0\\
+               \> to $\infty$ \\
+    \end{tabbing}
+\end{frame}
+
+\subsection{Text position}
+
+\begin{frame}[fragile]
+  \frametitle{Centering text}
+    \begin{center}
+        In\\
+        the\\
+        middle I don't\\
+        feel\\
+        so marginalized\\
+    \end{center}
+    {\color{darkgreen}\begin{verbatim}
+\begin{center}
+    In\\
+    the\\
+    middle I don't\\
+    feel\\
+    so marginalized\\
+\end{center}
+    \end{verbatim}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Flushright text}
+    \begin{flushright}
+       This is not a political statement
+    \end{flushright}
+    {\color{darkgreen}\begin{verbatim}
+\begin{flushright}
+    This is not a political statement
+\end{flushright}
+    \end{verbatim}}
+\end{frame}
+
+\section{Specialties}
+
+\subsection{The index}
+
+\begin{frame}[fragile]
+  \frametitle{Indexing commands}
+  \begin{description}
+    \item[simple]{\color{darkgreen}\verb+gnat\index{gnat}+}
+    \item[subtopics]{\color{darkgreen}\verb+gnat\index{gnat!size of}+}
+    \item[page range]{\color{darkgreen}\verb+\index{gnat|(}...\index{gnat|)}+}
+    \item[reference]{\color{darkgreen}\verb+\index{gnat|see{mosquito}}+}
+    \item[font]{\color{darkgreen}\verb+gnat\index{gnat@\textit{gnat}}+}
+  \end{description}
+  After first \LaTeX\ run, start \alert{makeindx} to sort the index.
+\end{frame}
+
+\subsection{List of acronyms}
+
+\begin{frame}[fragile]
+  \frametitle{Acronyms}
+  Assume the following list of acronyms:
+  {\color{darkgreen}\begin{verbatim}
+\begin{acronym}
+  \acro{nfkb}[NF-\textkappa B]{nuclear factor
+     \textkappa B}, protein in gene regulation
+\end{acronym}
+  \end{verbatim}}
+  This will print as\\
+  NF-\textkappa B: nuclear factor \textkappa B, protein in gene regulation
+
+  Then
+  \begin{description}
+    \item[{\color{darkgreen}$\backslash$acf\{nfkb\}}]{nuclear factor \textkappa B (NF-\textkappa B)}
+    \item[{\color{darkgreen}$\backslash$acs\{nfkb\}}]{NF-\textkappa B}
+    \item[{\color{darkgreen}$\backslash$acl\{nfkb\}}]{nuclear factor \textkappa B}
+  \end{description}
+\end{frame}
+
+\subsection{Bibliography}
+
+\begin{frame}[fragile]
+  \frametitle{BibTeX}
+  Database for literature references in ASCII-format. Can be
+  produced from many programs like \texttt{EndNote} or \texttt{RefMan}, also from \href{http://www.ncbi.nlm.nih.gov/pubmed/}{\texttt{\alert{PubMed}}}, \href{http://scholar.google.com/advanced_scholar_search?hl=en&as_sdt=2000}{\texttt{\alert{Google Scholar}}} (set preferences!) etc.
+  {\color{darkgreen}\small \begin{verbatim}
+@article{Alb-76,
+  AUTHOR= {W.J. Albery and J.R. Knowles},
+  TITLE= {Evolution of enzyme function and the
+    development of catalytic efficiency},
+  JOURNAL= {Biochemistry},
+  VOLUME= {15},
+  YEAR= {1976},
+  PAGES= {5631-5640},
+  ABSTRACT= {Catalytic efficiency constant kcat/Km
+    defined },
+  DOI= {10.1021/bi00670a032},
+  LANGUAGE= {engl}
+}
+  \end{verbatim} }
+  Similar for books, chapters, reports, thesis etc. In the text
+  use {\color{darkgreen}$\backslash$cite\{Alb-76\}}. After first \LaTeX
+  -run start \alert{bibtex} to create the bibliography.
+\end{frame}
+
+\subsection{Slide presentations}
+
+\begin{frame}
+  \frametitle{Beamer-slides}
+  {\color{darkgreen}$\backslash$begin\{frame\} \\
+  \hspace{2em}$\backslash$frametitle\{\} \\
+  \hspace{2em}... \\
+  $\backslash$end\{frame\}}
+\end{frame}
+
+\subsection{TeX-ing}
+
+\begin{frame}
+  \frametitle{\TeX ing}
+  Always use the sequence:
+  \begin{description}
+    \item[\LaTeX]{produces the necessary intermediate
+        files}
+    \item[makeindx]{sort the index}
+    \item[bibtex]{create the bibliography}
+    \item[\LaTeX]{include bibliography and index, resolve
+        cross-references}
+    \item[\LaTeX]{resolve remaining cross-references}
+  \end{description}
+  Note: using pdf\LaTeX\ instead of \LaTeX\ produces pdf-files
+  directly.
+\end{frame}
+
+\section{The departmental handout}
+
+\begin{frame}[fragile]
+  \frametitle{Packets used in dept. handout}
+  \begin{tabular}{lp{0.6\textwidth}}
+    acronym           & administration of acronyms                     \\
+    booktabs          & professional looking tables                    \\
+    chemarrow         & various types of arrows for equations          \\
+    color             & colored text                                   \\
+    eufrak            & font for arrays + vectors                      \\
+    graphicx          & inclusion of diagrams                          \\
+    hyperref          & use cross-referencing facilities of pdf        \\
+    isodate           & standard conform dates                         \\
+    isotope           & {\color{darkgreen}$\backslash$isotope[13]{C}} = \isotope[13]{C}\\
+    kpfonts           & works better than the original fonts           \\
+    makeidx           & index generation                               \\
+    natbib            & clean handling of bibliography                 \\
+    siunitx           & {\color{darkgreen}$\backslash$SI{}{}, $\backslash$num{}, $\backslash$ang{}} \\
+    thumb             & chapter thumbs                                 \\
+    upgreek           & {\color{darkgreen}$\backslash$textalpha} = \textalpha\ instead of $\alpha$ \\
+    wasysym,marvosym  & special symbols like \Male , \Female           \\
+  \end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Getting consistent output}
+  \begin{itemize}
+    \item{{\color{darkgreen}$\backslash$chemical\{CH\_2$\backslash$double
+        CH$\backslash$single OH\}} = \chemical{CH_2\double
+        CH\single OH} }
+    \item{{\color{darkgreen}$\backslash$ph} = \ph , similar for
+        {\color{darkgreen}$\backslash$pkw, $\backslash$pka, $\backslash$poh,
+        $\backslash$pI}}
+    \item{{\color{darkgreen}$\backslash$Name\{Maude Leonora Menten\}} =
+        \textsc{Maude Leonora Menten}}
+    \item{{\color{darkgreen}$\backslash$skalar\{x\}} = $x$, similar for
+        {\color{darkgreen}$\backslash$array, $\backslash$vektor,
+        $\backslash$set}. Note the list of variables used in
+        the appendix.}
+    \item{{\color{darkgreen}$\backslash$SI\{1\}\{cm\}} =
+        \SI{1}{cm},
+        {\color{darkgreen}$\backslash$num\{10000\}} =
+        \num{10000},
+        {\color{darkgreen}$\backslash$ang\{1;2;3\}} =
+        \ang{1;2;3}.}
+  \end{itemize}
+\end{frame}
+
+\end{document}

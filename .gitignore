@@ -1,5 +1,7 @@
 *.zip
 *.lz
+*-decoded.tex
+*/data/*.tex
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

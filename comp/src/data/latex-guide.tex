@@ -1,0 +1,449 @@
+\documentclass{article}
+
+\usepackage{amsmath, amsfonts, amsthm, fullpage, amssymb}
+\input{macros}
+
+\pagestyle{plain}
+
+\parskip=1.5mm
+\parindent=0mm
+
+\title{A Beginner's Guide to \LaTeX}
+\author{David Xiao \\
+\texttt{dxiao@cs.princeton.edu}}
+
+% These are some useful macros
+
+\begin{document}
+
+% This prints out the document's title, author, and date
+\maketitle
+
+\section{Introduction}
+\LaTeX{} is \emph{the} standard mathematical typesetting program.  This
+document is for people who have never used \LaTeX{} before and just want
+a quick crash course to get started.  I encourage all students in
+mathematics and theoretical computer science to learn \LaTeX{} so you
+can use it to typeset your problem sets; your TA's will love you if
+you do.
+
+For a more comprehensive introduction, check out \\
+\texttt{http://ctan.tug.org/tex-archive/info/lshort/english/lshort.pdf}.
+
+\section{How to find and use \LaTeX?}
+There are Windows packages for \LaTeX, though typically I prefer to
+use it on a Unix system (e.g. OS X, Linux, Solaris).  You will find
+that most university clusters have \LaTeX{} installed.  If you prefer,
+you can install it on your home system; it is easy to find via Google
+or your search engine of choice.  I will assume that you are using a
+Unix system for the rest of the guide.
+
+I recommend using an editor like \texttt{emacs} or \texttt{vi} to edit
+\LaTeX.  If you are uncomfortable with these, then any plaintext
+editor will do.  \texttt{emacs} is particularly nice because it has a
+built-in \LaTeX-mode that does text highlighting and indentation.
+
+\section{Basic rules}
+Basic \LaTeX{} is just text with typesetting commands.  Typesetting
+commands are usually preceded by ``\verb1\1'', and any arguments
+are usually placed inside curly braces ``\verb1{}1''.
+
+\LaTeX{} wraps text in adjacent lines as if they were part of the same
+paragraph.  To start a new paragraph, insert an extra ``return'':
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+This is one paragraph.
+
+This is another.
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+\parskip=1.5mm
+This is one paragraph.
+
+This is another.
+\end{minipage}}
+\end{tabular}
+
+\bigskip
+
+To get a newline without starting a new paragraph, use \verb1\\1.
+
+To get a comment, use the percent sign \verb1%1 at the beginning of a
+line.  The rest of that particular line will be commented out.
+
+\section{Starting a new document}
+
+The most basic (empty) document has only three parts:
+\begin{verbatim}
+\documentclass{article}
+
+\begin{document}
+\end{document}
+
+\end{verbatim}
+
+To start a new document, you can just take the \LaTeX{} file for this
+document and delete the stuff between the begin and end document
+commands, leaving the \verb1\maketitle1 command (this prints out the
+title and your name).  You will see before the \verb1\begin{document}1
+that there are commands for the title and author of the document.
+Change the names between the curly braces to the name of problem set
+and your name.  (The other stuff that precedes \verb1\begin{document}1
+is useful stuff that you don't need to worry about for now, just leave
+it as is.)  Then, save the file under a different name, for example
+\texttt{problem-set-1.tex}.
+
+\section{Compiling}
+Suppose our file is named \texttt{mylatexfile.tex}.  To compile it,
+simply invoke \texttt{latex mylatexfile.tex} in your Unix shell.  This
+will compile the file, assuming there are no errors.\footnote{You may
+have to invoke \texttt{latex} twice if you are using labels and
+references.  See Section \ref{sec:labels}.} If there are errors, you
+can quit the compiler by hitting ``\texttt{x}'' and then enter.
+Unfortunately \LaTeX{} compiler errors are very unhelpful in determining
+the nature of the problem, but they usually correctly point you to the
+line where the error occurred.
+
+Once it successfully compiles, you will get a file named
+\texttt{mylatexfile.dvi}.  Typically we convert this either into a
+Postscript or PDF file, which may be done by the programs
+\texttt{dvips mylatexfile.dvi} and \texttt{dvipdf mylatexfile.dvi}.
+Sometimes \texttt{dvips} requires an extra option: \texttt{-o}
+\textit{output-file-name} specifying the output file.
+
+\section{Organization}
+One important thing to do is to organize your document well.
+
+\subsection{Sectioning}
+There are two sectioning commands that will be useful for you:
+\verb1\section{Name of section}1 and\\
+\verb1\subsection{Name of subsection}1.  Use these to separate
+different problems or subproblems in the assignment.
+
+\subsection{Tables}
+
+You can put stuff into tables by using the \texttt{tabular}
+environment.  For example:
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+\begin{tabular}{r|cl}
+1st column & 2nd column & 3rd column\\
+\hline
+a & b & c
+\end{tabular}
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+\parskip=1.5mm
+\begin{tabular}{r|cl}
+1st column & 2nd column & 3rd column\\
+\hline
+a & b & c
+\end{tabular}
+\end{minipage}}
+\end{tabular}
+
+Note that the command is called \texttt{tabular} and \emph{not}
+\texttt{table}.  Important points:
+\begin{itemize}
+\item The ``\verb1{r|cl}1'' after the tabular \verb1\begin{tabular}1
+  indicate the alignment of the three columns: right, center, and
+  left.  This is mandatory as it specifies the layout of the table.
+  For more columns, type more alignment commands, e.g. for a table
+  with 5 columns all aligned to the right, you would use
+  \verb1rrrrr1. 
+\item The vertical bar \verb1|1 between the \texttt{r} and \texttt{c}
+indicates that a vertical line should be drawn between those columns.'
+\item The \verb1&1 separates the columns in the body of the table.
+\item A \verb1\\1 signifies the end of each line of the table.
+\item The command \verb1\hline1 means that a horizontal line should be
+  inserted.
+\end{itemize}
+
+\subsection{Lists}
+
+You can put stuff into ordered and unordered lists by using the
+\texttt{enumerate} and \texttt{itemize} commands, respectively.  For
+example:
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+Unordered list:
+
+\begin{itemize}
+\item This is one item.
+\item This is another.
+\end{itemize}
+
+Ordered list:
+
+\begin{enumerate}
+\item This is the first item.
+\item This is the second.
+\end{enumerate}
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+\parskip=1.5mm
+Unordered list:
+
+\begin{itemize}
+\item This is one item.
+\item This is another.
+\end{itemize}
+
+Ordered list:
+
+\begin{enumerate}
+\item This is the first item.
+\item This is the second.
+\end{enumerate}
+\end{minipage}}
+\end{tabular}
+
+\subsection{Labels and references}
+\label{sec:labels}
+It is useful to refer to the section number at times.  This may be
+done by using the \verb1\label{labelname}1 command.  Place this right
+after you start a section.  Then, you may refer to the section number
+by using \verb1\ref{labelname}1.  This will also be useful to refer to
+math equations.
+
+Note that \LaTeX creates and uses a bunch of auxiliary files.  Thus
+you will have to invoke it twice to compile a file that has labels and
+references, or if thoses labels and references have changed since the
+last compilation.
+
+\section{Math}
+The reason we use \LaTeX{} is because it is so powerful in typesetting
+mathematical expressions.  It wins hands down versus word processors
+like Word.
+
+\subsection{Math mode}
+Math expressions are separate from text in \LaTeX.  To enter a math
+environment in the middle of text, use the dollar sign \verb1$1, for
+example \verb1$F = ma$1 produces $F = ma$.  Everything between the two
+\verb1$1 signs will be considered math formula.
+
+To type a math expression that is on its own line and centered, use
+\verb1$$1:
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+The following is an important equation:
+$$E = mc^2$$
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+The following is an important equation:
+$$E = mc^2$$
+\end{minipage}}
+\end{tabular}
+
+\bigskip
+
+To give an equation a number and have it referable, use the
+\verb1equation1 environment and use a \verb1\label1 command:
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+The following is an important equation:
+\begin{equation}
+\label{emc}
+E = mc^2
+\end{equation}
+Please memorize Equation \ref{emc}.
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+The following is an important equation:
+\begin{equation}
+\label{emc}
+E = mc^2
+\end{equation}
+Please memorize Equation \ref{emc}.
+\end{minipage}}
+\end{tabular}
+
+\bigskip
+
+To typeset several equations together and have them properly aligned,
+use the \verb1align1 environment:
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+Some important equations:
+\begin{align}
+\label{einstein}
+E & = mc^2 \\
+\label{newton}
+F & = ma \\
+\label{euler}
+e^{i \pi} & = -1 
+\end{align}
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+Some important equations:
+\begin{align}
+\label{einstein}
+E & = mc^2 \\
+\label{newton}
+F & = ma \\
+\label{euler}
+e^{i \pi} & = -1 
+\end{align}
+\end{minipage}}
+\end{tabular}
+The equations are aligned along the \verb1&1 and each line is
+terminated by \verb1\\1.  To suppress the equation numbering (i.e. if
+the equations won't be referred to) use \verb1align*1 instead of
+\verb1align1.
+
+\subsection{Writing math expressions}
+I will only go over a few common mistakes and hard-to-find expressions
+regarding how to write math expressions.  It is quite intuitive
+otherwise, you can figure most things out quickly with trial and
+error.  All expressions in math mode may be nested within each other
+arbitrarily.
+
+\begin{itemize}
+\item Superscript and subscript are done using \verb1^1 and \verb1_1
+characters.  Note that if you want multiple characters in the
+super/subscript then you need to surround them with curly braces:
+\verb2$e^i\pi = -1$2 gives $e^i\pi = -1$ whereas
+\verb2$e^{i\pi} = -1$2 gives $e^{i\pi} = -1$.
+
+\item Fractions are done using \verb3$\frac{1}{2}$3 which gives
+  $\frac{1}{2}$.
+\item To do a binomial coefficient, use \verb1$\binom{n}{k}$1 which
+  gives $\binom{n}{k}$.
+\item Modular arithmetic can be written using the \verb1\pmod{n}1 and
+  \verb1\bmod{n}1 commands.  The first puts parentheses and a lot of
+  space around the \texttt{mod} and the second does not.
+\item $\forall$ and $\exists$ are written as \verb1\forall1 and
+  \verb1\exists1.
+\item $\neq$, $\geq$, and $\leq$ are \verb1\neq1, \verb1\geq1, and
+  \verb1\leq1.
+\item $\cdot$ (e.g. for multiplication) is \verb1\cdot1.
+\item $\circ$ is \verb1\circ1.
+\item $\cup$ and $\cap$ are \verb1\cup1 and \verb1\cap1.
+\item $\oplus$ is written with \verb1\oplus1.
+\item Large $\cup$, $\cap$, $\oplus$ signs that behave like summations
+  (see below for summations) are written as \verb1\bigcup1,
+  \verb1\bigcap1, \verb1\bigoplus1.
+\item $\drawnr$ is produced with \verb1\drawnr1.
+\item $\Z$, $\R$, etc. are produced using \verb1\Z1, \verb1\R1, etc.
+\item $\Exp$ is produced with \verb1\Exp1.
+\item $\P$, $\NP$, etc. are produced using \verb1\P1, \verb1\NP1, etc.
+\item $\calP$ is \verb1\calP1.
+\item $\ell$ (as opposed to $l$) is produced with \verb1\ell1.
+\item $\{\}$ are done with \verb1\{1 and \verb1\}1.
+\item $\approx$ is produced with \verb1\approx1.
+\item $\hat{x}$ and $\bar{x}$ are done with \verb1\hat{x}1 and
+  \verb1\bar{x}1.  A longer bar may be written using
+  \verb1\overline{\SAT}1, which produces $\overline{\SAT}$.
+\item $\eps$ (as opposed to $\epsilon$) may be written with
+  \verb1\eps1.
+\item $\in$ is written as \verb1\in1.
+\item $\notin$ is written as \verb1\notin1.
+\item Negations may be done with \verb1\not1, for example
+\item $\zo$ is abbreviated as \verb1\zo1.
+  \verb1\not\geq1 gives $\not\geq$.
+\item The probability sign is defined as \verb1\Pr1, i.e. $\Pr$.
+\item Encryption and decryption are \verb1\Enc1 and \verb1\Dec1, which
+  give $\Enc$ and $\Dec$.
+\item $\poly$ is written as \verb1\poly1.
+\item To draw parentheses that grow to match the contents, use
+  \verb1\left1 to precede the left parenthesis and \verb1\right1 to
+  precede the right:\\
+Source:
+\begin{verbatim}
+$$\Pr\left[\sum_{i=1}^k X_i > c \right] \leq 2^{-\Omega(c^2 k)}$$
+\end{verbatim}
+Output:
+$$\Pr\left[\sum_{i=1}^k X_i > c \right] \leq 2^{-\Omega(c^2 k)}$$
+
+\item Arrays are like tables, except they must be used in place of
+  tables when in math mode: instead of using \verb1\begin{tabular}1
+  and \verb1\end{tabular}1 use \verb1\begin{array}1 and
+  \verb1\end{array}1.  Again, you must give a column specification for
+  how the columns are to be laid out.
+
+\item Spacing is very different in math mode so text in the middle of
+a formula is set strangely.  If you want to have text in the middle of
+the formula, use the \verb1\text{some text}1 command.  For example,\\
+\verb1$\P \neq \NP \text{ implies that } \SAT \notin \P$1 produces $\P
+\neq \NP \text{ implies that } \SAT \notin \P$.
+
+\item Summations and products are done using \verb1\sum1 and
+  \verb1\prod1 respectively.  Parameters can be given for the
+  summation/product as well:
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+$$\sum_{i=1}^\infty \frac{1}{2^i} = 1$$
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+$$\sum_{i=1}^\infty \frac{1}{2^i} = 1$$
+\end{minipage}}
+\end{tabular}
+
+\item Piecewise functions may be defined using the \verb1piecewise1
+  environment:
+
+\begin{tabular}{ll}
+Source: & Output: \\
+\begin{minipage}{.5 \linewidth}
+\begin{verbatim}
+$$f(x) = \begin{piecewise}
+1 & x = 0 \\
+0 & \text{else}
+\end{piecewise}$$
+\end{verbatim}
+\end{minipage}
+&
+\framebox{\begin{minipage}{.5 \linewidth}
+$$f(x) = \begin{piecewise}
+1 & x = 0 \\
+0 & \text{else}
+\end{piecewise}$$
+\end{minipage}}
+\end{tabular}
+
+\item You may define new commands using
+  \verb1\newcommand{\commandname}{definition}1.  This is essentially
+  a macro, so that whenever \verb1\commandname1 appears, the text of
+  \verb1definition1 is inserted in its place.  If \verb1\commandname1
+  is already taken, either use a different name or use
+  \verb1\renewcommand{...}{...}1 to overwrite the old definition.
+\item There are many many other symbols available.  You can search for
+  ``latex symbols'' online and come up with the references.
+\end{itemize}
+
+\end{document}

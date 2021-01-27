@@ -1,0 +1,82 @@
+\hypertarget{w0001----archive-as-package-file-detected}{%
+\subsection{W0001 -\/- Archive as package file
+detected}\label{w0001----archive-as-package-file-detected}}
+
+Usually a CTAN package should not contain archives. An exception are
+situations where, for example, the source code of a package is kept in a
+separate zip archive.
+
+\hypertarget{w0002----duplicate-files-detected}{%
+\subsection{W0002 -\/- Duplicate files
+detected}\label{w0002----duplicate-files-detected}}
+
+Duplicate files were detected which are listed right after this message.
+
+The message is a warning message as something like this could not be
+seen as an error in general.
+
+\hypertarget{w0003----same-named-files-detected-in-the-package-tree}{%
+\subsection{W0003 -\/- Same named files detected in the package
+tree}\label{w0003----same-named-files-detected-in-the-package-tree}}
+
+We like to have unique file names over the whole package directory tree.
+When we discover same named files we report it as a warning. Common
+names like \texttt{README}, \texttt{README.txt}, \texttt{README.md},
+\texttt{Makefile}, \texttt{Makefile.in}, \texttt{Makefile.am} and
+\texttt{makefile} are ignored when checking.
+
+For more details refer to:
+\href{http://mirror.utexas.edu/ctan/help/ctan/CTAN-upload-addendum.html\#uniquefilenames}{http://mirror.utexas.edu/ctan/help/ctan/CTAN-upload-addendum.html\#uniquefilenames}
+
+\hypertarget{w0004-----encoding-with-bom-detected}{%
+\subsection{\texorpdfstring{W0004 -\/- encoding with BOM
+detected}{W0004 -\/-  encoding with BOM detected}}\label{w0004-----encoding-with-bom-detected}}
+
+A UTF encoded package file contains a BOM (byte order mark). Currently,
+we issues a warning.
+
+Nevertheless, the CTAN team discourages uses of BOM. Please be aware,
+that in some future time this could be reagarded as an error.
+
+\hypertarget{w0005----very-large-file--with-size-size-detected-in-package}{%
+\subsection{\texorpdfstring{W0005 -\/- Very large file with size
+\texttt{\textless{}size\textgreater{}} detected in
+package}{W0005 -\/- Very large file  with size \textless size\textgreater{} detected in package}}\label{w0005----very-large-file--with-size-size-detected-in-package}}
+
+(Experimental) We issue the message if there is a file is larger than
+40MiB in the package directory tree.
+
+\hypertarget{w0006----very-large-file-with-size-size-detected-in-tds-zip-archive}{%
+\subsection{\texorpdfstring{W0006 -\/- Very large file with size
+\texttt{\textless{}size\textgreater{}} detected in TDS zip
+archive}{W0006 -\/- Very large file with size \textless size\textgreater{} detected in TDS zip archive}}\label{w0006----very-large-file-with-size-size-detected-in-tds-zip-archive}}
+
+(Experimental) We issue the message if there is a file larger than 40MiB
+in the TDS zip archive.
+
+\hypertarget{w0007----empty-directory-detected-in-the-tds-zip-archive}{%
+\subsection{W0007 -\/- Empty directory detected in the TDS zip
+archive}\label{w0007----empty-directory-detected-in-the-tds-zip-archive}}
+
+Empty directories in a TDS zip archive are discouraged. As they usually
+don't create errors in the distribution we issue a warning only.
+
+\hypertarget{w0008----windows-file-has-unix-line-endings}{%
+\subsection{W0008 -\/- Windows file has Unix line
+endings}\label{w0008----windows-file-has-unix-line-endings}}
+
+A Windows file with Unix line endings was detected.
+
+We regard a file as a Windows file if its name ends with:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.bat}
+\item
+  \texttt{.cmd}
+\item
+  \texttt{.nsh}, or
+\item
+  \texttt{.reg}
+\end{itemize}

@@ -1,7 +1,11 @@
 6 Ideas:
 - Stack-based compression structure
-- Context-based compression
-- LZ78 compression
-- Huffman Encoding
-- Parameter Optimisation
-- Applying LZ78 and Huffman to context
+- Dictionary Compression
+- LZ77 Compression
+- Arithmetic Coding
+- Statistical Training and Parameter Optimisation
+- Huffman vs Arithmetic Coding
+
+- TODO: Try PPM / Adaptive coding with Huffman
+- TODO: Try get LZSS working
+- TODO: Try get arithmetic coding working

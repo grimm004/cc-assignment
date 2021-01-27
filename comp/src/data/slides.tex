@@ -1,0 +1,906 @@
+%%%\documentclass[handout]{beamer}
+\documentclass[handout]{beamer}
+\usepackage{pdfpages}
+\newcommand{\comment}[1]{}
+\usetheme{Copenhagen}
+\usecolortheme{beaver}
+%%% Intro, basic documents, Maths mode, figures/tables, cross-referencing
+%%%session 1: Intro and basic documents: resources, philosophy, steps to Latex, document style, margins, syntax \ {} , accents, dashes, enumerate, paragraphs
+%%%session 2: Maths mode: dollars/displayed eq (mention font), basic commands: greek letters, \frac, \sin, \cos, subscript, spacing, equation environments, theorem environments, adjustable brackets, arrays, newcommands
+%%%session 3: cross-referencing: labels, bibliography
+%%%session 4: tables & figures, 
+
+\renewenvironment{proof}{{\scshape Proof. }\itshape }{\hfill$\spadesuit$\par}
+
+
+%\renewtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\myfrac}[2]{\frac{x^2+#1}{#2}}
+\newcommand{\myint}{\int_0^\infty}
+
+
+\title{An introduction to \LaTeX}
+\author[Emma McCoy]{Emma McCoy\\Course Notes: Emma McCoy/Phillip Kent}
+
+\begin{document}
+					
+\begin{frame}
+\maketitle
+\end{frame}
+
+\section{Introduction}
+\begin{frame}[fragile]{Resources}
+This course is for \LaTeX\  ``$2_\varepsilon$'' (current standard).\\
+The previous version ``2.09'' works slightly differently - beware!\\[0.5cm]
+\textbf{Course website}:
+\verb|http://www.ma.ic.ac.uk/~ejm/LaTeX/Website/|\\[0.5cm]
+\textbf{References}: 
+\begin{itemize}
+\item {\em \LaTeX\ User Guide \&
+Reference Manual} by Leslie Lamport (Second edition, Addison-Wesley,  1994).
+\item {\em A Guide to \LaTeX}  by Kopka \& Daly (Third edition,
+Addison-Wesley, 1999) (details more advanced features).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Course contents}
+\begin{enumerate}
+\item Introduction \pause
+\item A first \LaTeX\ document \pause
+\item Maths mode \pause
+\item Complex documents \pause
+\item Figures, tables, etc...
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Pros}
+\begin{itemize}
+\item Great for typing mathematics
+\item Great for complex documents  -- cross-referencing, labelling, bibliographies...
+\item \LaTeX\ output is beautiful -- virtually of professional-typeset quality
+\item The basic \LaTeX\ system is FREE.
+\item \LaTeX\ makes typing ``easy'':
+\begin{itemize}
+\item formatting is automatic 
+\item emphasis on content over formatting
+\end{itemize}
+\item \LaTeX\ is written as plain text 
+\begin{itemize}
+\item compact, portable
+\item transferable across the internet/email
+\end{itemize}
+\item accepted by all major academic publishers 
+\begin{itemize}
+\item speeds up the publishing process
+\item reduces the chance of printing errors
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Cons}
+When is it not appropriate?\\[0.5cm] Many \LaTeX\ users make their CVs, presentations and even address their letters in \LaTeX\ but it's not great for:
+\begin{itemize}
+\item documents with little text and lots of pictures.
+\item incorporating spreadsheets etc. into text.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Where?}
+\begin{itemize}
+\item Free versions of \LaTeX\ exist across all platforms -- Microsoft Windows, Linux, Unix and Apple Macintosh. 
+\item Commercial (non-free) versions offer some extra features, e.g. WYSIWYG package \emph{Scientific Word} or {\em BaKoMa TeX Word}. 
+\item Power users should use Emacs.
+\item We will use MiK\TeX: {\tt http://miktex.org/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{About \TeX}
+\begin{itemize}
+\item \LaTeX\ is a super-set (macro package) of the typesetting language \TeX\, created by Donald Knuth
+\item Plain \TeX\ needs programming skills  -- deliberate policy
+\item \LaTeX\ (originally created by Leslie Lamport) adds functionality
+\item Originally other \TeX\ macro packages -- e.g. $\cal AMS$\TeX\ and $\cal AMS$\LaTeX\ -- now, incorporated into \LaTeX\
+\item \LaTeX\ and \TeX\ are not two different languages
+\begin{itemize}
+\item Most \TeX\ commands work in \LaTeX
+\item Sometimes a conflict where \LaTeX\ has re-defined a \TeX\ command
+\end{itemize}
+\item The {\em \TeX book} by Donald Knuth -- standard reference for \TeX
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Writing \LaTeX}
+\begin{itemize}
+\item Writing \LaTeX\ is like writing computer programs in, say, Fortran or C -- and there will be similar frustrations
+\item  \LaTeX\ {\emph source file}: contains plain (ASCII) text and formatting commands
+\item Commands are preceded by a ``{\tt \textbackslash}''.
+\item Nine \emph{reserved} characters:
+\begin{verbatim}
+ \ % $ ^ _ & # ~ { }
+\end{verbatim}
+If you want a ``\%'', type: \verb|\%|
+\item Source file must end in ``\verb|.tex|''
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The steps of writing in \LaTeX}
+\begin{figure}[h]
+\begin{center}
+\setlength{\unitlength}{0.035cm}
+\begin{picture}(210,140)(30,0)
+\put(5,70){\framebox(60,15){EDIT}}
+\put(90,115){\framebox(60,15){COMPILE}}
+\put(90,20){\framebox(60,15){PREVIEW}}
+\put(170,70){\framebox(60,15){PRINT}}
+\put(90,135){\dashbox{5}(60,15){\tt\small TeX|(TeX)}}
+\put(90,0){\dashbox{5}(60,15){\tt\small View|(View)}}
+\put(235,70){\dashbox{5}(60,15){\tt\small View+Print}}
+\put(120,110){\vector(0,-1){70}}
+\put(35,90){\vector(4,3){45}}
+\put(80,30){\vector(-4,3){45}}
+\put(155,126){\vector(4,-3){45}}
+\put(155,28){\vector(4,3){45}}
+\end{picture}
+\end{center}
+%\caption{The steps of doing \LaTeX.}
+\label{fig.steps}
+\end{figure}
+\end{frame}
+
+\section{A first \LaTeX\  document}
+\begin{frame}[fragile]{A skeleton source file}
+\hphantom{something}
+{\footnotesize
+\begin{verbatim}
+% the essential components of a LaTeX file
+% (N.B. % is the comment character, everything to 
+% the right of it on a line is IGNORED.)
+
+\documentclass{article}
+% **** PREAMBLE **** 
+% title/author/date information
+% definitions, short-hands, macros etc. BUT NO text
+
+\begin{document}
+% **** BODY OF DOCUMENT ****
+% ...the text itself
+% N.B. the RESERVED CHARACTERS:
+%     \ % $ ^ _ & # ~ { }
+
+\end{document}
+\end{verbatim}
+}
+\end{frame}
+
+\subsection{Commands that affect the whole document}
+\begin{frame}[fragile]{Document class}
+\begin{verbatim}
+\documentclass[options]{style}
+\end{verbatim}
+\begin{tabbing}
+\hspace{1cm} \= style: \hspace{1cm} \= \verb+book+ \\
+\>\> \verb+report+ \\
+\>\> \verb+article+ \\
+\>\> \verb+letter+ \\
+\> options: \> \verb+11pt+ \\
+\>\> \verb+12pt+ \\
+\>\> \verb+a4paper+
+\end{tabbing}
+\end{frame}
+
+\begin{frame}[fragile]{Sectioning Commands}
+\begin{itemize}
+\item \verb+\chapter+ 
+\item \verb+\section+ 
+\item \verb+\subsection+ 
+\item \verb+\subsubsection+ 
+\end{itemize}
+Example: \verb+\chapter{title}+
+\end{frame}
+
+\begin{frame}[fragile]{Margin sizes}
+If you are not happy with margin sizes they can be adjusted:
+\begin{itemize}
+\item \verb+\setlength{\textwidth}{5.7cm}+
+\item \verb+\setlength{\oddsidemargin}{0.6in}+
+\item \verb+\setlength{\topmargin}{-0.5in}+
+\item \verb+\setlength{\textheight}{246mm}+
+\end{itemize}
+alternatively use:
+\begin{verbatim}
+      \addtolength{\topmargin}{-5mm}
+\end{verbatim}
+\end{frame}
+
+
+
+\subsection{Writing in \LaTeX}
+\begin{frame}[fragile]{Font size}
+\begin{itemize}
+\item \verb+\small+ 
+\item \verb+\normalsize + 
+\item \verb+\large+  \verb+\Large+  \verb+\LARGE+
+\verb+\huge+ \verb+\Huge+ 
+\end{itemize}
+Example: \verb+{\Large this will be large}+
+\end{frame}
+
+\begin{frame}[fragile]{Font style}
+\begin{itemize}
+\item Bold: \verb+\bf+ \hspace{.5cm} 
+\begin{itemize}
+\item Example: \verb+{\bf this will be bold}+ 
+\end{itemize}
+\item Italics: \verb+\it+ 
+\begin{itemize}
+\item There are usually several command to achieve  the same result: 
+\verb+{\em italic} \textit{italic} \emph{italic} {\it italic}+ \\
+will all produce: \emph{italic}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Numbered list}
+For a numbered list:
+{\footnotesize
+\begin{verbatim}
+\begin{enumerate}
+\item This is the first item
+\item here's the second
+\begin{enumerate}
+\item this will be part 1 of number 2
+\item this is part 2 
+\end{enumerate}
+\end{enumerate}
+\end{verbatim}
+
+{\em Output of above commands:}
+\begin{enumerate}
+\item This is the first item
+\item here's the second
+\begin{enumerate}
+\item this will be part 1 of number 2
+\item this is part 2
+\end{enumerate}
+\end{enumerate}
+Replace \verb+enumerate+ with \verb+itemise+ for bullet points
+}
+\end{frame}
+
+\begin{frame}[fragile]{Extra critical commands}
+\begin{itemize}
+\item to go to a new page use: \verb+ \newpage+ 
+\item to go to a new line use: \verb+ \newline+ or \verb+\\+ 
+\item to start a new paragraph: leave a blank line
+\item to prevent indenting use: \verb+ \noindent+ 
+\item For double spacing, in the preamble:
+\begin{verbatim}
+\renewcommand{\baselinestretch}{1.6}
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Other useful commands}
+\begin{itemize}
+\item Quotation marks: use \verb+``a''+ to produce ``a''
+\item Accents: use \verb+\'e, + \verb+\"e ,+ \verb+\^e+ to produce \'e, \"e, \^e.
+\item Dashes: use \verb+--+, \verb+---+ to produce -- and ---
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Preliminary Exercise}
+\begin{itemize}
+\item Open \TeX works
+\item Follow the instructions on the sheet
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 1}
+\begin{verbatim}
+http://www2.imperial.ac.uk/~ejm/
+       LaTeX/Website/exercises/exercise1.html
+\end{verbatim}
+\end{frame}
+
+
+\section{Maths mode}
+%%%session 2: Maths mode: dollars/displayed eq (mention font), basic commands: greek letters, \frac, \sin, \cos, subscript, spacing, equation environments, theorem environments, adjustable brackets, arrays, newcommands
+\begin{frame}[fragile]{Math mode}
+Maths is ``expensive'':
+\begin{tabbing}
+\verb+\[+ \hspace{.5cm} \= \verb+\]+ 
+\hspace{.2cm} \= or \hspace{.5cm} \= \verb+$$+ 
+\hspace{.5cm} \= \verb+$$+ \= -- displayed formula \\
+\verb+\(+ \> \verb+\)+ \> or \> \verb+$+ \> \verb+$+  \> -- in-text formula 
+\end{tabbing}
+\textbf{E.g.}
+\begin{verbatim}
+I could put $x = y+2z+3w$ in the text 
+or as a displayed equation:
+\[x = y+2z+3w\]
+\end{verbatim}
+\textbf{gives:} \\
+I could put $x = y+2z+3w$ in the text or as a displayed equation:
+\[x = y+2z+3w\]
+\end{frame}
+
+\subsection{Basic typesetting of maths}
+\begin{frame}[fragile]{Subscript/superscripts:}
+\begin{tabbing}
+$x^{2y}$ \hspace{.5cm} \= \verb+$x^{2y}$+ \\
+$x_1^{y^{2}}$ \> \verb+$x_1^{y^{2}}$+
+\end{tabbing}
+Note bracketing, more than one argument in the sub/superscript must be enclosed
+in $\{ \ldots \}$.
+\begin{verbatim}
+\[
+\int_0^\infty f(t) \, dt
+\]
+\end{verbatim}
+{\em Output of above:}\\ 
+\[
+\int_0^\infty f(t) \, dt
+\]
+\end{frame}
+
+\begin{frame}[fragile]{Greek letters}
+Remember your Greek letters:
+\verb+$\alpha$+, \verb+$\beta$+, \verb+$\gamma$+, \verb+$\kappa$+, produce:\\
+$\alpha$, $\beta$, $\gamma$, $\kappa$.\\[0.5cm]
+...and just capitalise to get (non-Arabic) capital Greek letters, e.g. \verb+$\Gamma$+ produces $\Gamma$.
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Numbered equations}
+\begin{verbatim}
+\begin{equation}
+S_2 = \sum_{i=1}^N x_i^2 + 
+\sum_{i=1}^N (y_i-\overline{y})^2 
+\end{equation}
+\end{verbatim}
+{\em Output of above commands:}\\ 
+\begin{equation}
+S_2 = \sum_{i=1}^N x_i^2 + \sum_{i=1}^N (y_i-\overline{y})^2 
+\end{equation}
+\end{frame}
+
+\begin{frame}[fragile]{Fractions}
+\[
+x= \frac{y+z/2}{y^2+1} 
+\]
+\begin{verbatim}
+\[
+x= \frac{y+z/2}{y^2+1} 
+\]
+\end{verbatim}
+It's considered bad practice to \verb+\frac+ in in-text formulas because it basically looks ugly: $x= \frac{y+z/2}{y^2+1}$.
+\end{frame}
+
+\begin{frame}[fragile]{Adjustable brackets}
+Use \verb+\left+ and \verb+\right+ for correct sizing
+\[
+\left\{ \left[\frac{1}{2}\right] - \left[\frac{1}{4}\right] \right\}
+\]
+\begin{verbatim}
+\[
+\left\{ \left[\frac{1}{2}\right] - 
+\left[\frac{1}{4}\right] \right\}
+\]
+\end{verbatim}
+You can use \verb+\left\{+, \verb+\left[+, \verb+\left(+, \verb+\left/+, \verb+\left.+ etc...
+\end{frame}
+
+\begin{frame}[fragile]{Spacing}
+The \verb+\quad+ command leaves some space, other spaces in maths mode can
+be created with the following commands (smallest first): \\
+\verb+ \, \; \quad \qquad+
+
+\[
+x \, x \; x \quad x \qquad x
+\]
+is produced by:
+\begin{verbatim}
+\[
+x \, x \; x \quad x \qquad x
+\]
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Arrays}
+\[
+x= \left\{
+\begin{array}{cl}
+y  \qquad  & \mbox{if $y>0$} \\
+z+y \qquad & \mbox{otherwise}
+\end{array}
+\right.
+\]
+\begin{verbatim}
+\[
+x= \left\{
+\begin{array}{cl}
+y \quad & \mbox{if $y>0$} \\
+z+y \quad & \mbox{otherwise}
+\end{array}
+\right.
+\]
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Lining up in columns}
+To produce:
+\begin{align*}
+\rho_t + (\rho u)_x + (\rho v)_y &= 0,\\
+u_t + uu_x + vu_y + \frac{1}{\rho} p_x &= 0, \\
+v_t + uv_x + vv_y + \frac{1}{\rho} p_y &= 0.
+\end{align*}
+\begin{verbatim}
+\begin{align*}
+\rho_t + (\rho u)_x + (\rho v)_y &= 0,\\
+u_t + uu_x + vu_y + \frac{1}{\rho} p_x &= 0,\\
+v_t + uv_x + vv_y + \frac{1}{\rho} p_y &= 0.
+\end{align*}
+\end{verbatim}
+Use the \& symbol to line up the columns.
+\end{frame}
+
+\begin{frame}[fragile]{Numbered lines}
+Use \verb+\begin{align}+ for numbered equations -- you can suppress numbering for an individual equation by using the \verb+\nonumber+ command before \verb+\\+.
+\begin{align}
+\rho_t + (\rho u)_x + (\rho v)_y &= 0,\\
+u_t + uu_x + vu_y + \frac{1}{\rho} p_x &= 0,\nonumber\\
+v_t + uv_x + vv_y + \frac{1}{\rho} p_y &= 0.
+\end{align}
+\begin{verbatim}
+\begin{align}
+\rho_t + (\rho u)_x + (\rho v)_y &= 0,\\
+u_t + uu_x + vu_y + \frac{1}{\rho} p_x &= 0,\nonumber\\
+v_t + uv_x + vv_y + \frac{1}{\rho} p_y &= 0. 
+\end{align}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Matrices}
+\[P = \left( \begin{array}{ccc} 
+1 & \cdots & 3\\
+\vdots &\ddots & \vdots\\
+1 & \cdots & 3
+\end{array}\right)\]
+is produced by:
+\begin{verbatim}
+\[P = \left( \begin{array}{ccc} 
+1 & \cdots & 3\\
+\vdots &\ddots & \vdots\\
+1 & \cdots & 3
+\end{array}\right)\]
+\end{verbatim}
+\end{frame}
+
+
+\subsection{New commands}
+\begin{frame}[fragile]{Commands/Functions:}
+Often you will find yourself repeating the same commands to produce complicated constructions, e.g. you might find yourself repeatedly typesetting \verb+\int_0^\infty+ to produce 
+\[\int_0^\infty\]
+Save yourself time with \verb+\newcommand+ in the {\em preamble}:
+\begin{verbatim}
+\newcommand{\myint}{\int_0^\infty}
+\end{verbatim}
+Then in the document type (for example) \verb+\myint x \, dx+ to obtain:
+\[\myint x \, dx\]
+\end{frame}
+
+\begin{frame}[fragile]{Multiple arguments}
+You can give arguments to \verb+\newcommand+: \\
+E.g. if we want to type:
+\[
+\frac{x^2+a}{b}
+\]
+where the values of $a$ and $b$ can change,
+\begin{verbatim}
+\newcommand{\myfrac}[2]{\frac{x^2+#1}{#2}}
+\end{verbatim}
+Then use
+\begin{verbatim}
+\[
+y=\myfrac{2}{4}
+\]
+\end{verbatim}
+to produce
+\[
+y=\myfrac{2}{4}
+\]
+\end{frame}
+\begin{frame}[fragile]{New environments}
+In the preamble:
+\begin{verbatim}
+\newenvironment{proof}{{\scshape Proof. }\itshape }
+{\hfill$\spadesuit$\par}
+\end{verbatim}
+Then in body:
+\begin{verbatim}
+\begin{proof}
+Let us start by considering whether there is 
+actually anything to prove. Turns out there isn't.
+\end{proof}
+\end{verbatim}
+gives:\\
+\begin{proof}
+Let us start by considering whether there is actually anything to prove. Turns out there isn't.
+\end{proof}
+\end{frame}
+\begin{frame}[fragile]{Theorems}
+In preamble:
+\begin{verbatim}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conj}[theorem]{Conjecture}
+\end{verbatim}
+Then in body:
+\begin{verbatim}
+\begin{theorem}[Something] something \end{theorem}
+\begin{conj}[Something else] something else \end{conj}
+\end{verbatim}
+gives:\\
+\begin{theorem}[Something] something \end{theorem}
+\begin{conjecture}[Something else] something else \end{conjecture}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 2}
+\begin{verbatim}
+http://www2.imperial.ac.uk/~ejm/
+       LaTeX/Website/exercises/exercise2.html
+\end{verbatim}
+\end{frame}
+
+\section{Tables and Figures}
+\begin{frame}[fragile]{Tables:}
+To produce the following table:
+\renewcommand{\arraystretch}{1.4}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|c|c|} \hline
+& \multicolumn{2}{|c|}{Statistic} \\ \hline
+Distribution & Expected value & Variance \\ \hline\hline
+Binomial($n,p$) & $np$ & $np(1-p)$ \\ \hline
+Uniform($\alpha, \beta$) & $(\beta+\alpha)/2$ & $(\beta-\alpha)^2/12$ \\ \hline
+Exponential($\lambda$) & $1/\lambda$ &  $1/\lambda^2$ \\ \hline
+\end{tabular}
+\end{center}
+\caption{Means and variances}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Table code}
+The code: 
+{\footnotesize
+\begin{verbatim}
+\renewcommand{\arraystretch}{1.4}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|c|c|} \hline
+& \multicolumn{2}{|c|}{Statistic} \\ \hline
+Distribution & Expected value & Variance \\ \hline\hline
+Binomial($n,p$) & $np$ & $np(1-p)$ \\ \hline
+Uniform($\alpha, \beta$) & $(\beta+\alpha)/2$ & 
+     $(\beta-\alpha)^2/12$ \\ \hline
+Exponential($\lambda$) & $1/\lambda$ &  
+     $1/\lambda^2$ \\ \hline
+\end{tabular}
+\end{center}
+\caption{Means and variances}
+\end{table}
+\end{verbatim}
+}
+\end{frame}
+
+\begin{frame}[fragile]{Extra useful table commands:}
+Can have a fixed width box as one of the columns (to allow line breaks):
+\begin{verbatim}
+\begin{tabular}{|l|p{5cm}|} \hline
+First & extremely clear and accurate 
+description of the school, the role in the
+classroom and the teaching methods used \\ \hline
+Upper Second & clear and accurate description 
+of the school, the role in the
+classroom and the teaching methods used \\ \hline
+Lower Second & a description of the school, 
+the role in the classroom and the
+teaching methods used \\ \hline
+\end{tabular}
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}{The table}
+\begin{tabular}{|l|p{8cm}|} \hline
+First & extremely clear and accurate 
+description of the school, the role in the
+classroom and the teaching methods used \\ \hline
+Upper Second & clear and accurate description 
+of the school, the role in the
+classroom and the teaching methods used \\ \hline
+Lower Second & a description of the school, 
+the role in the classroom and the
+teaching methods used \\ \hline
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}[fragile]{Multirow}
+There is also a \verb+\multirow+ command, but you need to 
+add \verb+\usepackage{multirow}+\\
+usage: \verb+\multirow{number of rows to span}{alignment}+ \\
+can set alignment to \verb+*+ for best fit.
+
+Similarly, \verb+\usepackage{multicolumn}+.
+\end{frame}
+
+\begin{frame}[fragile]{Aligning to decimal point}
+\begin{verbatim}
+\begin{tabular}{r@{.}l}
+  2&1\\
+  16&2\\
+  2&456\\
+\end{tabular}
+\end{verbatim}
+gives:
+\begin{tabular}{|r@{.}l|}
+\hline
+  2&1\\
+  16&2\\
+  2&456\\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Figures}
+To produce the following picture from a PDF file:
+\begin{figure}[h]
+\begin{center}
+\includegraphics[height=3cm,width=4cm]{sh05plume.jpg}
+\caption{Random figure}
+\end{center}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Code}
+In the preamble use the \verb+graphicx+ package:
+\begin{verbatim}
+\usepackage{graphicx}
+\end{verbatim}
+Then use the following commands:
+\begin{verbatim}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[height=4cm,width=6cm]{Rplots.pdf}
+\caption{Random figure}
+\end{center}
+\end{figure}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Rotating figures and tables}
+To rotate figures and tables use the \verb+rotating+ package:
+include the following line in the preamble:
+\begin{verbatim}
+\usepackage{rotating}
+\end{verbatim}
+Then use \verb+\begin{sidewaysfigure}+ or \verb+\begin{sidewaystable}+.
+\end{frame}
+
+\begin{frame}[fragile]{Exercise}
+\begin{enumerate}
+\item Pick a random picture from the web and put it in your document.
+\item Tables: \\
+\begin{verbatim}
+http://www2.imperial.ac.uk/~ejm/LaTeX/
+           Website/exercises/table.html
+\end{verbatim}
+\end{enumerate}
+\end{frame}
+
+\section{Writing complex documents}
+%the start of a document: title, author, date, list of tables, list of figures
+%labels and referring
+%bibtex
+%messing around with the numbers.
+
+\subsection{At the start of the document}
+\begin{frame}[fragile]{Title}
+In the preamble type: \\
+\begin{verbatim}
+\title{A snappy title}
+\author{Emma McCoy}
+\date{\today}
+\end{verbatim}
+Then after the \verb+\begin{document}+ command type:
+\begin{verbatim}
+\maketitle
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Contents etc...}
+Based on your chapters, sections, subsections, subsubsections:
+\begin{verbatim}
+\tableofcontents
+\end{verbatim}
+If you have figures and tables you can also produce
+\begin{verbatim}
+\listoftables
+\listoffigures
+\end{verbatim}
+\end{frame}
+
+\subsection{Labels}
+\begin{frame}[fragile]{Numbers}
+Many environments produce numbers:\\
+(e.g. \verb+\section, \begin{equation}+ \verb+\begin{enumerate}, \begin{table} +)\\[0.5cm]
+If it is numbered it can be {\em labelled} and {\em referred to} :
+\begin{verbatim}
+\section{A subsection} \label{seclabelex}
+\begin{equation}
+x=y^2 \label{eq1}
+\end{equation}
+\end{verbatim}
+Then later in the text:
+\begin{verbatim}
+In equation (\ref{eq1}) in subsection \ref{seclabelex} 
+on page \pageref{intro} we discussed....
+\end{verbatim}
+\end{frame}
+
+\subsection{A subsection} \label{seclabelex}
+\begin{frame}[fragile]{Output}
+\begin{equation}
+x=y^2 \label{eq1}
+\end{equation}
+In equation (\ref{eq1}) in subsection \ref{seclabelex} 
+on page \pageref{seclabelex} we discussed....
+\end{frame}
+
+\subsection{BibTeX}
+%% A separate .bib file for bibliography - how to use it
+%% Syntax
+%% How to input in document
+
+\begin{frame}[fragile]{The bibliography}
+The notes explain how to use a simple within-document bibliography.\\[0.5cm]
+
+My advice: record anything you've ever read in a separate \emph{Bib\TeX} file.\\[0.5cm]
+
+References will only appear if they are cited in the current document.
+\end{frame}
+
+\begin{frame}[fragile]{A Bib\TeX\ file}
+... should finish with .bib. Example syntax:
+{\scriptsize
+\begin{verbatim}
+@Article{LillyPark,
+author={Jonathan Lilly and Jeffrey Park},
+title={Multiwavelet Spectral and Polarization Analysis of Seismic Records},
+journal={Geophysical Journal International},
+year={1995},
+volume={122},
+pages={1001--1021}
+}
+
+@Book{Daub,
+author={Ingrid Daubechies},
+title={Ten Lectures on Wavelets},
+publisher={SIAM Press},
+year={1992},
+address={Philadelphia, USA}
+}
+\end{verbatim}
+}
+\end{frame}
+
+\begin{frame}[fragile]{Entry types}
+Example entry types: \verb+article+, \verb+book+, \verb+manual+, \verb+phdthesis+, \verb+inproceedings+, any many more.\\[0.5cm]
+
+Each has its own mandatory and optional fields.\\[0.5cm]
+
+See e.g.
+\begin{verbatim}
+http://en.wikipedia.org/wiki/BibTeX
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Placing and citing in document}
+Just before \verb+\end{document}+:
+\begin{verbatim}
+\bibliographystyle{plain}
+\bibliography{name}
+\end{verbatim}
+To cite in the document, use e.g. \verb+\cite[p.12]{label}+.
+\end{frame}
+
+\begin{frame}{Compiling}
+This depends on the editor but traditionally: 
+\begin{itemize}
+\item whenever the global numbering has changed (e.g. you have added a new section), \LaTeX\ needs to be compiled twice.
+\item whenever you input a new reference, compile \LaTeX\ once, then BiB\TeX\ once, then \LaTeX\ twice!
+\end{itemize}
+\end{frame}
+
+\subsection{Counters}
+\begin{frame}[fragile]{To change numbering}
+Use the following {\em counters}:
+{\scriptsize
+\begin{tabbing}
+numbering: \hspace{2cm} \= page \\
+\> chapter \\
+\> section, subsection \\
+\> equation \\
+\> figure \\
+\> table \\
+
+For enumerate: \> enumi \\
+\> enumii \\
+\> enumiii \\
+\> enumiv \\
+\end{tabbing}
+\begin{verbatim}
+\setcounter{section}{5}
+\addtocounter{section}{-2}
+\end{verbatim}
+}
+\end{frame}
+
+\begin{frame}[fragile]{Printing counter numbers}
+\begin{verbatim}
+\setcounter{page}{7}
+\arabic{page}
+\roman{page}
+\Roman{page}
+\alph{page}
+\Alph{page}
+\end{verbatim}
+produces:\setcounter{page}{7}
+\arabic{page}
+\roman{page}
+\Roman{page}
+\alph{page}
+\Alph{page}
+\\
+\setcounter{page}{56}
+To change numbering, add a \verb+\the+ to the front of the counter name, e.g. to relabel the 4th subsection of the 2nd section ``II-D'':\\
+{\footnotesize
+\begin{verbatim}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\thesection-\Alph{subsection}}
+\end{verbatim}
+}
+\end{frame}
+
+%%Other things: include and input
+%%style files and
+\begin{frame}[fragile]{Input and include}
+To split a lot of code into multiple files use \verb+\input+, e.g.
+\begin{verbatim}
+\input{chap1}
+\input{chap2}
+\input{chap3}
+\end{verbatim}
+If you only want to print part of the document, use \verb+\include+, e.g. to only print chapters 2 and 3:
+\begin{verbatim}
+\includeonly{chap2,chap3}
+\documentclass{article}
+\begin{document}
+\include{chap1}
+\include{chap2}
+\include{chap3}
+\end{document}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 3}
+\begin{verbatim}
+http://www2.imperial.ac.uk/~ejm/LaTeX/
+          Website/exercises/exercise3.html
+\end{verbatim}
+\end{frame}
+\end{document}

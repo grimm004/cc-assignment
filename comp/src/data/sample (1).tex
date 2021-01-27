@@ -1,0 +1,316 @@
+\documentclass[a4paper,oneside]{book}
+
+% Extend the basic mathematical functions of latex
+\usepackage{amsmath}
+
+% Handling various graphics files
+\usepackage{graphics,graphicx}
+
+
+% Easy control of margins
+\usepackage[a4paper, top=1.5in,left=1in, right=1in, bottom=1.5in]{geometry}
+
+% Various theorem environments
+\usepackage[standard,thmmarks,amsmath]{ntheorem}
+
+
+
+
+\title{An introduction to \LaTeX}
+\author{A. Mathematician\\[12pt]
+Department of Mathematics\\[6pt]
+        London School of Economics}
+\date{The date}
+
+\begin{document}
+
+% Print title page
+\maketitle
+
+% Print table of contents, and lists of figures and tables
+\tableofcontents
+\listoffigures
+\listoftables
+
+
+
+% Chapter 1
+\chapter{My First Chapter}
+
+
+
+% Chapter 2
+\chapter{My Second Chapter}
+\section{A section}
+\subsection{A subsection}
+\subsubsection{A subsubsection}
+
+
+
+% Chapter 3
+\chapter{Some useful environments}
+
+
+\section{The \texttt{table} environment}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{c | l c r}
+centred & left-justified & centered & right-justified \\ \hline
+$\alpha$ & frequenty & $x$ & x \\\cline{1-1}
+$\beta$ & this is longer than title & 0 & 1\\\cline{3-4}
+totals &  & $x + 0$ & x + 1
+\end{tabular}
+\end{center}
+\caption{A table environment (with caption).}
+\end{table}
+
+
+\section{Some additional environments}
+
+
+\subsection{Those list environments}
+
+
+\subsubsection{The \textbf{itemize} list environment}
+\begin{itemize}
+  \item Item 1
+  \item Item 2
+\end{itemize}
+
+
+\subsubsection{The \textbf{enumerate} list environment}
+\begin{enumerate}
+  \item Item 1
+  \item Item 2
+\end{enumerate}
+
+
+\subsubsection{The \textbf{description} list environment}
+\begin{description}
+  \item[\TeX] a typesetting system developed by Donald Knuth.
+  \item[\LaTeX] a format of \TeX, created by Leslie Lamport.
+  \item[markup language] a language for the annotating documents with information about their logical structure.
+\end{description}
+
+
+\subsection{Some more useful environments}
+
+
+\subsubsection{The \texttt{quote} environment}
+\begin{quote}
+Quotes can be indented using the quote environment.
+\end{quote}
+
+
+\subsubsection{The \texttt{verbatim} environment}
+This will typeset everything you type - with no processing - in a fixed width font.
+It is especially useful for typesetting program listings.
+\begin{verbatim}
+  #include <iostream>
+
+  int main()
+  {
+    std::cout << "Hello, world!\n";
+    return(0);
+  }
+\end{verbatim}
+
+
+\subsection{The \texttt{ntheorem} package}
+
+The following are provided by the \texttt{ntheorem} package.
+
+\begin{theorem}[Optional title]
+Statement of theorem.
+\end{theorem}
+
+Other environments include:
+\begin{itemize}
+  \item \texttt{proposition}
+  \item \texttt{lemma}
+  \item \texttt{corollary}
+  \item \texttt{definition}
+\end{itemize}
+
+
+\section{Including figures in your document}
+
+\begin{center}
+\LaTeX\,makes assumptions about your graphics file format!!
+\end{center}
+
+Download the files \texttt{quadratic.pdf} and \texttt{quadratic.eps} from the Moodle course page and then uncomment (i.e. remove the preceding \% symbol from) the line containing the \texttt{\textbackslash{includegraphics}} command.
+\begin{enumerate}
+\item
+Making sure you have selected an output type of PDF, by selecting \textbf{LaTeX} $=>$ \textbf{PDF} in the drop-down build menu, compile and view this document.  In particular, look at the figure on page \pageref{fig_quadratic}.
+\item
+Now do so again, but this time select an output type of PS, by selecting \textbf{LaTeX} $=>$ \textbf{PS} in the drop-down menu. In particular, look at the figure on page \pageref{fig_quadratic}.
+\end{enumerate}
+\begin{figure}[h]
+\label{fig_quadratic}
+\begin{center}
+\includegraphics[width=0.5\linewidth]{quadratic}
+\caption{The graphics file named \texttt{quadratic}.}
+\end{center}
+\end{figure}
+
+
+
+\chapter{Typesetting mathematics}
+\label{chap_typesetting}
+
+In this chapter, (\ref{chap_typesetting}), we shall consider text mode mathematics,  in \S\ref{sec_text_mode_maths}, and then display mode mathematics, in \S\ref{sec_display_mode_maths}.
+
+
+\section{Inline (text mode) mathematics}
+\label{sec_text_mode_maths}
+
+Mathematics within text is displayed using the \$ \ldots \$ signs.  For example:
+
+\begin{definition}[Convergence of a sequence]
+The sequence $(x_n)$ converges to some limit $L$ if and only if $\forall \epsilon > 0$, $\exists N \in \mathbb{N}$ such that $|x_n - L| < \epsilon$ for all $n > \mathbb{N}$.
+\end{definition}
+
+Remember that \LaTeX\, will squash things down to more appropriately fill the line.
+\begin{quote}
+We then compute the integral $\int_0^1 x dx = \frac{1}{2}$.
+\end{quote}
+You can avoid this forcing it to format it in display mode:
+\begin{quote}
+We then compute the integral $\displaystyle{ \int_0^1 x dx = \frac{1}{2} }$.
+\end{quote}
+
+
+\section{Display mode mathematics}
+\label{sec_display_mode_maths}
+
+
+\subsection{Unnumbered environments}
+
+Mathematics can also be formatted outside of a body of text - this is known as \textbf{display mode maths}.
+While taking more space, this can make your dissertation more readable.
+
+There are two unnumbered environments (see the next section for numbering) for single line mathematical expressions.
+
+\begin{enumerate}
+
+\item
+You can use either the double dollar symbols, \$\$ \ldots \$\$:
+$$\cos^2 \theta + \sin^2 \theta = 1$$
+
+\item
+You can also use \textbackslash[ \ldots \textbackslash]:
+\[
+y^x = \exp{x\ln{y}}
+\]
+
+\end{enumerate}
+
+
+\subsection{Numbered environments}
+
+The following are automatically numbered environments.
+If we then attach labels to them, we can reference them in the text.
+
+\subsubsection{The \texttt{equation} environment}
+
+\begin{equation}
+\label{eq_unit_circle}
+\mathcal{C}
+  = \left\{ (x,y) \in \mathbb{R}^2 \mid x^2 + y^2 = 1 \right\}
+\end{equation}
+Equation (\ref{eq_unit_circle}) is found on page \pageref{eq_unit_circle}.
+
+
+\subsubsection{The \texttt{gather} environment}
+
+\begin{gather}
+\label{eq_gamma}
+\Gamma(z) = \int_0^\infty t^{z - 1} e^{-t} dt \\
+\label{eq_binomial}
+\binom{n}{k}
+  = \frac{n!}{(n - k)!k!}.
+\end{gather}
+Equations (\ref{eq_gamma}) and (\ref{eq_binomial}) are found on pages \pageref{eq_gamma} and \pageref{eq_binomial} respectively.
+
+
+\subsubsection{The \texttt{align} environment}
+
+\begin{align}
+   \sum_{n=0}^k a_n x^n
+     &= a_0 + a_1 x + \ldots + a_n x^n\\
+   \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}
+   \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix}
+     &= I
+\end{align}
+
+
+\subsubsection{The \texttt{alignat} environment}
+
+\begin{alignat}{6}
+f(x)
+  &= a_0 &+ a_1 x &+ a_2 x^2 &+ a_3 x^3 &+ \ldots \\
+x f(x)
+  &=     &+ a_0 x &+ a_1 x^2 &+ a_2 x^3 &+ \ldots \\
+-x^2 f(x)
+  &=     &        &- a_0 x^2 &- a_1 x^3 &- \ldots 
+\end{alignat}
+You should be careful about using this, since the \textit{actual} output can be markedly different than the \textit{desired} output.
+
+
+\subsubsection{The \texttt{multline} environment}
+
+\begin{multline}
+  \left\{ (x,y,z) \in \mathbb{R}^3 \mid x + y + z = 5 \right\} \\
+  \cap \left\{ (x,y,z) \in \mathbb{R}^3 \mid xy + yz + zx = 8 \right\} \\
+  \cap \left\{ (x,y,z) \in \mathbb{R}^3 \mid x^2 + y^2 + z^2 = 4 \right\}
+\end{multline}
+
+What happens if you add another line in the centre now?
+Copy and paste the middle line in again and see.
+
+
+% Appendices
+\appendix
+% Appendix A
+\chapter{An appendix chapter}
+
+\section{Special characters}
+
+\begin{table}[h]
+\begin{tabular}{c | l | c}
+Symbol & Reserved function  &\\\hline
+\textbackslash & Indicates a \LaTeX\,command\\[6pt]
+\{ \quad \} & Contains arguments for commands \\[6pt]
+\% & Indicates a comment \\[6pt]
+\$ & Starts/ends a maths environment \\[6pt]
+\textasciicircum \quad \_ & Superscript and subscript operators
+\end{tabular}
+\caption{A table of special characters and their function.}
+\end{table}
+
+
+
+% Appendix B
+\chapter{A second appendix chapter}
+
+
+
+% Bibliography
+\begin{thebibliography}{xx}
+
+	\bibitem{lamport94}
+	  Leslie Lamport,
+	  \emph{\LaTeX: A Document Preparation System}.
+	  Addison Wesley, Massachusetts,
+	  2nd Edition,
+	  1994.
+
+\end{thebibliography}
+
+
+\end{document}
+
+
+This sentence is not compiled in any way.

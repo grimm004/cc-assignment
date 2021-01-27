@@ -20,6 +20,7 @@
 \begin{document}
     \maketitle
 
+
     \section{Introduction}\label{sec:introduction}
     This report looks to explore an attack plan to decrypt the following 16-byte ciphertext:
     \[\texttt{0x903408ec4d951acfaeb47ca88390c475} \tag{1}\label{eq:ciphertext}\]
@@ -47,7 +48,7 @@
 
     As demonstrated in~\eqref{eq:plaintext_definition}, the plaintext must contain two full stop characters (\texttt{0x2e}).
     Without access to an oracle, this, potentially combined with a dictionary, could be used to help check for a valid plaintext when the correct key is used.
-    Given access to the encryption oracle however, this can theoretically be reduced by many factors of 2 ($~2^{40}-2^{50}$) using techniques such as linear cryptanalysis~\cite{matsui1993linear}, and differential cryptanalysis~\cite{biham1992differential}.
+    Given access to the encryption oracle however, this can theoretically be reduced by many factors of 2 (to between $~2^{40}$ and $2^{50}$) using techniques such as linear cryptanalysis~\cite{matsui1993linear}, and differential cryptanalysis~\cite{biham1992differential}.
     On a single machine, even with GPU acceleration, this may take several days to months.
 
     For this reason, this attack will not be carried out.
@@ -76,7 +77,7 @@
     This means there are only a few combinations of word lengths $\{\len(x), len(y), len(z)\}$, these are
     \[\{6, 4, 4\}, \{4, 6, 4\}, \{4, 4, 6\}, \{5, 5, 4\}, \{4, 5, 5\}, \{5, 4, 5\}\]
 
-    According to the \textit{what3words} Wikipedia page~\cite{what3words_wikipedia}, a 40,000-long English word-list is used to cover all sea and land squares.
+    According to the \textit{what3words} Wikipedia page~\cite{what3words_wikipedia}, albeit without a verifiable source, a 40,000-long English word-list is used to cover all land and sea squares.
     Supposing all words from this could be used in the ciphertext, this, if known, would require up to $40,000^3 = 64\times10^{12} \approx 2^{46}$ tests for a guaranteed ciphertext, which is roughly in-line with a linear cryptanalysis attack.
     Given the presented constraints however, this can be significantly reduced while maintaining an incredibly high chance of attaining success.
     Hence, any dictionary can safely discard words of length less than 4 and greater than 6, as well as words considered to be rude or offensive.

@@ -1,0 +1,147 @@
+\documentclass[a4paper,12pt]{article}
+
+% determine if pdfLaTeX is running or just plain LaTeX
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+\pdffalse % we are not running PDFLaTeX
+\else
+\pdfoutput=1 % we are running PDFLaTeX
+\pdftrue
+\fi
+
+% Load hyperref package and set up \href command
+\ifpdf
+\usepackage[pdftex,colorlinks=true,bookmarks=false]{hyperref} 
+\else
+\newcommand\href[2]{#2}
+\fi
+
+\begin{document}
+
+\title{Introduction to \LaTeX:\\local information}
+\author{Richard Kaye\\\href{http://web.mat.bham.ac.uk/R.W.Kaye/}{http://web.mat.bham.ac.uk/R.W.Kaye/}}
+\date{10th October 2000}
+
+\maketitle
+
+This document outlines some machine-specific information
+about using \LaTeX\ on one of the suns (e.g., babbage, fourier or ugs2)
+in the School of Maths and Stats at Birmingham. For more information on 
+any particular aspect of \LaTeX, see the accompanying handouts 
+or the web pages at
+\begin{quote}
+\href{http://web.mat.bham.ac.uk/R.W.Kaye/latex/}{http://web.mat.bham.ac.uk/R.W.Kaye/latex/}.
+\end{quote}
+
+\subsection*{Logging on from room 304}
+
+There are several `X-terminals' in 304.  I recommend you log
+on to fourier, babbage or ugs2, depending on where you have
+an account.  
+
+When you have logged on, you will need to have a `command tool', `terminal',
+or `console' window open.  If you haven't already got one, you can get one
+by pressing and holding the right mouse button on some empty workspace,
+selecting programs, moving the mouse right, and then selecting `command 
+tool' (or `terminal', or `console'), and then releasing the mouse button.
+
+\subsection*{Running \LaTeX}
+
+Your first task will be to get used to the \textbf{Edit--\LaTeX--View} cycle.
+You will find material for this course from the web page
+\begin{center}
+\href{http://web.mat.bham.ac.uk/R.W.Kaye/latex/}{http://web.mat.bham.ac.uk/R.W.Kaye/latex/}
+\end{center}
+Beginners to either \LaTeX\ or the 
+suns or both are recommended to start by going to `Session 1' 
+and working through the \verb|small2e| example. 
+\textbf{Do not print out \texttt{small2e.tex} until
+you have changed it in some way which will be
+recognizable as your output and not someone else's!}  
+(For example, add your name somewhere in the text.)
+
+\subsection*{Viewing dvi files}
+
+To view dvi files on the suns, use the \texttt{xdvi} command.
+For example, to view \texttt{small2e.dvi} you should type
+\begin{quote}
+\texttt{xdvi small2e \&}
+\end{quote}
+in the command tool or console window.  A table later on in this document
+lists some of the key-presses that you will find useful for \texttt{xdvi}.
+
+\subsection*{Printing dvi files}
+
+To print dvi files in room 304, use the \texttt{dvips} command.
+For example, to view \texttt{small2e.dvi} you should type
+\begin{quote}
+\texttt{dvips -PLsp small2e}
+\end{quote}
+in the command tool or console window.  (The \texttt{-PLsp}
+option tells \texttt{dvips} to print to the printer in room 304.)
+
+\subsection*{For the remaining sessions\ldots}  
+Please bring with you some mathematics of
+the sort you do, or expect to have to type up.  This could be a text book,
+a paper, or some work of your own.  Start to experiment with typing it
+up.  We will discuss any difficulties that arise and which of the huge
+number of \LaTeX\ packages that are available can help you.
+
+\begin{table}
+\noindent     \texttt{xdvi} recognizes the following keystrokes when typed  in  its
+     window.   Each  may optionally be preceded by a (positive or
+     negative) number, whose interpretation will  depend  on  the
+     particular  keystroke.   Also,  the `Home', `Prior', `Next',
+     and arrow cursor keys are synonyms for `\^{ }', `b',  `f',  `l',
+     `r', `u', and `d' keys, respectively.
+
+\begin{description} 
+\item[q]    Quits the program.  Control-C  and  control-D  will  do
+          this, too.
+ 
+\item[n]    Moves to the next page (or to the nth next  page  if  a
+          number is given).  Synonyms are `f', Space, Return, and
+          Line Feed.
+ 
+\item[p]    Moves to the previous page (or back n pages).  Synonyms
+          are `b', control-H, and Delete.
+ 
+\item[g]    Moves to the page with the  given  number.   Initially,
+          the first page is assumed to be page number 1, but this
+          can be changed with the `P' keystroke,  below.   If  no
+          page number is given, then it goes to the last page.
+ 
+\item[P]    ``This is page number n.''  This can be  used  to  make
+          the  `g' keystroke refer to actual page numbers instead
+          of absolute page numbers.
+ 
+\item[Control-L] Redisplays the current page. (Useful when you have
+re-\LaTeX ed a document and want to see the results.)
+ 
+\item[\^{ }]    Move to the ``home'' position of  the  page.   This  is
+          normally  the  upper  left-hand  corner  of  the  page.
+ 
+\item[u]    Moves up two thirds of a windowfull.
+ 
+\item[d]    Moves down two thirds of a windowfull.
+ 
+\item[l]    Moves left two thirds of a windowfull.
+ 
+\item[r]    Moves right two thirds of a windowfull.
+ 
+\item[c]    Moves the page so that the point currently beneath  the
+          cursor  is  moved to the middle of the window.  It also
+          (gasp!) warps the cursor to the same place.
+ 
+\item[R]    Forces the dvi file to be reread.  This allows  you  to
+          preview  many  versions  of the same file while running
+          xdvi only once.
+ 
+\item[x]    Toggles expert mode (in which the buttons  do  not  appear).   
+ 
+\end{description} 
+\hrule
+\caption{Some keystrokes recognized by the Xdvi viewer}
+\end{table}
+
+\end{document}

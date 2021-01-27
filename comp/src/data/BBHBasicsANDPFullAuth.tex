@@ -1,0 +1,1617 @@
+\documentclass{andp2012}% no class options needed by now
+\usepackage[english]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% The following commands will be completed by the publisher.  Please leave 
+%%% these to the editors.
+% \setcopyrightyear{2012}%
+% \DOIprefix{10.1002}%
+% \DOIsuffix{andp.201100xxx}%
+% \Volume{524}%
+% \Issue{}%
+% \Month{}%
+% \Year{2012}%
+%%\Day{1}
+% \pagespan[A]{}{}% page numbers are irrelevant for now
+% \Receiveddate{}
+% \Reviseddate{}
+% \Accepteddate{}
+% \Dateposted{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{etoolbox}
+\usepackage{url,hyperref}
+
+
+%%%%%%%%%%%
+
+\def\w{\omega}
+\def\D{{\rm d}} 
+\def\e{{\rm e}} 
+\def\i{{\rm i}} 
+
+\def\({\left(}
+\def\){\right)}
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+\def\bea{\begin{eqnarray}}
+\def\eea{\end{eqnarray}}
+\def\ergo{\Longrightarrow}
+%\newcommand{\inlinecite}[1]{Ref.~\onlinecite{#1}}
+%\newcommand{\inlinecites}[1]{Refs.~\onlinecite{#1}}
+\newcommand{\inlinecite}[1]{\cite{#1}}
+\newcommand{\inlinecites}[1]{\cite{#1}}
+\newcommand{\refigure}[1]{Fig.~\ref{#1}}
+\newcommand{\refigures}[1]{Figs.~\ref{#1}}
+\newcommand{\refapp}[1]{App.\ \ref{#1}}
+\newcommand{\refsec}[1]{Sec.\ \ref{#1}}
+\newcommand{\refeqn}[1]{Eq.\ \ref{#1}}
+%\newcommand{\caveatformat}[1]{{\bf #1}. }
+\newcommand{\caveatformat}[1]{\subsection{#1}}
+
+\def\Mc{\mathcal{M}}
+\def\Lplanck{L_{\rm Planck}}
+
+\def\fgw{f_{\rm GW}}
+\def\forb{f}
+\def\wgw{\w_{\rm GW}}
+\def\worb{\w}
+
+\def\submax{\big|_{\rm max}}
+\def\fgwmax{f_{\rm GW} \submax}
+\def\subfin{\big|_{\rm fin}}
+\def\fgwfin{f_{\rm GW} \subfin}
+\def\subRD{|_{\rm ringdown}}
+\def\fRD{{\fgw}\subRD}
+
+\def\wkep{\w_{\rm Kep}}
+\def\wkepmax{\wkep\submax}
+\def\orb{_{\rm orb}}
+
+\def\hmax{h\submax}
+
+%%% use acronyms
+%\def\BH{BH }		\def\BHs{BHs }		\def\BHns{BH}		\def\BHsns{BHs}		\def\GW{GW }		\def\GWs{GWs }				\def\GWns{GW}		\def\GWsns{GWs}		\def\LR{LR }		\def\ISCO{ISCO }		\def\NS{NS }		\def\NSs{NSs }			\def\GR{GR }
+
+%%% expand out acronyms
+\def\BH{black hole }		\def\BHs{black holes }			\def\BHns{black hole}		\def\BHsns{black holes}		\def\GW{gravitational wave }		\def\GWs{gravitational waves }				\def\GWns{gravitational wave}		\def\GWsns{gravitational waves}		\def\LR{light ring }		\def\ISCO{innermost stable circular orbit }		\def\NS{neutron star }		\def\NSs{neutron stars }		\def\GR{general relativity }
+
+%%% some macros used by the detection paper for standardization
+
+\newcommand{\Msun}{\ensuremath{\mathrm{M}_\odot\,}}
+
+\newcommand{\MCOMPONENTAPPROX}{\ensuremath{35\, \Msun}}
+\newcommand{\CHIRPSTRAINPEAK}{\macro{\ensuremath{1.0 \times 10^{-21}}}} 
+\newcommand{\CHIRPFSTRAINPEAK}{\ensuremath{150}} % Hz
+\newcommand{\MFINALAPPROX}{\ensuremath{70\, \Msun}}
+
+\newcommand{\CHIRPMASSAPPROX}{\ensuremath{30\, \Msun}}
+\newcommand{\CHIRPFMIN}{\macro{\ensuremath{30}}} % Hz
+\newcommand{\CHIRPFATMAX}{\macro{\ensuremath{170}}} % Hz
+\newcommand{\CHIRPFMAX}{250} % Hz
+\newcommand{\CHIRPDURATION}{\macro{\ensuremath{0.2}}} % s
+\newcommand{\ORBITALSEP}{\ensuremath{347}} % km
+\newcommand{\ORBITALSEPAPPROX}{\ensuremath{350}} % km
+
+
+
+
+
+%% Enable/disable the full author list
+\newtoggle{fullauthorlist}
+\toggletrue{fullauthorlist}
+%\togglefalse{fullauthorlist}
+
+%% Enable/disable placing author list at the end
+\newtoggle{endauthorlist}
+\toggletrue{endauthorlist}
+%\togglefalse{endauthorlist}
+
+
+
+\iftoggle{endauthorlist}{
+%
+% Put the author list at the end of the document.
+% Save author, affiliation, and maketitle commands.
+%
+\let\mymaketitle\maketitle
+\let\myauthor\author
+\let\myaffiliation\affiliation
+\author{The LIGO Scientific Collaboration
+%\footnote{Corresponding author\quad E-mail:~\textsf{info??@ligo.org}}
+}
+\author{The Virgo Collaboration
+\footnote{Full author list appears at the end.}
+}
+}{
+%
+% Keep the author list on the initial title page.
+%
+\iftoggle{fullauthorlist}{
+\input{BBHBasicsAuthors.txt}
+}{
+\author{The LIGO Scientific Collaboration}
+\affiliation{LSC}
+\author{The Virgo Collaboration}
+\affiliation{Virgo}
+}
+}
+
+
+
+%%% You can give a category and subcategory, but you don't have to. It is 
+%%% recommended to leave these lines as-is.
+% \category{Review Article/Original Paper}
+% \subcategory{}
+%%% Please give keywords, if there are any, in a comma separated list starting
+%%% with a capital and ending with a period.
+\keywords{GW150914, gravitational waves, black holes.}
+\title{The basic physics of the binary black hole merger GW150914}
+%%% this one is not mandatory:
+% \subtitle{subtitle}
+%%% In two-column articles the sequence of author names and addresses in the
+%%% article title page is identical to the sequence of the respective \author
+%%% and \address macros here.  They don't need to be intertwined as in 
+%%% three-column mode, though.  The correspondence between author names and 
+%%% (probably multiple) affiliations is shown using numerical tags in \inst 
+%%% macros and the optional arguments of the \address declarations, 
+%%% respectively:
+
+%\author[B. Allen]{Bruce Allen\inst{1,2,3}}
+%\author[O. Birnholtz]{Ofek Birnholtz\inst{1} \footnote{Corresponding author\quad E-mail:~\textsf{ofek.birnholtz@aei.mpg.de}}}
+%\author[A. B. Nielsen]{Alex B. Nielsen\inst{1}}
+%\author[S. Ghosh]{Shaon Ghosh\inst{4,5}}
+%\author[A. G. Wiseman]{Alan G. Wiseman\inst{3}}
+%\address[1]{Max-Planck-Institut f\"ur Gravitationsphysik, D-30167 Hannover, Germany}
+%\address[2]{Leibniz Universit\"at Hannover, D-30167 Hannover, Germany}
+%\address[3]{University of Wisconsin-Milwaukee, Milwaukee, WI 53201, USA}
+%\address[4]{Department of Astrophysics/IMAPP, Radboud University Nijmegen, P.O. Box 9010, 6500 GL Nijmegen, The Netherlands}
+%\address[5]{Nikhef, Science Park, 1098 XG Amsterdam, The Netherlands}
+
+\shortauthors{LIGO Scientific \& VIRGO Collaborations}
+
+
+
+
+\begin{abstract}
+The first direct gravitational-wave detection was made by the
+Advanced Laser Interferometer Gravitational Wave Observatory
+on September 14, 2015.
+The GW150914 signal was strong enough
+to be apparent,
+without using any waveform model,
+in the filtered detector strain data.
+Here those features of the signal visible in these data are used,
+along with only such concepts from Newtonian physics
+and general relativity
+as are accessible to anyone with a general physics background.
+The simple analysis presented here is consistent with
+the fully general-relativistic analyses published elsewhere,
+in showing that the signal was produced by
+the inspiral and subsequent merger of two black holes.
+The black holes were each of approximately
+$\MCOMPONENTAPPROX{}$,
+still orbited each other as close as
+$\sim\ORBITALSEPAPPROX$ km apart
+and subsequently merged to form a single black hole.
+%no other known type of astrophysical objects
+%could have been responsible for the GW150914 signal.
+Similar reasoning, directly from the data,
+is used to roughly estimate how far these black holes were from the Earth,
+and the energy that they radiated in gravitational waves.
+\end{abstract}
+\shortabstract
+
+%%% Here, the document begins.
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\label{Sec:intro}
+
+Advanced LIGO made the first observation of a gravitational wave (GW) signal, GW150914 \cite{DetectionPaper},
+on September 14th, 2015,
+a successful confirmation of a prediction by
+Einstein's theory of general relativity (GR).
+The signal was clearly seen by the two LIGO detectors
+located in Hanford, WA and Livingston, LA.
+Extracting the full information about the source of the signal
+requires detailed analytical and computational methods
+(see \inlinecites{PEPaper, BetterPE, TestingGRPaper, AstroPaper, O1BBH}
+and references therein for details).
+However, much can be learned about the source
+by direct inspection of the detector data
+and some basic physics\cite{Schutz:1984nf},
+accessible to a general physics audience,
+as well as students and teachers.
+This simple analysis indicates that the source is
+two black holes (BHs) orbiting around one another
+and then merging to form another \BH.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\columnwidth]{figs/StrainFreqDetPaper1.jpg}
+\caption{
+ The instrumental strain data in the
+ Livingston detector (blue) and Hanford detector (red),
+ as shown in Figure 1 of \inlinecite{DetectionPaper}.
+ Both have been bandpass- and notch-filtered.
+ The Hanford strain has been shifted back in time by 6.9 ms and inverted.
+ Times shown are relative to 09:50:45 Coordinated Universal Time (UTC) on September 14, 2015.
+}
+ \label{f:rawdata}
+\end{figure}
+
+A black hole is
+%an object, demarcated by
+a region of space-time
+where the gravitational field is so intense
+that neither matter nor radiation can escape.
+There is a natural ``gravitational radius'' associated with a mass $m$,
+called the Schwarzschild radius, given by
+\begin{equation}
+  r_{\rm Schwarz}(m) = \frac{2 G m}{c^2} = 2.95 \, \biggl(
+  \frac{m}{\Msun} \biggr) \, {\rm km},
+\end{equation}
+where
+$\Msun =1.99 \times 10^{30}~\rm{kg}$
+is the mass of the Sun,
+$G = 6.67 \times 10^{-11} \; {\rm m^3/s^2kg}$
+is Newton's gravitational constant, and
+$c = 2.998 \times 10^8 \; {\rm m/s}$
+is the speed of light.
+According to the hoop conjecture, if a non-spinning mass is compressed
+to within that radius, then it must form a black hole~\cite{Thorne:1972ji}.
+Once the \BH is formed,
+any object that comes within this radius can no longer
+escape out of it.
+
+Here, the result that GW150914 was emitted by an inspiral and merger of two \BHs
+follows from
+(1) the strain data visible at the instrument output,
+(2) dimensional and scaling arguments,
+(3) primarily Newtonian orbital dynamics and
+(4) the Einstein quadrupole formula for the luminosity of a \GW source\footnote{
+In the terminology of GR corrections to Newtonian dynamics,
+(3) \& (4) constitute the ``0th post-Newtonian" approximation (0PN)
+(see \refsec{Sec:just:newton}).
+A similar approximation was used for the first analysis of
+binary pulsar PSR 1913+16 \cite{Hulse:1974eb, Taylor:1982zz}.
+}.
+These calculations are simple enough that they can be readily
+verified with pencil and paper in a short time.
+Our presentation is by design approximate, emphasizing simple arguments.
+
+Specifically, while the orbital motion of two bodies is approximated
+by Newtonian dynamics and Kepler's laws
+to high precision at sufficiently large separations and sufficiently low velocities,
+we will invoke Newtonian dynamics
+to describe the motion even toward the end point of orbital motion
+(We revisit this assumption in \refsec{Sec:just:newton}).
+The theory of \GR
+is a fully nonlinear theory,
+which could make
+any Newtonian analysis
+wholly unreliable;
+however, solutions of Einstein's equations
+using numerical relativity
+(NR)\cite{Pretorius:2005gq, Buonanno:2006ui, Boyle:2007ft}
+have shown that
+a binary system's departures
+from Newtonian dynamics
+can be described well using
+a quantifiable analytic perturbation
+until quite late in its evolution
+- late enough for our argument
+(as shown in \refsec{Sec:just:newton}).
+
+The approach presented here,
+using basic physics,
+is intended
+as a pedagogical introduction to the physics of \GW signals,
+and as a tool to build intuition using rough, but straightforward, checks.
+Our presentation here is by design elementary,
+but gives results consistent with more advanced treatments.
+The fully rigorous arguments,
+as well as precise numbers describing the system,
+have already been published elsewhere\cite{PEPaper, BetterPE, TestingGRPaper, O1BBH, AstroPaper}.
+
+The paper is organized as follows:
+our presentation begins with the data output by the detectors\footnote{
+The advanced LIGO detectors use laser interferometry to measure the strain
+caused by passing \GWsns.
+For details of how the detectors work,
+see \inlinecite{DetectionPaper} and its references.}
+.
+\refsec{Sec:data} describes the properties of the signal read off the strain data,
+and how they determine the quantities relevant for analyzing the system as a binary inspiral.
+We then discuss in \refsec{Sec:basic}, using the simplest assumptions,
+how the binary constituents must be heavy and small, consistent only with being black holes.
+In \refsec{Sec:justifications}
+we examine and justify the assumptions made,
+and constrain both masses to be well above the heaviest known neutron stars.
+\refsec{Sec:luminosity} uses the peak \GW luminosity
+to estimate the distance to the source,
+and calculates the total luminosity of the system.
+The appendices provide a calculation of gravitational radiation strain and radiated power (\refapp{Sec:Mc from Quadrupole}),
+and discuss astrophysical compact objects of high mass (\refapp{Sec:stability})
+and what one might learn from the waveform after the peak (\refapp{Sec:ringdown}).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\columnwidth]{figs/OmegaScanDetPaper1.jpg}
+\caption{A representation of the strain-data as a time-frequency
+		   plot (taken from \inlinecite{DetectionPaper}),
+		   where the increase in signal frequency (``chirp")
+		   can be traced over time.}
+\label{f:time-freq-plot}
+\end{figure}
+
+\section{Analyzing the observed data}
+\label{Sec:data}
+
+Our starting point is shown in \refigure{f:rawdata}:
+the instrumentally observed strain data $h(t)$,
+after applying a band-pass filter to the LIGO sensitive frequency band (35--350 Hz),
+and a band-reject filter around known instrumental noise frequencies \cite{LOSC}.
+The time-frequency behavior of the signal is depicted in \refigure{f:time-freq-plot}.
+An approximate version of the time-frequency evolution can also be obtained
+directly from the strain data in \refigure{f:rawdata}
+by measuring the
+time differences $\Delta t$ between
+successive zero-crossings
+\footnote{
+To resolve the crossing at
+$t\sim0.35$ s,
+when the signal amplitude is lower
+and the true waveform's sign transitions
+are difficult to pinpoint,
+we averaged the positions of the
+five adjacent zero-crossings
+(over $\sim6$ ms).
+}
+and estimating
+$\fgw=1/(2\Delta t)$,
+without assuming a waveform model.
+We plot the $-8/3$ power of these estimated frequencies in \refigure{f:linearfit},
+and explain its physical relevance below.
+
+The signal is dominated by several cycles of a wave pattern
+whose amplitude is initially increasing,
+starting from around the time mark 0.30 s.
+In this region the gravitational wave period is decreasing, thus the frequency is increasing.
+After a time around 0.42s, the amplitude drops rapidly,
+and the frequency appears to stabilize.
+The last clearly visible cycles
+(in both detectors, after accounting for a $6.9$~ms time-of-flight-delay \cite{DetectionPaper})
+indicate that the final instantaneous frequency is above $200$~Hz.
+The entire visible part of the signal lasts for around $0.15~$s.
+
+In general relativity,
+\GWs are produced by accelerating masses\cite{Flanagan:2005yc}.
+Since the waveform clearly shows at least eight oscillations,
+we know that mass or masses are oscillating.
+The increase in \GW frequency and amplitude also indicate that
+during this time the oscillation frequency of the source system is increasing.
+This initial phase cannot be due to a perturbed system returning back to stable equilibrium,
+since oscillations around equilibrium are generically characterized by
+roughly constant frequencies and decaying amplitudes.
+For example, in the case of a fluid ball,
+the oscillations would be damped by viscous forces.
+Here, the data demonstrate very different behavior.
+
+During the period when the \GW frequency and amplitude are increasing,
+orbital motion of two bodies is the only plausible explanation:
+there, the only ``damping forces'' are provided by \GW emission,
+which brings the orbiting bodies closer (an ``inspiral"),
+increasing the orbital frequency and
+amplifying the \GW energy output from the system\footnote{
+The possibility of a different inspiraling system,
+whose evolution is not governed by \GWsns,
+is explored in \refapp{app:different inspiral}
+and shown to be inconsistent with this data.
+}.
+%
+
+Gravitational radiation
+has many aspects analogous to
+electromagnetic (EM) radiation from accelerating charges.
+A significant difference is that there is no analog to EM
+dipole radiation, whose amplitude is proportional
+to the second time derivative of the electric dipole moment.
+This is because the gravitational analog
+is the mass dipole moment
+($\sum_A m_A {\bf x}_A$ at leading order in the velocity)
+whose first time derivative
+is the total linear momentum,
+which is conserved for a closed system,
+and whose second derivative therefore vanishes.
+Hence, at leading order,
+gravitational radiation is quadrupolar.
+Because the quadrupole moment
+(defined in \refapp{Sec:Mc from Quadrupole})
+is symmetric under rotations by $\pi$
+about the orbital axis,
+the radiation has a frequency
+{\em twice} that of the orbital frequency
+(for a detailed calculation for a 2-body system,
+see \refapp{Sec:Mc from Quadrupole}
+and pp. 356-357 of \inlinecite{LandauLifshitz}).
+
+The eight \GW cycles of increasing frequency therefore require
+at least four orbital revolutions, at separations large enough
+(compared to the size of the bodies) that the bodies do not collide.
+The rising frequency signal eventually terminates,
+suggesting the end of inspiraling orbital motion.
+As the amplitude decreases and the frequency stabilizes
+the system returns to a stable equilibrium configuration.
+We shall show that the only reasonable explanation for the
+observed frequency evolution is that the system consisted
+of two black holes that had orbited each other and subsequently merged.
+
+{\bf Determining the frequency at maximum strain amplitude $\fgwmax$}:
+The single most important quantity for the reasoning in this paper is
+the \GW frequency at which the waveform has maximum amplitude.
+Using the zero-crossings around the peak of \refigure{f:rawdata}
+and/or the brightest point of \refigure{f:time-freq-plot},
+%\refigures{f:rawdata} and \ref{f:time-freq-plot},
+we take the conservative (low) value
+\begin{equation}
+  \fgwmax \sim \CHIRPFSTRAINPEAK ~\rm{Hz},
+\end{equation}
+where here and elsewhere the notation indicates that the quantity
+before the vertical line is evaluated at the time indicated after the line.
+We thus interpret the observational data as indicating that the bodies were orbiting each other
+(roughly Keplerian dynamics)
+up to at least an orbital angular frequency
+\begin{equation}
+  \wkepmax = \frac{2\pi \fgwmax}{2} = 2\pi \times 75~\rm{Hz}.
+\end{equation}
+
+{\bf Determining the mass scale}:
+Einstein found\cite{EinsteinGW} that the \GW strain $h$
+at a (luminosity) distance $d_L$ from a system
+whose traceless mass quadrupole moment is $Q_{ij}$
+(defined in \refapp{Sec:Mc from Quadrupole})
+is
+\begin{equation}
+  \label{e:quadrupole strain}
+  h_{ij} = \frac{2 \, G}{c^4 \, d_L} \frac{\D^2 Q_{ij}}{\D t^2},
+\end{equation}
+and that the rate at which energy is carried away by these \GWs
+is given by the quadrupole formula\cite{EinsteinGW}
+
+\begin{eqnarray}
+  \label{e:quadrupole2}
+  \frac{\D E_{\rm GW}}{\D t}
+  & = & \frac{c^3}{16\pi \, G} \iint \bigl| \dot{h} \bigr|^2
+      \D S  
+      =  \frac{1}{5} \frac{G}{c^5}\sum_{i,j=1}^3  \frac{\D^3 Q_{ij}}{\D t^3}\frac{\D^3 Q_{ij}}{\D t^3}  ~,\\
+\nonumber
+&& {\rm where\ } \bigl| \dot{h} \bigr|^2 =  \sum_{i,j=1}^3
+      \frac{\D h_{ij}}{\D t}
+      \frac{\D h_{ij}}{\D t} ,
+\end{eqnarray}
+the integral is over a sphere at radius $d_L$
+(contributing a factor $4\pi d_L^2$),
+and the quantity on the right-hand side must be averaged
+over (say) one orbit\footnote{See
+\refapp{Sec:Mc from Quadrupole}
+for a worked-out calculation,
+and pp. 974-977 of \inlinecite{MTW}
+for a derivation of these results,
+obtained by linearizing the Einstein Equation,
+the central equation of general relativity.}.
+
+%Taking a time derivative of \refeqn{e:quadrupole strain},
+%plugging in \refeqn{e:quadrupole1}
+
+In our case, \refeqn{e:quadrupole2}
+gives the rate of loss of orbital energy to \GWsns,
+when the velocities of the orbiting objects are not too close
+to the speed of light,
+and the strain is not too large\cite{Flanagan:2005yc};
+we will apply it until the frequency $\fgwmax$,
+see \refsec{Sec:just:newton}.
+This wave description is applicable
+in the ``wave zone" \cite{wavezone},
+where the gravitational field is weak
+and the expansion of the universe is ignored
+(see \refsec{Sec:just:distance}).
+
+For the binary system we denote the two masses by $m_1$ and $m_2$,
+the total mass by $M=m_1 + m_2$,
+and the reduced mass by $\mu = m_1 m_2 / M$.
+We define the mass ratio $q=m_1/m_2$ and
+without loss of generality assume that $m_1 \ge m_2$ so that $q \ge 1$.
+To describe the \GW emission from a binary system, a useful mass quantity
+is the {\it chirp mass}, $\Mc$, related to the component masses by
+\begin{equation}
+  \Mc= \frac{(m_1 m_2)^{3/5}}{(m_1 + m_2)^{1/5}} ~.
+\label{e:Mc1}
+\end{equation}
+
+Using Newton's laws of motion, Newton's universal law of gravitation, and
+Einstein's quadrupole formula for the \GW luminosity of a system, a
+simple formula is derived in \refapp{Sec:Mc from Quadrupole}
+(following \inlinecites{Peters:1963ux, Peters:1964qza})
+relating the frequency and frequency derivative
+of emitted \GWs to the chirp mass,
+\begin{equation}
+\label{e:Mc2}
+% \dot f = \frac{96}{5}\pi^{8/3} \left(\frac{G\,\Mc}{c^3}\right)^{5/3} f^{11/3},
+\Mc = \frac{c^3}{G} \( \(\frac{5}{96}\)^{3} \pi^{-8} \(f_{\rm GW}\)^{-11} \(\dot{f}_{\rm GW}\)^{3} \)^{1/5} ,
+\end{equation}
+where $\dot{f}_{\rm GW} = \D f_{\rm GW}/\D t$ is the rate-of-change of the frequency
+(see \refeqn{e:Mc derivation} and Eq.~3 of
+\inlinecite{PhysRevLett.74.3515}).
+This equation is expected to hold as long as the Newtonian approximation is valid
+(see \refsec{Sec:just:newton}).
+
+Thus, a value for the chirp mass can be determined
+directly from the observational data,
+using the frequency and frequency derivative
+of the \GWs at any moment in time.
+For example, values for the frequency can be estimated
+from the time-frequency plot of the observed \GW strain data
+(\refigure{f:time-freq-plot}),
+and for the frequency derivative
+by drawing tangents to the same curve.
+The time interval during which
+the inspiral signal is in
+the sensitive band of the detector
+(and hence is visible) corresponds to
+\GW frequencies in the range
+$30<\fgw<\CHIRPFSTRAINPEAK$~Hz.
+Over this time,
+the frequency (period) varies
+by a factor of 5 ($\frac{1}{5}$),
+and the frequency derivative varies
+by more than two orders-of-magnitude.
+The implied chirp mass value, however,
+remains constant to within $35\%$.
+The exact value of $\Mc$ is not critical
+to the arguments that we present here,
+so for simplicity we take
+$\Mc = \CHIRPMASSAPPROX\!$.
+
+{\bf Note that the characteristic mass scale of the radiating system
+  is obtained by direct inspection of the time-frequency behavior of
+  the observational data.}
+
+The fact that the chirp mass remains approximately constant
+for $\fgw \!<\! \CHIRPFSTRAINPEAK~$Hz
+is strong support for the orbital interpretation.
+The fact that the amplitude of the \GW strain
+increases with frequency also supports this interpretation,
+and suggests that the assumptions that go into the
+calculation which leads to these formulas are applicable:
+the velocities in the binary system are not too close to the speed of light,
+and the orbital motion has an adiabatically changing radius and period
+described instantaneously by Kepler's laws.  The data also indicate
+that these assumptions certainly break down at a \GW frequency above $\fgwmax$,
+as the amplitude stops growing.
+
+Alternatively, \refeqn{e:Mc2} can be integrated to obtain
+\begin{equation}
+f_{\rm GW}^{-8/3} (t) = \frac{(8\pi)^{8/3}}{5} \( \frac{G\, \Mc}{c^3} \)^{5/3} \, (t_c - t),
+\label{e:feightthirds}
+\end{equation}
+which does not involve $\dot{f}_{\rm GW}$ explicitly,
+and can therefore be used to calculate $\Mc$ directly
+from the time periods between zero-crossings in the strain data.
+We have performed such an analysis,
+presented in \refigure{f:linearfit},
+to find similar results.
+We henceforth adopt a conservative lower estimate of $\CHIRPMASSAPPROX$.
+We remark that this mass is derived from quantities measured in the detector frame,
+thus it and the quantities we derive from it are given in the detector frame.
+Discussion of redshift from the source frame appears in \refsec{Sec:just:distance}.
+
+\begin{figure}
+\includegraphics
+[width=\columnwidth]
+{figs/linearfitV2Opt7.png}
+\caption{A linear fit (green) of $\fgw^{-8/3}(t)$.
+  While this interpolation used
+  the combined strain data from H1 and L1
+  (in fact, the sum of L1
+  with time shifted and sign-flipped H1,
+  as explained),
+  A similar fit can be done using
+  either H1 or L1 strain independently.
+  The fit shown has residual sum of squares
+  $R_{\rm L1-H1}^2\sim0.9$;
+  we have also found
+  $R_{\rm H1}^2\sim0.9$
+  and $R_{\rm L1}^2\sim0.8$.
+  The slope of this fitted line gives
+  an estimate of the chirp mass
+  using \refeqn{e:feightthirds}.
+  The blue and red lines indicate
+  $\Mc$ of 30\Msun and 40\Msun, respectively.
+  The error-bars have been estimated
+  by repeating the procedure for
+  waves of the same amplitudes and frequencies
+  added to the LIGO strain data just before GW150914.
+  A similar error estimate has been found using
+  the differences between H1 and L1 zero-crossings.
+}
+\label{f:linearfit}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=0.7\columnwidth]{figs/keplerorbit.png}
+\centering
+\caption{A demonstration of the scale of the orbit at minimal
+  separation (black, 350 km) vs. the scale of the compact radii:
+  Schwarzschild (red, diameter 200 km)
+  and extremal Kerr (blue, diameter 100 km).
+%  The figure is drawn to scale.
+  Note the masses here are equal;
+  as \refsec{Sec:just:q} explains,
+  the system is even more compact for unequal masses.
+%
+  While identification of a rigid reference frame for
+  measuring distances between points is not unique in relativity,
+  this complication only really arises with strong gravitational fields,
+  while in the Keplerian regime
+  (of low compactness and low gravitational potentials)
+  the system's center-of-mass rest-frame can be used.
+  Therefore if the system is claimed to be non-compact,
+  the Keplerian argument should hold,
+  and constrain the distances to be compact.
+  Thus the possibility of non-compactness
+  is inconsistent with the data;
+  see also \refsec{Sec:just:newton}.
+}
+\label{fig:tightorbit}
+\end{figure}
+
+\section{Evidence for compactness in the simplest case}
+\label{Sec:basic}
+
+For simplicity, suppose that the two bodies have equal masses, $m_1 =
+m_2$. The value of the chirp mass then implies that $m_1 = m_2 =
+2^{1/5} \Mc = \MCOMPONENTAPPROX$, so that the total mass would be $M=m_1 + m_2 =
+\MFINALAPPROX$.
+We also assume for now that the objects are not spinning, and that their orbits remain
+Keplerian and essentially circular until the point of peak amplitude.
+
+Around the time of peak amplitude the bodies therefore had an orbital separation $R$ given by
+\begin{equation}
+  R = \( \frac{G M}{\wkep^2\submax} \)^{1/3} = \ORBITALSEPAPPROX~\rm{km}.
+  \label{e:keplerradius}
+\end{equation}
+%
+Compared to normal length scales for stars, this is a {\it tiny} value.
+This constrains the objects to be exceedingly small,
+or else they would have collided and merged
+long before reaching such close proximity.
+Main-sequence stars have radii measured in hundreds of thousands or millions of kilometers,
+and white dwarf (WD) stars have radii which are typically ten thousand kilometers.
+Scaling \refeqn{e:keplerradius} shows that such stars' inspiral evolution
+would have terminated with a collision at an orbital frequency of a few mHz (far below 1~Hz).
+
+The most compact stars known are neutron stars, which have radii of
+about ten kilometers.  Two neutron stars could have orbited at this
+separation without colliding or merging together -- but the maximum
+mass that a neutron star can have before collapsing into a black hole
+is about 3~$\Msun\!\!$ (see \refapp{Sec:stability}).
+
+In our case, the bodies of mass
+$m_1 = m_2 = \MCOMPONENTAPPROX$ each have a
+Schwarzschild radius of $103$~km.
+This is illustrated in \refigure{fig:tightorbit}.
+The orbital separation of these objects, \ORBITALSEPAPPROX~km,
+is only about twice the sum of their Schwarzschild radii.
+
+In order to quantify the closeness of the two
+objects relative to their natural gravitational radius, we
+introduce the compactness ratio $\mathcal{R}$.
+This is defined as the
+Newtonian orbital separation between the centers of the objects
+divided by the sum of their smallest possible respective radii (as compact objects).
+For the non-spinning, circular orbit, equal-mass case just discussed
+$\mathcal{R} = {\ORBITALSEPAPPROX \, \rm km}/{206 \, \rm km} \sim 1.7$.
+
+For comparison with other
+known Keplerian systems,
+the orbit of Mercury,
+the innermost planet in our solar system,
+has $\mathcal{R} \sim 2 \times 10^7$,
+the binary orbit for
+the stellar \BH in Cyg X-1\footnote{Radio,
+optical and X-ray telescopes
+have probed the accretion disk extending
+much further inside\cite{CygX1}.
+}
+has $\mathcal{R} \sim 3\times10^5$,
+and the binary system of highest known orbital frequency,
+the WD system HM Cancri (RX J0806),
+has $\mathcal{R} \sim 2 \times 10^4$
+\cite{Postnov:2014tza}.
+Observations of orbits around our galactic center
+indicate the presence of a supermassive \BHns,
+named Sgr A* \cite{Gillessen:2008qv, Ghez:2008ms},
+%Its mass is about $4\times10^6 \Msun\!$,
+%corresponding to a Schwarzschild radius of $\sim10^7\,{\rm km}$,
+%while direct telescope observations
+%at resolutions as fine as $\sim4\times10^7\,{\rm km}$,
+%have not seen it
+%confining it to $\sim\mathcal{R} \lesssim 4$.
+with the star S2 orbiting it
+as close as
+$\mathcal{R} \sim 10^3$.
+For a system of two \NSs just touching,
+$\mathcal{R}$ would be between
+$\sim\!2$ and $\sim\!5$.
+
+
+The fact that the Newtonian/Kepler evolution of the
+orbit inferred from the signal of GW150914
+breaks down when the separation is about the order of the
+\BH radii (compactness ratio $\mathcal{R}$ of order 1) is further
+evidence that the objects are highly compact.
+
+\section{Revisiting the assumptions}
+\label{Sec:justifications}
+
+In \refsec{Sec:basic} we used the data to show that the
+coalescing objects are black holes under the assumptions of a circular orbit,
+equal masses, and no spin.
+It is not possible, working at the level of approximation that we are using here,
+to directly constrain these parameters of the system
+(although more advanced techniques
+are able to constrain them, see \inlinecite{PEPaper}).
+However, it is possible to examine how these assumptions affect our conclusions
+and in this section we show that
+relaxing them does not significantly change the outcome. 
+We also use the Keplerian approximation
+to discuss these three modifications (Sec. \ref{Sec:just:ecc}-\ref{Sec:just:spins}),
+then revisit the Keplerian assumption itself,
+and discuss the consequences of foregoing it
+(Sec. \ref{Sec:just:newton}-\ref{Sec:just:chirpmass}).
+In \refsec{Sec:just:distance} we discuss
+the distance to the source,
+and its potential effects.
+
+\caveatformat{Orbital eccentricity}
+\label{Sec:just:ecc}
+For non-circular orbits
+with eccentricity $e > 0$,
+the $R$ of Kepler's third law
+(\refeqn{e:keplerradius}) no longer refers to the
+orbital separation but rather to the semi-major axis.
+The instantaneous orbital separation $r_{\rm sep}$
+is bounded from above by $R$,
+and from below by the point of closest approach (periapsis),
+$r_{\rm sep} \ge \(1-e\) R$.
+We thus see that the compactness bound
+imposed by eccentric orbits is even tighter
+(the compactness ratio $\mathcal{R}$ is smaller).
+
+There is also a correction to the luminosity
+which depends on the eccentricity.
+However, this correction is significant
+only for highly eccentric orbits\footnote{
+Eccentricity increases
+the luminosity\cite{Peters:1963ux, Peters:1964qza}
+by a factor
+$\ell(e)=\(1-e^2\)^{-7/2} \(1 + \frac{73}{24}e^2 + \frac{37}{96}e^4 \) \geq 1$,
+thus reducing the chirp mass (inferred using \refeqn{e:Mc2})
+to $\Mc(e) = \ell^{-3/5}(e) \cdot \Mc(e\!=\!0)$.
+Taking into account the ratio between
+the separation at periapsis and the semi-major axis,
+one obtains
+$\mathcal{R}(e)=\(1-e\)\ell^{2/5}(e)\cdot\mathcal{R}(e\!=\!0)$.
+Hence for the compactness ratio to increase,
+the eccentricity must be $e \gtrsim 0.6$,
+and for a factor of 2, $e \gtrsim 0.9$
+(see \refigure{fig:separationAndFrequency})}.
+For these,
+the signal should display a modulation\cite{Tanay:2016zog}:
+the velocity would be greater near periapsis
+than near apoapsis,
+so the signal would alternate between
+high-amplitude and low-amplitude peaks.
+Such modulation is not seen in the data,
+whose amplitude grows monotonically.
+
+This is not surprising,
+as the angular momentum
+that \GWs carry away causes the orbits to circularize
+much faster than they shrink\cite{Peters:1963ux, Peters:1964qza}.
+This correction can thus be neglected.
+
+\caveatformat{The case of unequal masses}
+\label{Sec:just:q}
+It is easy to see that the compactness ratio $\mathcal{R}$ also gets smaller
+with increasing mass-ratio,
+as that implies a higher total mass for the observed value of the Newtonian order chirp mass.
+To see this explicitly,
+we express the component masses and total mass in terms of the chirp mass $\Mc$ and the mass ratio $q$, as
+$m_1 = \Mc (1+q)^{1/5}q^{2/5}$, $m_2 =  \Mc (1+q)^{1/5}q^{-3/5}$, and
+%
+\begin{equation}
+  M  =  m_1 + m_2 = \Mc (1 + q)^{6/5}q^{-3/5}.
+  \label{m_as_mchirp_and_q}
+\end{equation}
+%
+The compactness ratio $\mathcal{R}$ is the ratio of the orbital
+separation $R$ to the sum of the Schwarzschild radii of the two
+component masses, $r_{\rm Schwarz}(M) = r_{\rm Schwarz}(m_1) + r_{\rm
+  Schwarz}(m_2)$, giving
+%
+\bea
+\mathcal{R}&=&\frac{R}{r_{\rm Schwarz}(M)}
+	= \frac{c^2}{2(\wkepmax GM)^{2/3}}	\nonumber \\
+	&=& \frac{c^2}{2(\pi \fgwmax G\Mc)^{2/3}} \frac{q^{2/5}}{(1\!+\!q)^{4/5}}
+	\approx \frac{3.0 \,q^{2/5}}{(1\!+\!q)^{4/5}}\,.
+\label{eq:separation_massRatio}
+\eea
+%
+This quantity is plotted in \refigure{fig:separationAndFrequency},
+which clearly shows that for mass ratios $q>1$ the compactness ratio
+{\it decreases}: the separation between the objects becomes smaller
+when measured in units of the sum of their Schwarzschild radii.  Thus,
+for a given chirp mass and orbital frequency, a system composed of
+unequal masses is {\it more} compact than one composed of equal masses.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=1\columnwidth]{figs/mass_ecc_blue2.png}
+\caption{
+  This figure shows the compactness ratio constraints
+  imposed on the binary system by
+  $\Mc = 30 \, \Msun$ and $\fgwmax = 150 \, {\rm Hz}$.
+  It plots the compactness ratio (the ratio of the separation between
+  the two objects to the sum of their Schwarzschild radii) as a function of
+  mass ratio and eccentricity
+  from $e=0$ to the very high (arbitrary) value of $e=0.8$.
+  The bottom-left corner ($q=1,e=0$)
+  corresponds to the case given in \refsec{Sec:basic}.
+  At fixed mass ratio, the system becomes more compact
+  with growing eccentricity until $e=0.27$,
+  as explained in \refsec{Sec:just:ecc}.
+  The bottom edge ($e=0$) illustrates the argument given in
+  \refsec{Sec:just:q} and \refeqn{eq:separation_massRatio}:
+  the system becomes more compact as the mass ratio increases.
+  We note that (for $e=0$) beyond mass ratio of
+  $q\sim 13$ ($m_2\sim11\,\Msun\!$) the system 
+  would become more compact than the sum of
+  the component Schwarzschild radii. 
+}
+\label{fig:separationAndFrequency}
+\end{figure}
+
+One can also place an {\it upper} limit on the mass ratio $q$,
+thus a lower bound on the smaller mass $m_2$, based purely on the data. 
+This bound arises from minimal compactness:
+we see from the compactness ratio plot in \refigure{fig:separationAndFrequency} 
+that beyond the mass ratio of $q\sim 13$ the system becomes so compact
+that it will be within the Schwarzschild radii of the combined mass of the two bodies.
+ This gives us a limit for the mass of the smaller object
+$m_2 \geq 11 \, \Msun$.
+As this is 3--4 times more massive than the \NS limit,
+both bodies are expected to be \BHs.
+
+\caveatformat{The effect of objects' spins}
+\label{Sec:just:spins}
+The third assumption we relax concerns the spins of the objects.
+For a mass $m$ with spin angular momentum $S$ we define
+the dimensionless spin parameter
+\be
+\chi = \frac{c}{G}\frac{S}{m^2}~.
+\ee
+The spins of $m_1$ and $m_2$ modify their gravitational radii 
+as described in this subsection,
+as well as the orbital dynamics, as described in the next subsection.
+
+The smallest radius a non-spinning object ($\chi=0$)
+could have without being a
+\BH is its Schwarzschild radius.
+Allowing the objects to have angular momentum (spin) pushes
+the limit down by a factor of two, to the radius of an extremal Kerr
+\BH (for which $\chi=1$), $r_{\rm EK}(m)=\frac{1}{2}r_{\rm Schwarz}(m)=Gm / c^2$.
+As this is linear in the mass, and summing radii linearly,
+we obtain a lower limit on the Newtonian separation of two adjacent non-\BH bodies of total mass $M$ is \be r_{\rm EK}
+(m_1) + r_{\rm EK} (m_2)= \frac{1}{2} r_{\rm Schwarz}(M) = \frac{G \, M}{c^2}
+\approx 1.5\(\frac{M}{\Msun}\)\,{\rm km}.
+\label{rcompact}
+\ee
+The compactness ratio can also be defined in relation to $r_{\rm EK}$ rather than
+$r_{\rm Schwarz}$, which is at most a factor of two larger than for non-spinning objects.
+
+We may thus constrain the
+orbital compactness ratio (now accounting for eccentricity, unequal masses, and spin) by
+\bea \mathcal{R} \, &=& \,
+\frac{r_{\rm sep}(M)}{r_{\rm EK}(M)} \, \leq \, \frac{R(M)}{r_{\rm EK}(M)} \, = \,
+\frac{ c^2 } { \( G \, M \, \wkep \)^{2/3}} 	 \\
+ &\leq& \, \frac{
+  c^2 } { \( 2^{6/5} \, G \, \Mc \, \wkep \)^{2/3}} \, = \,
+\frac{ c^2 } { \( 2^{6/5} \, \pi \, G \, \Mc \, \fgwmax \)^{2/3}} \,
+\simeq \, 3.4 ~,	\nonumber
+\label{compactness ratio}
+\eea
+where in the last step we used $\Mc=\CHIRPMASSAPPROX\!\!$ and $\fgwmax=\CHIRPFSTRAINPEAK$~Hz.
+This constrains the constituents to under 3.4 (1.7) times their extremal Kerr (Schwarzschild) radii,
+making them highly compact.
+The compact arrangement is illustrated in Fig. \ref{fig:tightorbit}.
+%Note that the changes in the Keplerian orbits that
+%result from including relativistic effects in the gravitational potential
+%would allow even tighter constraints on the orbital separation and compactness.
+
+We can also derive an upper limit on the value of the mass ratio $q$,
+from the constraint that the compactness ratio must be larger than
+unity. This is because, for a fixed value of the chirp mass $\Mc$ and a fixed
+value of $\fgwmax$,
+the compactness ratio $\mathcal{R}$ decreases
+as the mass ratio $q$ increases.
+Thus, the constraint $\mathcal{R} \geq 1$,
+puts a limit on the maximal possible $q$
+and thus on the maximum total mass $M_{\rm max}$,
+\be \( \frac{ M_{\rm max} } { \Mc } \) \, \simeq \, 3.4^{3/2} \times 2^{6/5}
+\simeq 14.4 ~,
+\label{M limit}
+\ee which for GW150914 implies $M_{\rm max} \simeq 432\, \Msun\!\!$
+(and $q \simeq 83$).
+This again forces the smaller mass to be at least $5\, \Msun\!\!$
+--
+well above the \NS mass limit (\refapp{Sec:stability}).
+
+The conclusion is the same as in the equal-mass or non-spinning case:
+both objects must be black holes.
+
+\caveatformat{Newtonian dynamics and compactness}
+\label{Sec:just:newton}
+We now examine the applicability of Newtonian dynamics.
+The dynamics will depart from the Newtonian approximation
+when the relative velocity $v$ approaches the speed of light
+or when the gravitational energy becomes large
+compared to the rest mass energy.
+For a binary system
+bound by gravity
+and with orbital velocity $v$,
+these two limits coincide
+and may be quantified
+by the post-Newtonian (PN) parameter \cite{lrr-2014-2}
+$x = \left( v/c \right)^2\ = G\,M / \( c^2 \, r_{\rm sep}\)$.
+Corrections to Newtonian dynamics may be
+expanded in powers of $x$,
+and are enumerated by their PN order.
+The 0PN approximation is
+precisely correct at $x=0$,
+where dynamics are Newtonian and \GW emission
+is described exactly by the quadrupole formula (\refeqn{e:quadrupole2}).
+
+The expression for the dimensionless PN parameter
+includes the Schwarzschild radius, so
+$x$ can be immediately recast
+in terms of the compactness ratio,
+$x \sim \(2\mathcal{R}\)^{-1}$.
+As Newtonian dynamics holds when $x$ is small, the Newtonian
+approximation is valid down to compactness $\mathcal{R}$ of order of a few.
+Arguing by contradiction,
+if one assumes that the orbit is non-compact,
+then our analysis of the data
+using Newtonian mechanics
+is justified as an approximation of \GR
+and leads to the conclusion that the orbit is compact.
+
+If either of the bodies is rapidly spinning,
+their rotational velocity may also approach the speed of light,
+modifying the Newtonian dynamics,
+effectively adding
+spin-orbit and spin-spin interactions.
+However, these are also suppressed
+with a power of the PN parameter
+(1.5PN and 2PN, respectively \cite{lrr-2014-2,SpinEFT,SpinEFT2}),
+and thus are significant only for compact orbits.
+
+The same reasoning may also be applied
+to the use of the quadrupole formula\cite{Flanagan:2005yc}
+and/or to using the coordinate $R$ for the comparison of
+the Keplerian separation to the corresponding compact object radii
+(see \refigure{fig:tightorbit} and its caption),
+as both of these are not entirely general and might be inaccurate.
+The separations are also subject to some arbitrariness due to gauge freedom.
+However here too, the errors in using these coordinates are non-negligible
+only in the orbits very close to a \BHns,
+so again this argument does not refute our conclusions.
+
+\caveatformat{Is the chirp mass well measured? -- constraints on the individual masses}
+\label{Sec:just:chirpmass}
+As we are analyzing the final cycles before merger,
+having accepted that the bodies were compact,
+one might still ask whether
+\refeqn{e:Mc2} correctly describes the chirp mass
+in the non-Newtonian regime\cite{McWilliams:2010eq}.
+In fact for the last orbits, it does not:
+In Newtonian dynamics
+stable circular orbits may exist
+all the way down to merger,
+and energy lost to \GWs drives
+the inspiral between them.
+However in general relativity,
+close to the merger of compact objects
+(at least when one of the objects is much larger than the other)
+there are no such orbits past the
+innermost stable circular orbit (ISCO),
+whose typical location is given below.
+Allowed interior trajectories must be non-circular
+and ``plunge" inwards (see pp. 911 of \inlinecite{MTW}).
+The changes in orbital separation and frequency
+in the final revolutions
+are thus not driven by the \GW emission
+given by \refeqn{e:Mc2}.
+This is why we used $\fgwmax$ at the peak,
+rather than $\fgwfin$.
+
+We shall now constrain the individual masses based on $\fgwfin$,
+for which we do not need the Newtonian approximation at the late stage.
+No \NSs have been observed above $3\,\Msun \!$;
+we shall rely on an even more conservative \NS mass upper bound
+at $4.76\,\Msun\!$, a value chosen because
+given $\Mc$ from the early visible cycles, in order for
+the smaller mass $m_2$ to be below this threshold, $m_1$ must be at
+least $476\,\Msun\!$, which implies $q \geq 100$.
+Is such a high $q$ possible with the data that we have?
+Such a high mass ratio suggests a treatment of the system as
+an extremal mass ratio inspiral (EMRI), where the smaller mass approximately
+follows a geodesic orbit around the larger mass ($m_1\sim M$).
+The frequencies of test-particle orbits (hence waveforms) around an object scale with
+the inverse of its mass, and also involve its dimensionless spin $\chi$.
+The orbital frequency $\w\orb$ as measured at infinity of a circular,
+equatorial orbit at radius $r$ (in Boyer-Lindquist coordinates)
+is given by \cite{Bardeen:1972fi}
+%
+\be
+\label{eq:ModKep}
+\w\orb = \frac{\sqrt{G M}}{r^{3/2}+\chi \, \( \sqrt{G M} / c\)^{3}}
+%
+%XXX THIS CAN ALSO BE WRITTEN AS (WHICH ONE LOOKS BETTER?)
+%
+= \frac{c^{3}}{G M}\left( \chi + \(\frac{c^2 r}{GM}\)^{3/2} \right)^{-1} %\nonumber
+.
+\ee
+%
+
+For example, around a Schwarzschild \BH ($\chi=0$) the quadrupole
+\GW frequency at the \ISCO
+(which is at $r = 6 GM/c^2$) is hence equal to
+$f_{\rm GW} = 4.4 ( \Msun / M ) $~kHz,
+while for an extremal Kerr \BH ($\chi=1$)
+the orbital frequency at
+ISCO ($r = GM/c^2$)
+is $\w\orb = c^3/2GM$,
+and the quadrupole gravitational frequency is 
+$f_{\rm GW} = c^3/2\pi GM = 32 ( \Msun / M )$~kHz.
+For a \GW from the final plunge,
+the highest expected frequency is approximately
+the frequency from the light ring (LR),
+as nothing physical is expected
+to orbit faster than light\footnote{Hypothesized
+frequency up-conversions
+due to nonlinear GR effects
+have also been shown by NR
+to be absent NR
+\cite{Pretorius:2005gq, Buonanno:2006ui, Boyle:2007ft}.},
+and as waves originating within the \LR
+encounter an effective potential barrier
+at the \LR going out\cite{
+Davis:1971gg, Press:1971wr, Davis:1972ud, Buonanno:2000ef, Cardoso:2016rao}
+.
+The \LR is at
+\begin{equation}
+r_{\rm LR}= \frac{2\,G\,M}{c^2} \left(1 + \cos \left(\frac{2}{3}
+\cos^{-1}(-\chi)\right)\right).
+\label{eq:LR}
+\end{equation}
+This radius is $3GM/c^2$ for a Schwarzschild \BHns, while for a spinning Kerr \BHns,
+as the spin $\chi$ increases the \LR radius decreases. For an extremal Kerr \BH it
+coincides with the \ISCO at $GM/c^2$.
+The maximal \GW frequency for a plunge into $m_1$ is then $67$~Hz.
+
+Because we see \GW emission from orbital motion at frequencies much higher
+than this maximal value, with or without spin, such a system is ruled out.
+Hence even the lighter of the masses must be at least $4.76 ~\Msun\! > 3~\Msun\!$,
+beyond the maximum observed mass of neutron stars.
+
+
+
+\caveatformat{Possible redshift of the masses -- a constraint from the luminosity}
+\label{Sec:just:distance}
+Gravitational waves are stretched by the expansion of the Universe as they travel across it.
+This increases the wavelength and decreases the frequency of the waves observed on Earth
+compared to their values when emitted.  The same effect accounts for the redshifting of photons from distant objects.
+The impact of this on the gravitational wave phasing corresponds to a scaling of the masses as measured on Earth;
+dimensional analysis of \refeqn{e:Mc2} shows that
+the source frame masses are smaller by $(1+z)$ relative to the detector frame,
+where $z$ is the redshift.
+Direct inspection of the detector data yields mass values from the red-shifted waves.
+How do these differ from their values at the source?
+In the next section, we estimate the distance to the source and hence the redshift, by
+relating the amplitude and luminosity of the \GW from the merger
+to the observed strain and flux  at the detector.
+The redshift is found to be $z\le 0.1$, so the detector- and source-frame masses differ by less than 
+of order 10$\%$.
+
+\section{Luminosity and distance}
+\label{Sec:luminosity}
+
+Basic physics arguments also provide estimates of the peak
+\GW luminosity of the system,
+its distance from us,
+and the total energy
+radiated in \GWsns.
+
+The \GW amplitude $h$ falls off
+with increasing luminosity distance $d_L$
+as $h \propto 1/d_L$.
+As shown in \refigure{f:rawdata},
+the measured strain peaks at $\hmax\sim10^{-21}$.
+Had our detector been
+ten times closer to the source,
+the measured strain would have peaked
+at a value ten times larger.
+This could be continued,
+but the scaling relationship would break
+before $h$ reached unity,
+because near the Schwarzschild radius
+of the combined system $R\sim200~{\rm km}$
+the non-linear nature of gravity would become apparent.
+In this way we obtain a crude order-of-magnitude upper bound
+\be
+d_L < 10^{21} \times 200~{\rm km}
+~ \sim ~ 6~{\rm Gpc}
+\ee
+on the distance to the source.
+
+We can obtain a more accurate distance estimate
+based on the luminosity, because 
+the \GW luminosity from an equal-mass
+binary inspiral has a peak value
+which is independent of the mass.
+This can be seen from 
+naive dimensional analysis of the quadrupole formula,
+which  gives a luminosity
+$L \sim \frac{G}{c^5} M^2 r^4 \w^6$,
+with $\w\sim c/r$ and $r\sim G M / c^2$,
+and $M \w\sim c^3 /G$ for the final tight orbit.
+Together this gives the Planck luminosity
+\footnote{The ``Planck luminosity'' $c^5/G$ has been proposed as the
+  upper limit on the luminosity
+  of any physical system\cite{Dyson,
+    Massa, Hogan:1999hz}.  Gibbons \cite{Gibbons} has suggested that
+  $c^5/4G$ be called the ``Dyson luminosity'' in honor of the
+  physicist Freeman Dyson and because it is a {\it classical} quantity
+  that does not contain $\hbar$.},
+\be
+L\sim \Lplanck = c^5 / G = 3.6 \times 10^{52} \; {\rm W}~.
+\ee
+However, a closer look (\refeqn{e:quadrupole3}) shows
+the prefactor should be $\frac{32}{5}\(\frac{\mu}{M}\)^2$,
+which gives $\frac{2}{5}$ for an equal-mass system,
+and is close to that for $q\sim1$.
+Also, analysis of a small object falling into a Schwarzschild \BH
+suggests $M\sim \frac{1}{6} c^2 r_{\rm ISCO} / G$ and $\w r \sim 0.5 c$.
+Taken together with the correct exponents,
+$L$ acquires a factor $0.4 \times 6^{-2} \times 0.5^6 \sim 0.2 \times 10^{-3}$.
+While the numerical value may change by a factor of a few
+with the specific spins,
+we can treat its order of magnitude as universal
+for similar-mass binaries.
+
+Using \refeqn{e:quadrupole2} we relate the luminosity of \GWs to their strain $h$ at luminosity distance $d_L$,
+\be
+L \sim \frac{c^3 \, d_L^2}{4\,G} \bigl| \dot{h} \bigr|^2 \;  \sim \frac{c^5}{4\,G} \( \frac{\wgw d_L h}{c} \)^2~.
+\ee
+Thus we have
+\be
+\frac{L_{\rm peak}}{\Lplanck} \equiv \frac{L\submax}{\Lplanck} \sim0.2 \times 10^{-3} \sim \( \frac{\wgw d_L \hmax}{c} \)^2,
+\ee
+and we estimate the distance
+from the change of the measured strain in time
+over the cycle at peak amplitude,
+as
+\be
+d_L \sim 45 ~ {\rm Gpc} \( \frac{\rm Hz}{\fgwmax}\) \(\frac{10^{-21}}{\hmax}\) ~,
+\ee
+which for GW150914 gives $d_L \sim 300 ~ {\rm Mpc}$.
+This distance corresponds to a redshift of $z\le 0.1$,
+and so does not substantially affect any of the conclusions.
+For a different distance-luminosity calculation based only on the strain data
+(reaching a similar estimate),
+see \inlinecite{Burko:2016vnu}.
+
+Using the orbital energy $E\orb$ 
+(as defined in \refapp{Sec:Mc from Quadrupole})
+we may also estimate the total energy
+radiated as \GWs during the system's evolution
+from a very large initial separation (where $E\orb^{\rm i}\to 0$)
+down to a separation $r$.
+For GW150914, using
+$m_1\sim m_2 \sim \MCOMPONENTAPPROX$
+and $r\sim R = \ORBITALSEPAPPROX \, {\rm km}$ (\refeqn{e:keplerradius}),
+\begin{equation}
+  \label{e:total energy}
+  E_{\rm GW} = E\orb^{\rm i} - E\orb^{\rm f}
+  = 0 - \( - \frac{G M \mu}{2 R} \)
+  \sim 3 \,\Msun c^2.
+\end{equation}
+This quantity should be considered an estimate
+for a lower bound on the total emitted energy
+(as some energy is emitted in the merger and ringdown);
+compare with the exact calculations in \inlinecite{DetectionPaper, PEPaper, BetterPE}.
+
+We note that
+the amount of energy emitted in this event
+is remarkable.
+During its ten-billion-year lifetime,
+our sun is expected to convert
+less than 1\% of its mass into light and radiation.
+Not only did GW150914 release
+$\sim300$ times as much energy
+in \GWs
+(almost entirely over
+the fraction of a second
+shown in \refigure{f:rawdata}),
+but for the cycle at peak luminosity,
+its power $L_{\rm peak}$ in the form of \GWs
+was about 22 orders of magnitude greater
+than the power output from our sun.
+
+\section{Conclusions}
+A lot of insight can be obtained by applying these basic physics arguments
+to the observed strain data of GW150914.
+These show the system that produced the \GW
+was a pair of inspiraling black holes that approached very closely before merging.
+The system is seen to settle down, most likely to a single
+black hole.
+Simple arguments can also give us information
+about the system's distance and basic properties
+(for a related phenomenological approach
+see \inlinecite{Rodriguez:2016obk}).
+
+With these basic arguments
+we have only drawn limited conclusions
+about the mass ratio $q$,
+because the frequency evolution
+described by \refeqn{e:Mc2}
+does not depend on $q$.
+The mass ratio $q$ does appear
+in the PN corrections \cite{EIH1938, PhysRevLett.74.3515},
+thus its value can be further constrained from the data
+\cite{PEPaper, BetterPE}.
+
+These arguments will not work for every signal,
+for instance if the masses are too low to safely rule out a \NS constituent
+as done in \refsec{Sec:just:chirpmass},
+but should be useful for systems similar to GW150914.
+There has already been another \GW detection, GW151226\cite{GW151226, O1BBH},
+whose amplitude is smaller and therefore cannot be seen in the strain data
+without application of more advanced techniques.
+
+Such techniques,
+combining analytic and numerical methods,
+can give us even more information,
+and we encourage the reader to explore how
+such analyses and models have been used for
+estimating the parameters of the system \cite{PEPaper, BetterPE},
+for testing and constraining the validity of \GR
+in the highly relativistic, dynamic regime \cite{TestingGRPaper}
+and for astrophysical studies based on this event \cite{AstroPaper}.
+
+We hope that this paper will serve as an invitation to the field,
+at the beginning of the era of gravitational wave observations.
+
+\begin{acknowledgements}
+\input{LVCacknowledgments.txt}
+\end{acknowledgements}
+
+\appendix
+
+\section{Calculation of gravitational radiation from a binary system}
+\label{Sec:Mc from Quadrupole}
+%%%
+%%% Derivation of \Mc formula
+%%%
+Here we outline the calculation of the energy a binary system emits in \GWs
+and the emitted energy's effect on the system.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/2BodyDiagram.pdf}
+\caption{A two-body system, $m_1$ and $m_2$ orbiting
+in the $xy$-plane
+around their C.O.M.
+}
+\label{fig:two_bodies_diagram}
+\end{figure}
+
+
+First we calculate the quadrupole moment $Q_{ij}$ of the system's
+mass distribution.
+We use a Cartesian coordinate system ${\bf x}=(x_1, x_2, x_3)=(x,y,z)$
+whose origin is the center-of-mass, with $r$ the radial distance from the origin. 
+$\delta_{ij} = \rm{diag} (1,1,1)$ is the Kronecker-delta and
+$\rho({\bf x})$ denotes the mass density.
+Then
+\bea
+%\begin{equation}
+Q_{ij} &=& \int \D^3 x  \, \rho({\bf x})  \bigl( x_i x_j - \frac{1}{3} r^2 \delta_{ij}
+\bigr) \\
+&=& \sum_{A\in\{1,2\}} \!\! m_A
+\(
+\begin{array}{ccc}
+\frac{2}{3}x^2_A - \frac{1}{3}y^2_A 	&	 x_A y_A 										&	 0 \\
+x_A y_A 										&	\frac{2}{3}y^2_A - \frac{1}{3}x^2_A  	&	 0 \\
+0 												&	0  												&	 -\frac{1}{3}r^2_A
+\end{array}
+\)
+,
+\eea
+%\end{equation}
+where the second equality holds for a system of two bodies $A \in \{1,2\}$ in the $xy$-plane.
+In the simple case of a circular orbit at separation $r=r_1+r_2$ and frequency $f=\frac{\w}{2\pi}$,
+a little trigonometry gives for each object (see \refigure{fig:two_bodies_diagram})
+\be
+Q^A_{ij} (t) = \frac{m_A r_A^2}{2} I_{ij},
+\ee
+where
+$I_{xx}=\cos(2\w t)+\frac{1}{3}$,
+$I_{yy}=\frac{1}{3}-\cos(2\w t)$,
+$I_{xy}=I_{yx}=\sin(2\w t)$
+and $I_{zz} = -\frac{2}{3}$.
+Combining we find $Q_{ij} (t) = \frac{1}{2} \mu r^2 I_{ij}$, 
+%where we have used the standard reduced mass $\mu = m_1 m_2 / M$,
+and the \GW luminosity from \refeqn{e:quadrupole2} is
+\begin{equation}
+  \label{e:quadrupole3}
+  \frac{\D}{\D t} E_{\rm GW}
+  = \frac{32}{5} \frac{G}{c^5} \mu^2 r^4 \w^6.
+\end{equation}
+This energy loss drains the orbital energy
+$E\orb = - \frac{G M \mu}{2r}$,
+thus
+$\frac{\D }{\D t} E\orb
+= \frac{G M \mu}{2r^2} \dot{r}
+= - \frac{\D}{\D t} E_{\rm GW}$.
+We assume that
+the energy radiated away over each orbit
+is small compared to $E\orb$,
+in order to describe each orbit as approximately Keplerian.
+
+Now using Kepler's third law $r^3 = GM / \w^2$
+and its derivative $\dot{r}=-\frac{2}{3} r\dot{\w}/\w$
+we can substitute for all the $r$'s and obtain
+\begin{equation}
+  \label{e:Mc derivation}
+  \dot{\w}^3 = \(\frac{96}{5}\)^3 \frac{\w^{11}}{c^{15}} G^5 \mu^3 M^2 = \(\frac{96}{5}\)^3 \frac{\w^{11}}{c^{15}} \(G \Mc\)^5,
+\end{equation}
+having defined the chirp mass $\Mc = \( \mu^3 M^2 \)^{1/5} $.
+
+We can see that \refeqn{e:Mc derivation}
+describes the evolution of the system as an inspiral:
+the orbital frequency goes up (``chirps''),
+while by Kepler's Law the orbital separation shrinks.
+
+\subsection{Gravitational radiation from a different rotating system}
+\label{app:different inspiral}
+A rising \GW amplitude can accompany a rise in frequency
+in other rotating systems,
+evolving under different mechanisms.
+An increase in frequency means the system rotates faster and faster,
+so unless it gains angular momentum, 
+the system's characteristic length $r(t)$ should be decreasing.
+For a system not driven by the loss of
+energy and angular momentum to \GWsns,
+rapidly losing angular momentum is also difficult,
+thus the system should conserve its angular momentum
+$L=\alpha M r^2 \w$,
+and so $\w \propto L/r^2$.
+
+The quadrupole formula (\refeqn{e:quadrupole strain})
+then indicates the \GW strain amplitude should follow
+the second time derivative of the quadrupole moment,
+$h \propto M\, r^2 \, w^2 \propto L\,\w$.
+
+Thus we see that for a system
+\emph{not} driven by emission of \GWsns,
+as the characteristic system size $r$ shrinks,
+both its \GW frequency and amplitude grow,
+but remain proportional to each other.
+This is inconsistent with the data of GW150914
+(\refigures{f:rawdata}, \ref{f:time-freq-plot}),
+which show the amplitude only grows by a factor of about 2
+while the frequency $\w(t)$ grows by at least a factor of 5.
+
+\section{Possibilities for massive, compact objects}
+\label{Sec:stability}
+We are considering astrophysical objects with mass scale
+$m \sim \MCOMPONENTAPPROX$, which are constrained to
+fit into a radius $R $ such that the compactness ratio
+obeys $\mathcal{R} = \frac{c^2 \, R}{G\,m}\lesssim 3.4$.
+This produces a scale for their Newtonian density,
+\begin{equation}
+\label{density}
+\rho \geq \frac{m}{(4\pi/3) R^3 } = 3 \times 10^{15} \; 
+\left (\frac{3.4}{\mathcal{R}}\right )^3 
+\left ( \frac{\MCOMPONENTAPPROX}{m} \right )^2 \; \frac{\rm kg}{{\, \rm m}^3} ~,
+\end{equation}
+where equality is attained for a uniform object.
+This is a factor of $10^6$ more dense than white dwarfs, so we
+can rule out objects supported by electron degeneracy pressure,
+as well as any main-sequence star, which are less dense.
+While this density is a factor of $\sim10^2$ {\it less} dense than neutron stars,
+these bodies exceed the maximum \NS mass by
+an order of magnitude,
+as the \NS limit is
+$\sim3\Msun\!\!$ (3.2~$\Msun\!\!$ in \inlinecites{Rhoades:1974fn,Hannam:2013uu},
+2.9~$\Msun\!\!$ in \inlinecite{Kalogera:1996ci}).
+A more careful analysis of the frequency change, including tidal
+distortions, would have undoubtedly required the bodies to be
+even more compact in order to reach the final orbital frequency.
+This would push these massive bodies even closer to neutron-star
+density, thus constraining  the equation of state into an even
+narrower corner.
+Thus, although theoretically a compactness ratio as low as $\mathcal{R}=4/3$
+is permitted for uniform objects \cite{doi:10.1146/annurev-nucl-102711-095018},
+we can conclude that the data do show that if any of these objects were material bodies,
+they would need to occupy an extreme, narrow and heretofore unexplored and
+unobserved niche in the stellar continuum.
+The likeliest objects with such mass and compactness are black holes.
+
+
+\section{Post inspiral phase: what we can conclude about the ringdown and the final object?}
+\label{Sec:ringdown}
+
+We have argued, using basic physics and scaling arguments, that the
+directly observable properties of the signal waveform for \GW
+frequencies $\fgw< \CHIRPFSTRAINPEAK$~Hz shows that the source had been
+two black holes, which approached so closely that they subsequently merged.
+We now discuss the properties of the signal waveform at higher frequencies,
+and argue that this also lends support to this interpretation.
+
+The data in Figures \ref{f:rawdata} and \ref{f:time-freq-plot} show that
+after the peak \GW amplitude is reached,
+the signal makes a few more complete cycles,
+and continues to rise in frequency until reaching
+about $\CHIRPFMAX$~Hz,
+while dropping sharply in amplitude.
+The frequency seems to level off just as the signal amplitude becomes
+hard to distinguish clearly.
+
+Is this consistent with a merger remnant \BHns?
+Immediately after being formed in a merger, a black hole horizon is
+very distorted.
+It proceeds to ``lose its hair" and settle down to a final state of a Kerr \BHns, uniquely
+defined\cite{NoHair} by its mass $M$ and spin parameter $\chi$.
+Late in this ringdown stage, the remaining perturbations should
+linearize, and the emitted \GW should thus have characteristic quasi-normal-modes
+(QNMs). The set of QNMs is enumerated by various discrete indices, and their
+frequencies and damping times are determined by $M$ and $\chi$. Each such set
+would have a leading (least-damped) mode --
+and so finding a ringdown of several cycles
+with a fixed frequency would be strong evidence that a single final remnant was formed.
+We do clearly see the \GW stabilizing in frequency (at around $\CHIRPFMAX$~Hz)
+about two cycles after the peak, and dying out in amplitude.
+Does the end of the observed waveform contain evidence of
+an exponentially-damped sinusoid of fixed frequency?
+Were such a mode found, analyzing its frequency and damping time,
+in conjunction with a model for \BH perturbations,
+could give an independent estimate of the mass and spin\cite{Press:1973zz}.
+
+\caveatformat{Mode Analysis}
+The ringing of a Kerr \BH can be thought of
+as related to a distortion of space-time traveling on a \LR orbit outside
+the black hole horizon (See \inlinecite{BertiCardosoWill} and references therein,
+and Eqs.\ (\ref{eq:ModKep}, \ref{eq:LR}));
+the expected frequency for a quadrupolar mode ($\ell=m=2)$ will thus be
+given as a dimensionless complex number
+\begin{equation}
+\frac{G}{c^3} M \, \wgw = x + \i y.
+\end{equation}
+where the real part of $\wgw$
+is the angular frequency and the imaginary part is the (inverse) decay time.
+The ringdown amplitude and damping times are then found from
+\begin{equation}
+\e^{\i \wgw t } = \e^{\i\frac{c^3x}{GM}t} \, \e^{-\frac{c^3y}{GM}t} 
+= \e^{2\pi \i \fRD t}  \, \e^{-t/\tau_{\rm damp}} \; ,
+\end{equation}
+to be
+$\fRD  = c^3x/ \( 2 \pi GM \)$ and $\tau_{\rm damp}= GM/c^3y$.
+
+The exact values of $x$ and $y$ can be found as when analyzing the normal
+modes of a resonant cavity: one uses separation of variables to solve the field
+equations, and then enforces the boundary conditions to obtain
+a discrete set of complex eigenfrequencies \cite{BertiCardosoWill}.
+However, limiting values on $x$, $x \in (\sim0.3,1]$, are derived immediately
+from Eqs.\ (\ref{eq:ModKep}, \ref{eq:LR}),
+with a factor of 2 between orbital and \GW frequencies.
+The final \GW frequency is thus determined by the mass
+(up to the order-of-unity factor $x$, which embodies the spin).
+We have in fact already used this to show
+how our high attained frequency constrains the total mass
+and the compactness of the objects
+(objects of larger radius would have distortion bulges orbiting much farther than the \LR,
+mandating much lower frequencies).
+For the parameter $y$ determining the damping time, numerical tabulations
+of the QNMs \cite{BertiCardosoWill} show that
+\begin{equation}
+\fRD \; \tau_{\rm damp} = \frac{x}{2 \pi y } \sim 1 
+\end{equation}
+for a broad range of mode numbers and spins,
+as long as the spin is not close to extremal.
+This shows that the ringdown is expected to have a damping time
+roughly equal to the period of oscillation. This is exactly what is
+seen in the waveform, and is the reason the signal amplitude drops so low
+by the time the remnant rings at the final frequency.
+
+While it is beyond the scope of this paper to calculate the exact QNMs for \BHs of different spins,
+or to find the final spin of a general \BH merger,
+it is worth mentioning that for a wide range of spins for similar-mass binaries,
+the final spin is expected to be about $\chi\sim0.7$,
+for which Eq. (\ref{eq:ModKep}, \ref{eq:LR}) estimate that
+${\rm Re} [ \frac{G}{c^3} M \wgw ] \sim 0.55$.
+
+The exact value can be found using Table~II in \inlinecite{BertiCardosoWill},
+where the leading harmonic ($\ell=2,m=2,n=0$)
+for a \BH with a spin $\chi=0.7$ has
+$\frac{G}{c^3}M\wgw = 0.5326 + 0.0808 i $,
+giving a ringdown frequency
+\begin{equation}
+\fRD \approx 260~{\rm Hz}
+\left ( \frac{65\,\Msun}{M} \right )  \; ,
+\end{equation}
+and a damping time
+\begin{equation}
+\tau_{\rm damp} =  4 \; {\rm ms} 
+\left ( \frac{M}{65\,\Msun} \right )   \; \sim
+\frac{1}{\fRD} .
+\end{equation}
+In other words, the signal in the data is fully consistent\cite{Burko:2016vnu} with
+the final object being a Kerr black hole with a dimensionless spin
+parameter $\chi \sim 0.7$ and a mass $M\sim 65\,\Msun{}$
+Such a final mass is consistent with the merger of two \BHs
+of $\sim\MCOMPONENTAPPROX$ each,
+after accounting for the energy emitted as \GWs (\refeqn{e:total energy}).
+This interpretation of the late part of the signal
+is also consistent with numerical simulations \cite{PhysRevD.85.024018}.
+Full numerical simulations from the peak and onward,
+where the signal amplitude is considerably higher, also show
+consistency with the formation of a Kerr \BH remnant \cite{TestingGRPaper, PEPaper}.
+
+
+%%% The resulting bibliography-output (the contents of the .bbl file)
+%%% must be pasted into this file before submission.
+%%% 
+\bibliographystyle{andp2012}
+\bibliography{references}
+
+%\begin{thebibliography}{00}
+ 
+%\end{thebibliography}
+
+\iftoggle{endauthorlist}{
+%
+% Restore the author, affiliation and maketitle commands.
+%
+\let\author\myauthor
+\let\affiliation\myaffiliation
+\let\maketitle\mymaketitle
+%\title{Authors}
+%\pacs{}
+%\date{}
+%\newpage
+%\maketitle
+
+\medskip
+\centerline{\bf Authors}
+
+\input{BBHBasicsADPAuthors.txt}
+}
+
+
+\end{document}

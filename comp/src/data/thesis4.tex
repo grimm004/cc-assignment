@@ -1,0 +1,47 @@
+\documentclass[a4paper]{report}
+
+\begin{document}
+
+\title{A Sample PhD Thesis}
+\author{A. N. Other}
+\date{July 2004}
+
+\maketitle
+
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\listoftables
+
+\chapter*{Acknowledgements}
+
+\begin{abstract}
+\end{abstract}
+
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+\label{ch:intro}
+
+This is an example of how to use BiB\TeX.
+First of all, let's cite a book~\cite{wainwright93}
+now let's cite a journal paper and a conference proceedings~\cite{cawley96,talbot97}.
+Finally, let's cite a chapter in a book~\cite[Chapter 9]{goossens97}.
+
+\chapter{Technical Introduction}
+\label{ch:techintro}
+
+\chapter{Method}
+\label{ch:method}
+
+\chapter{Results}
+\label{ch:results}
+
+\chapter{Conclusions}
+\label{ch:conc}
+
+\bibliographystyle{plain}
+\bibliography{thesis}
+\addcontentsline{toc}{chapter}{\bibname}
+
+\end{document}
